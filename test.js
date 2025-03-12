@@ -16,9 +16,29 @@ $(document).ready(function() {
 });
 
 $("#essaie").click(function() {
+    if ($('#seconde').is(':visible')) {
+        $('#seconde').animate({ 
+            width: "100px", // Taille réduite avant de disparaître
+            height: "auto" 
+        }, {
+            duration: 2000,
+            complete: function() {
+                $(this).fadeOut(2050);
+            }
+        });
+    } else {
+        $('#seconde').fadeIn(2000, function() {
+            $(this).animate({ 
+                width: "300px", // Nouvelle taille lors de l'affichage
+                height: "auto" 
+            }, 2050);
+        });
+    }
+    
     $("#first").toggle();
-    $('#seconde').fadeToggle(4050)
-})
+});
+
+
 
 
 
