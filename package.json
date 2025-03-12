@@ -1,0 +1,30 @@
+{
+  "name": "adipsys",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon -e js ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-bulma": "sass --load-path=node_modules my-bulma-project.scss my-bulma-project.css",
+    "watch-bulma": "npm run build-bulma -- --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@clickhouse/client": "^1.10.1",
+    "@depyronick/clickhouse-client": "^2.0.4",
+    "body-parser": "^1.20.3",
+    "bulma": "^1.0.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jspdf": "^3.0.0",
+    "nodemon": "^3.1.9",
+    "sass": "^1.85.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3"
+  }
+}

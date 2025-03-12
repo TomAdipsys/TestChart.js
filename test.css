@@ -1,0 +1,62 @@
+body {
+    background-color: rgba(245, 185, 233, 0.318);
+    height: 100vh;
+}
+
+img {
+    width: 175px;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+    text-align: center;
+    width: 100%;
+    background-color: rgba(125, 125, 125, 0.796);
+}
+
+header h1 {
+    color: rgba(57, 57, 176, 0.505);
+}
+
+.canvas {
+    display: flex;
+    flex-wrap: wrap;
+    height: max-content;
+    margin: 0;
+    gap: 200px;
+    padding: 4rem;
+    justify-content: center;
+    justify-self: center;
+    align-items: end;
+}
+
+.canvas .buttons{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+   /* position: relative; */
+   justify-self: center;
+   align-self: end;
+   padding: 5px;
+   margin: 5px;
+}
+
+.canvas .doughnutChart {
+    background: black;
+    width: 500px;
+    padding: 2rem;
+    border: 1px solid #f49131;
+    border-radius: 1rem;    
+    box-shadow: 0 0 16px rgba(255, 255, 255, 0.75);
+}
+
+.canvas .lineChart {
+    background: rgb(255, 255, 255);
+    width: 500px;
+    padding: 2rem;
+    border: 1px solid #f49131;
+    border-radius: 1rem;    
+    box-shadow: 0 0 16px rgb(0, 0, 0, 0.75);
+}

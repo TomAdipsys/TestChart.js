@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Graphique avec Chart.js</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" ></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPDF/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="test.css">
+  <link rel="stylesheet" href="my-bulma-project.css">
+</head>
+<body>
+  <header>
+    <h1 class="title">Graphique de données provenant de ClickHouse</h1>
+  </header>
+
+  <img id='first'src="https://preview.redd.it/this-isnt-made-in-abyss-v0-nbnolzkay2nd1.png?width=1080&format=png&auto=webp&s=d2cf83ed483edcc2b7669fdd3b8d6b43d626bfaa" target="_top">
+  <img id='seconde'src="https://preview.redd.it/this-isnt-made-in-abyss-v0-nbnolzkay2nd1.png?width=1080&format=png&auto=webp&s=d2cf83ed483edcc2b7669fdd3b8d6b43d626bfaa" target="_parent">
+ <button class="button" id="essaie">toggle</button>
+ <span class="bulma-arrow-mixin"></span>
+  <div class="canvas">
+    
+    <div class="doughnutChart">
+      <canvas id="doughnut_Chart" width="500" height="500"></canvas>
+      <div class="buttons">
+        <button class="hide button" id="hide_doughnut">hide the doughnut</button>
+        <button class="resetButton button" id="resetButton_doughnut_Chart">reset the doughnut</button>
+        <button class="download button" id="download_doughnut">Download as JPG</button>
+      </div>
+    </div>
+
+    <div class="lineChart">
+      <canvas id="line_Chart" width="500" height="500"></canvas>
+      <div class="buttons">
+        <button class="hide button"  id="hide_line_Chart">hide the line</button>
+        <button class="resetButton button" id="resetButton_line_Chart">reset the line</button>
+        <button class="download button" id="download_line">Download as JPG</button>
+      </div>
+    </div>
+      
+  <script type="module" src="./script_doughnut.js" defer></script>
+  <script type="module" src="./script_line.js" defer></script>
+  <script type="module" src="./test.js" defer></script>
+
+</body>
+</html>  
