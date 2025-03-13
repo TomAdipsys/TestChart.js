@@ -5,8 +5,9 @@ fetch('http://localhost:3000/hm_stats')
   .then(data => {
     if (!data || data.length === 0) throw new Error('Aucune donnée reçue');
 
-    const labels = data.map(row => row.accesspointmac);
-    const values = data.map(row => row.nb);
+    const labels = data.connections.map(row => row.accesspointmac);
+    const values = data.connections.map(row => row.nb);
+    
 
     const ctx_doughnut = document.getElementById('doughnut_Chart').getContext('2d');
     myChart = new Chart(ctx_doughnut, {

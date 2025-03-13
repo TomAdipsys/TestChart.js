@@ -7,8 +7,9 @@ fetch('http://localhost:3000/hm_stats')
     console.log(data); // Affiche les données pour le débogage
 
     // 2. Line chart (Évolution du temps de connexion)
-    const labels_line = data.map(row => row.acctstarttime);  // Dates de connexion
-    const values_line = data.map(row => row.nb); // Temps de connexion (en secondes)
+    const labels_line = data.connections.map(row => row.acctstarttime);
+    const values_line = data.connections.map(row => row.nb);
+    
 
     const ctx_line = document.getElementById('line_Chart').getContext('2d');
     myChartLine = new Chart(ctx_line, {
