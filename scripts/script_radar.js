@@ -1,26 +1,25 @@
 var myChartRadar;
 fetch('http://localhost:3000/hm_stats')
-
   .then(res => res.json())
   .then(data => {
-    if (!data) throw new Error('Aucne udonnée reçue pour radar');
-    if (!data || data.length === 0) throw new Error('Aucune donnée reçue pour radar');
-    console.log(data);
+    if (!data) throw new Error('Aucune donnée reçue pour radar');
+    if (!data.stats) throw new Error('Aucune donnée statistique trouvée');
 
-    
+    console.log(data.stats); // Affiche les données des stats
+
     const ctx_radar = document.getElementById('radar_Chart').getContext('2d');
     myChartRadar = new Chart(ctx_radar, {
       type: 'radar',
       data: {
-        labels: ['Min', 'Moyenne', 'Max'],
+        labels: ['Min', 'Moyenne', 'Max'],  // Labels initialement
         datasets: [{
           label: 'Données envoyées',
-          data: [data.minOut, data.avgOut, data.maxOut],
+          data: [data.stats.minOut, data.stats.avgOut, data.stats.maxOut],
           borderColor: 'rgba(255, 99, 132, 1)',
           backgroundColor: 'rgba(255, 99, 132, 0.2)'
         }, {
           label: 'Données reçues',
-          data: [data.minIn, data.avgIn, data.maxIn],
+          data: [data.stats.minIn, data.stats.avgIn, data.stats.maxIn],
           borderColor: 'rgba(54, 162, 235, 1)',
           backgroundColor: 'rgba(54, 162, 235, 0.2)'
         }]
@@ -29,5 +28,36 @@ fetch('http://localhost:3000/hm_stats')
         responsive: true,
       }
     });
+
+    // Fonction pour interchanger les données min, avg, et max et les labels
+    const swapDataOrder = (dataset) => {
+      return [
+        dataset[2],  // Max
+        dataset[1],  // Moyenne
+        dataset[0]   // Min
+      ];
+    };
+
+    const swapLabelsOrder = (labels) => {
+      return [
+        labels[2], // Max
+        labels[1], // Moyenne
+        labels[0]  // Min
+      ];
+    };
+
+    // Ajout d'un écouteur pour le bouton toggle
+    document.getElementById('toggleButton').addEventListener('click', () => {
+      // Interchanger les données des datasets
+      myChartRadar.data.datasets[0].data = swapDataOrder(myChartRadar.data.datasets[0].data);
+      myChartRadar.data.datasets[1].data = swapDataOrder(myChartRadar.data.datasets[1].data);
+
+      // Interchanger les labels
+      myChartRadar.data.labels = swapLabelsOrder(myChartRadar.data.labels);
+
+      // Redessiner le graphique après avoir échangé les valeurs et les labels
+      myChartRadar.update();
+    });
+
   })
   .catch(error => console.error('Erreur de récupération des données :', error.message));

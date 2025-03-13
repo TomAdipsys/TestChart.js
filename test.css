@@ -44,7 +44,7 @@ header h1 {
 }
 
 .canvas .doughnutChart {
-    background: black;
+    background: rgba(0, 0, 0, 0.955);
     width: 500px;
     padding: 2rem;
     border: 1px solid #f49131;
@@ -54,6 +54,15 @@ header h1 {
 
 .canvas .lineChart {
     background: rgb(255, 255, 255);
+    width: 500px;
+    padding: 2rem;
+    border: 1px solid #f49131;
+    border-radius: 1rem;    
+    box-shadow: 0 0 16px rgb(0, 0, 0, 0.75);
+}
+
+.canvas .radarChart {
+    background: rgba(255, 255, 255, 0.34);
     width: 500px;
     padding: 2rem;
     border: 1px solid #f49131;

@@ -1,4 +1,4 @@
-import { getMinOutPutOctets, getMaxOutPutOctets, getAvgOutPutOctets } from '../services/outputdata.js';
+import { getMinOutPutOctets, getMaxOutPutOctets, getAvgOutPutOctets } from '../services/outputData.js';
 
 export const getOutputStats = async () => {
   const [minOut, maxOut, avgOut] = await Promise.all([
