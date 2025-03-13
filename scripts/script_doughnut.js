@@ -37,9 +37,11 @@ fetch('http://localhost:3000/hm_stats')
 
 // Boutons d'interaction
 $('#hide_doughnut').click(() => {
+  $('#CntDONUT').fadeToggle(220)
   $('#doughnut_Chart').fadeToggle(220, function() {
     $('#hide_doughnut').text($(this).is(':visible') ? 'hide the doughnut' : 'show the doughnut');
   });
+  
 });
 
 

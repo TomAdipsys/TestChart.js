@@ -58,17 +58,13 @@ fetch('http://localhost:3000/hm_stats')
   })
   .catch(error => console.error('Erreur lors de la récupération des données :', error));
 
-  $('#hide_line_Chart').click(function() {
-    if ($("#line_Chart").is(":visible")) {
-        console.log("button 'hide the line' clicked");
-        $("#line_Chart").fadeOut();
-        $("#hide_line_Chart").text('show the doughnut');
-    } else {
-        console.log("button 'show the line' clicked");
-        $("#line_Chart").fadeIn();
-        $("#hide_line_Chart").text('hide the doughnut');
-    }
-});
+
+$('#hide_line_Chart').click(() => {
+  $('#CntLINE').fadeToggle(220)
+  $('#line_Chart').fadeToggle(220, function() {
+    $('#hide_line_Chart').text($(this).is(':visible') ? 'hide the line' : 'show the line');
+  });
+})
 
 $("#resetButton_line_Chart").click(function() {
     console.log("button 'resetButton_line_Chart' clicked");
