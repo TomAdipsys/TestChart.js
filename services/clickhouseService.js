@@ -15,7 +15,7 @@ export async function getNbConnection() {
     SELECT DISTINCT(accesspointmac), count(*) AS nb
     FROM hm_stats.sessions    
     GROUP BY accesspointmac 
-    LIMIT 25
+    LIMIT 10
   `);
 }
 
@@ -24,6 +24,6 @@ export async function getConnectionTimes() {
   return clickhouse.queryPromise(`
     SELECT DISTINCT(accesspointmac), acctstarttime AS time 
     FROM hm_stats.sessions 
-    LIMIT 25
+    LIMIT 10
   `);
 }

@@ -21,7 +21,7 @@ export async function getTotalInPutOctetsPerPerson() {
     SELECT acctuniqueid, SUM(acctinputoctets) AS total_data_received
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10
+    LIMIT 5
   `);
 }
 
@@ -38,7 +38,7 @@ export async function getAvgInPutOctetsPerPerson() {
     SELECT acctuniqueid, AVG(acctinputoctets) AS average_data_received
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10
+    LIMIT 5
   `);
 }
 
@@ -55,7 +55,7 @@ export async function getMinInPutOctetsPerPerson() {
     SELECT acctuniqueid, MIN(acctinputoctets) AS min_data_received
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10
+    LIMIT 5
   `);
 }
 
@@ -72,6 +72,6 @@ export async function getMaxInPutOctetsPerPerson() {
     SELECT acctuniqueid, MAX(acctinputoctets) AS max_data_received
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10
+    LIMIT 5
   `);
 }
