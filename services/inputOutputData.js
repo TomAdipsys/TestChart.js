@@ -12,7 +12,7 @@ const clickhouse = new ClickHouseClient({
 export async function getTotalInOutOctets() {
   return clickhouse.queryPromise(`
     SELECT SUM(acctoutputoctets + acctinputoctets) AS total_data
-    FROM hm_stats.sessions;
+    FROM hm_stats.sessions
   `);
 }
 
@@ -21,7 +21,7 @@ export async function getTotalInOutOctetsPerPerson() {
     SELECT acctuniqueid, SUM(acctoutputoctets + acctinputoctets) AS total_data
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10;
+    LIMIT 10
   `);
 }
 
@@ -29,7 +29,7 @@ export async function getTotalInOutOctetsPerPerson() {
 export async function getAvgInOutOctets() {
   return clickhouse.queryPromise(`
     SELECT AVG(acctoutputoctets + acctinputoctets) AS average_data
-    FROM hm_stats.sessions;
+    FROM hm_stats.sessions
   `);
 }
 
@@ -38,7 +38,7 @@ export async function getAvgInOutOctetsPerPerson() {
     SELECT acctuniqueid, AVG(acctoutputoctets + acctinputoctets) AS average_data
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10;
+    LIMIT 10
   `);
 }
 
@@ -46,7 +46,7 @@ export async function getAvgInOutOctetsPerPerson() {
 export async function getMinInOutOctets() {
   return clickhouse.queryPromise(`
     SELECT MIN(acctoutputoctets + acctinputoctets) AS min_data
-    FROM hm_stats.sessions;
+    FROM hm_stats.sessions
   `);
 }
 
@@ -55,7 +55,7 @@ export async function getMinInOutOctetsPerPerson() {
     SELECT acctuniqueid, MIN(acctoutputoctets + acctinputoctets) AS min_data
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10;
+    LIMIT 10
   `);
 }
 
@@ -63,7 +63,7 @@ export async function getMinInOutOctetsPerPerson() {
 export async function getMaxInOutOctets() {
   return clickhouse.queryPromise(`
     SELECT MAX(acctoutputoctets + acctinputoctets) AS max_data
-    FROM hm_stats.sessions;
+    FROM hm_stats.sessions
   `);
 }
 
@@ -72,6 +72,6 @@ export async function getMaxInOutOctetsPerPerson() {
     SELECT acctuniqueid, MAX(acctoutputoctets + acctinputoctets) AS max_data
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10;
+    LIMIT 10
   `);
 }

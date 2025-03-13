@@ -12,7 +12,7 @@ const clickhouse = new ClickHouseClient({
 export async function getTotalInPutOctets() {
   return clickhouse.queryPromise(`
     SELECT SUM(acctinputoctets) AS total_data_received
-    FROM hm_stats.sessions;
+    FROM hm_stats.sessions
   `);
 }
 
@@ -21,7 +21,7 @@ export async function getTotalInPutOctetsPerPerson() {
     SELECT acctuniqueid, SUM(acctinputoctets) AS total_data_received
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10;
+    LIMIT 10
   `);
 }
 
@@ -29,7 +29,7 @@ export async function getTotalInPutOctetsPerPerson() {
 export async function getAvgInPutOctets() {
   return clickhouse.queryPromise(`
     SELECT AVG(acctinputoctets) AS average_data_received
-    FROM hm_stats.sessions;
+    FROM hm_stats.sessions
   `);
 }
 
@@ -38,7 +38,7 @@ export async function getAvgInPutOctetsPerPerson() {
     SELECT acctuniqueid, AVG(acctinputoctets) AS average_data_received
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10;
+    LIMIT 10
   `);
 }
 
@@ -46,7 +46,7 @@ export async function getAvgInPutOctetsPerPerson() {
 export async function getMinInPutOctets() {
   return clickhouse.queryPromise(`
     SELECT MIN(acctinputoctets) AS min_data_received
-    FROM hm_stats.sessions;
+    FROM hm_stats.sessions
   `);
 }
 
@@ -55,7 +55,7 @@ export async function getMinInPutOctetsPerPerson() {
     SELECT acctuniqueid, MIN(acctinputoctets) AS min_data_received
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10;
+    LIMIT 10
   `);
 }
 
@@ -63,7 +63,7 @@ export async function getMinInPutOctetsPerPerson() {
 export async function getMaxInPutOctets() {
   return clickhouse.queryPromise(`
     SELECT MAX(acctinputoctets) AS max_data_received
-    FROM hm_stats.sessions;
+    FROM hm_stats.sessions
   `);
 }
 
@@ -72,6 +72,6 @@ export async function getMaxInPutOctetsPerPerson() {
     SELECT acctuniqueid, MAX(acctinputoctets) AS max_data_received
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
-    LIMIT 10;
+    LIMIT 10
   `);
 }
