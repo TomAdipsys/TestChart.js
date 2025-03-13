@@ -1,9 +1,9 @@
 var myChartRadar;
-fetch('http://localhost:3000/hm_stats/radar')
+fetch('http://localhost:3000/hm_stats')
 
   .then(res => res.json())
   .then(data => {
-    if (!data) throw new Error('Aucune donnée reçue pour radar');
+    if (!data) throw new Error('Aucne udonnée reçue pour radar');
     if (!data || data.length === 0) throw new Error('Aucune donnée reçue pour radar');
     console.log(data);
 

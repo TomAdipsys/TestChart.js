@@ -2,6 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import dataRoutes from './routes/dataRoutes.js';
+import listEndpoints from 'express-list-endpoints';
+
 
 const app = express();
 const port = 3000;
@@ -15,3 +17,4 @@ app.use('/hm_stats', dataRoutes);
 app.listen(port, () => {
   console.log(`Serveur Express en écoute sur le port ${port}`);
 });
+console.log(listEndpoints(app));
