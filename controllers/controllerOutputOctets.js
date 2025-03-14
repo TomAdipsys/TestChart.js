@@ -26,29 +26,29 @@ export const getOutputStats = async () => {
   // Retourner les données formatées
   return {
     // Statistiques globales
-    minOut: minOut[0].min_data_sent,
-    maxOut: maxOut[0].max_data_sent,
-    avgOut: avgOut[0].average_data_sent,
+    minOut: minOut.data[0].min_data_sent,
+    maxOut: maxOut.data[0].max_data_sent,
+    avgOut: avgOut.data[0].average_data_sent,
 
     // Données totales (pas par utilisateur)
-    totalDataSent: total[0].total_data_sent,
+    totalDataSent: total.data[0].total_data_sent,
 
     // Statistiques par utilisateur
-    minOutPers: minOutPers.map(person => ({
+    minOutPers: minOutPers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
       min_data_sent: person.min_data_sent
     })),
-    maxOutPers: maxOutPers.map(person => ({
+    maxOutPers: maxOutPers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
       max_data_sent: person.max_data_sent
     })),
-    avgOutPers: avgOutPers.map(person => ({
+    avgOutPers: avgOutPers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
       avg_data_sent: person.average_data_sent
     })),
 
     // Données totales par utilisateur
-    totalDataSentPerPerson: totalpers.map(person => ({
+    totalDataSentPerPerson: totalpers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
       total_data_sent: person.total_data_sent
     }))

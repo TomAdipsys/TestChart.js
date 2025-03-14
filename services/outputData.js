@@ -1,77 +1,89 @@
-import { ClickHouseClient } from '@depyronick/clickhouse-client';
+import { testDB } from "../index.js";
 
-const clickhouse = new ClickHouseClient({
-  host: '51.91.178.210',
-  port: 8123,
-  user: 'default',
-  password: '',
-  database: 'hm_stats',
-});
-
-// Total données envoyées
+// Fonction pour récupérer le total des données envoyées
 export async function getOutPutOctets() {
-  return await clickhouse.queryPromise(`
-    SELECT SUM(acctoutputoctets) AS total_data_sent
-    FROM hm_stats.sessions
-  `);
+  const result = await testDB.query({
+    query: `SELECT SUM(acctoutputoctets) AS total_data_sent
+            FROM hm_stats.sessions`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
+// Fonction pour récupérer le total des données envoyées par personne
 export async function getOutPutOctetsPerPerson() {
-  return await clickhouse.queryPromise(`
-    SELECT acctuniqueid, SUM(acctoutputoctets) AS total_data_sent
-    FROM hm_stats.sessions
-    GROUP BY acctuniqueid
-    LIMIT 5
-  `);
+  const result = await testDB.query({
+    query: `SELECT acctuniqueid, SUM(acctoutputoctets) AS total_data_sent
+            FROM hm_stats.sessions
+            GROUP BY acctuniqueid
+            LIMIT 5`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
-// Moyenne données envoyées
+// Fonction pour récupérer la moyenne des données envoyées
 export async function getAvgOutPutOctets() {
-  return await clickhouse.queryPromise(`
-    SELECT AVG(acctoutputoctets) AS average_data_sent
-    FROM hm_stats.sessions
-  `);
+  const result = await testDB.query({
+    query: `SELECT AVG(acctoutputoctets) AS average_data_sent
+            FROM hm_stats.sessions`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
+// Fonction pour récupérer la moyenne des données envoyées par personne
 export async function getAvgOutPutOctetsPerPerson() {
-  return await clickhouse.queryPromise(`
-    SELECT acctuniqueid, AVG(acctoutputoctets) AS average_data_sent
-    FROM hm_stats.sessions
-    GROUP BY acctuniqueid
-    LIMIT 5
-  `);
+  const result = await testDB.query({
+    query: `SELECT acctuniqueid, AVG(acctoutputoctets) AS average_data_sent
+            FROM hm_stats.sessions
+            GROUP BY acctuniqueid
+            LIMIT 5`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
-// Min données envoyées
+// Fonction pour récupérer le minimum des données envoyées
 export async function getMinOutPutOctets() {
-  return await clickhouse.queryPromise(`
-    SELECT MIN(acctoutputoctets) AS min_data_sent
-    FROM hm_stats.sessions
-  `);
+  const result = await testDB.query({
+    query: `SELECT MIN(acctoutputoctets) AS min_data_sent
+            FROM hm_stats.sessions`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
+// Fonction pour récupérer le minimum des données envoyées par personne
 export async function getMinOutPutOctetsPerPerson() {
-  return await clickhouse.queryPromise(`
-    SELECT acctuniqueid, MIN(acctoutputoctets) AS min_data_sent
-    FROM hm_stats.sessions
-    GROUP BY acctuniqueid
-    LIMIT 5
-  `);
+  const result = await testDB.query({
+    query: `SELECT acctuniqueid, MIN(acctoutputoctets) AS min_data_sent
+            FROM hm_stats.sessions
+            GROUP BY acctuniqueid
+            LIMIT 5`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
-// Max données envoyées
+// Fonction pour récupérer le maximum des données envoyées
 export async function getMaxOutPutOctets() {
-  return await clickhouse.queryPromise(`
-    SELECT MAX(acctoutputoctets) AS max_data_sent
-    FROM hm_stats.sessions
-  `);
+  const result = await testDB.query({
+    query: `SELECT MAX(acctoutputoctets) AS max_data_sent
+            FROM hm_stats.sessions`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
+// Fonction pour récupérer le maximum des données envoyées par personne
 export async function getMaxOutPutOctetsPerPerson() {
-  return await clickhouse.queryPromise(`
-    SELECT acctuniqueid, MAX(acctoutputoctets) AS max_data_sent
-    FROM hm_stats.sessions
-    GROUP BY acctuniqueid
-    LIMIT 5
-  `);
+  const result = await testDB.query({
+    query: `SELECT acctuniqueid, MAX(acctoutputoctets) AS max_data_sent
+            FROM hm_stats.sessions
+            GROUP BY acctuniqueid
+            LIMIT 5`,
+    format: 'JSON',
+  });
+  return await result.json();
 }

@@ -3,6 +3,14 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import dataRoutes from './routes/dataRoutes.js';
 import listEndpoints from 'express-list-endpoints';
+import { createClient } from "@clickhouse/client";
+
+export const testDB = createClient({
+    url: 'http://51.91.178.210:8123',
+    username: 'clickhouse',
+    password:'clickhouse',
+    database:'hm_stats'
+})
 
 
 const app = express();
@@ -14,7 +22,8 @@ app.use(cors());
 // Utiliser les routes définies dans dataRoutes
 app.use('/hm_stats', dataRoutes);
 
-app.listen(port, () => {
+app.listen(port, async () => {
   console.log(`Serveur Express en écoute sur le port ${port}`);
+
 });
 console.log(listEndpoints(app));

@@ -22,10 +22,10 @@ export const getInputStats = async () => {
   ]);
 
   return {
-    minIn: minIn[0].min_data_received,
-    maxIn: maxIn[0].max_data_received,
-    avgIn: avgIn[0].average_data_received,
-    totalIn: totalIn[0].total_data_received,
+    minIn: minIn.data[0].min_data_received,
+    maxIn: maxIn.data[0].max_data_received,
+    avgIn: avgIn.data[0].average_data_received,
+    totalIn: totalIn.data[0].total_data_received,
     totalInPerPerson,
     minInPerPerson,
     maxInPerPerson,

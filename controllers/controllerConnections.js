@@ -6,9 +6,9 @@ export const getConnections = async () => {
     getConnectionTimes()
   ]);
 
-  return resultNbConnection.map((row, index) => ({
+  return resultNbConnection.data.map((row, index) => ({ 
     accesspointmac: row.accesspointmac,
     nb: row.nb,
-    acctstarttime: resultTime[index] ? resultTime[index].time : null
+    acctstarttime: resultTime.data[index] ? resultTime.data[index].time : null
   }));
 };

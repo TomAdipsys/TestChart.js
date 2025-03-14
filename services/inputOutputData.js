@@ -1,77 +1,89 @@
-import { ClickHouseClient } from '@depyronick/clickhouse-client';
+import { testDB } from "../index.js";
 
-const clickhouse = new ClickHouseClient({
-  host: '51.91.178.210',
-  port: 8123,
-  user: 'default',
-  password: '',
-  database: 'hm_stats',
-});
-
-// Total données (envoyées + reçues)
+// Fonction pour récupérer le total des données envoyées et reçues
 export async function getTotalInOutOctets() {
-  return await clickhouse.queryPromise(`
-    SELECT SUM(acctoutputoctets + acctinputoctets) AS total_data
-    FROM hm_stats.sessions
-  `);
+  const result = await testDB.query({
+    query: `SELECT SUM(acctoutputoctets + acctinputoctets) AS total_data
+            FROM hm_stats.sessions`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
+// Fonction pour récupérer le total des données envoyées et reçues par personne
 export async function getTotalInOutOctetsPerPerson() {
-  return await clickhouse.queryPromise(`
-    SELECT acctuniqueid, SUM(acctoutputoctets + acctinputoctets) AS total_data
-    FROM hm_stats.sessions
-    GROUP BY acctuniqueid
-    LIMIT 5
-  `);
+  const result = await testDB.query({
+    query: `SELECT acctuniqueid, SUM(acctoutputoctets + acctinputoctets) AS total_data
+            FROM hm_stats.sessions
+            GROUP BY acctuniqueid
+            LIMIT 5`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
-// Moyenne données (envoyées + reçues)
+// Fonction pour récupérer la moyenne des données envoyées et reçues
 export async function getAvgInOutOctets() {
-  return await clickhouse.queryPromise(`
-    SELECT AVG(acctoutputoctets + acctinputoctets) AS average_data
-    FROM hm_stats.sessions
-  `);
+  const result = await testDB.query({
+    query: `SELECT AVG(acctoutputoctets + acctinputoctets) AS average_data
+            FROM hm_stats.sessions`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
+// Fonction pour récupérer la moyenne des données envoyées et reçues par personne
 export async function getAvgInOutOctetsPerPerson() {
-  return await clickhouse.queryPromise(`
-    SELECT acctuniqueid, AVG(acctoutputoctets + acctinputoctets) AS average_data
-    FROM hm_stats.sessions
-    GROUP BY acctuniqueid
-    LIMIT 5
-  `);
+  const result = await testDB.query({
+    query: `SELECT acctuniqueid, AVG(acctoutputoctets + acctinputoctets) AS average_data
+            FROM hm_stats.sessions
+            GROUP BY acctuniqueid
+            LIMIT 5`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
-// Min données (envoyées + reçues)
+// Fonction pour récupérer le minimum des données envoyées et reçues
 export async function getMinInOutOctets() {
-  return await clickhouse.queryPromise(`
-    SELECT MIN(acctoutputoctets + acctinputoctets) AS min_data
-    FROM hm_stats.sessions
-  `);
+  const result = await testDB.query({
+    query: `SELECT MIN(acctoutputoctets + acctinputoctets) AS min_data
+            FROM hm_stats.sessions`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
+// Fonction pour récupérer le minimum des données envoyées et reçues par personne
 export async function getMinInOutOctetsPerPerson() {
-  return await clickhouse.queryPromise(`
-    SELECT acctuniqueid, MIN(acctoutputoctets + acctinputoctets) AS min_data
-    FROM hm_stats.sessions
-    GROUP BY acctuniqueid
-    LIMIT 5
-  `);
+  const result = await testDB.query({
+    query: `SELECT acctuniqueid, MIN(acctoutputoctets + acctinputoctets) AS min_data
+            FROM hm_stats.sessions
+            GROUP BY acctuniqueid
+            LIMIT 5`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
-// Max données (envoyées + reçues)
+// Fonction pour récupérer le maximum des données envoyées et reçues
 export async function getMaxInOutOctets() {
-  return await clickhouse.queryPromise(`
-    SELECT MAX(acctoutputoctets + acctinputoctets) AS max_data
-    FROM hm_stats.sessions
-  `);
+  const result = await testDB.query({
+    query: `SELECT MAX(acctoutputoctets + acctinputoctets) AS max_data
+            FROM hm_stats.sessions`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
 
+// Fonction pour récupérer le maximum des données envoyées et reçues par personne
 export async function getMaxInOutOctetsPerPerson() {
-  return await clickhouse.queryPromise(`
-    SELECT acctuniqueid, MAX(acctoutputoctets + acctinputoctets) AS max_data
-    FROM hm_stats.sessions
-    GROUP BY acctuniqueid
-    LIMIT 5
-  `);
+  const result = await testDB.query({
+    query: `SELECT acctuniqueid, MAX(acctoutputoctets + acctinputoctets) AS max_data
+            FROM hm_stats.sessions
+            GROUP BY acctuniqueid
+            LIMIT 5`,
+    format: 'JSON',
+  });
+  return await result.json();
 }
