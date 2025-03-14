@@ -11,7 +11,7 @@ const clickhouse = new ClickHouseClient({
 
 // Fonction pour récupérer le nombre de connexions
 export async function getNbConnection() {
-  return clickhouse.queryPromise(`
+  return await clickhouse.queryPromise(`
     SELECT DISTINCT(accesspointmac), count(*) AS nb
     FROM hm_stats.sessions    
     GROUP BY accesspointmac 
@@ -21,7 +21,7 @@ export async function getNbConnection() {
 
 // Fonction pour récupérer les dates de connexion
 export async function getConnectionTimes() {
-  return clickhouse.queryPromise(`
+  return await clickhouse.queryPromise(`
     SELECT DISTINCT(accesspointmac), acctstarttime AS time 
     FROM hm_stats.sessions 
     LIMIT 10

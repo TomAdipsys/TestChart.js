@@ -10,14 +10,14 @@ const clickhouse = new ClickHouseClient({
 
 // Total données (envoyées + reçues)
 export async function getTotalInOutOctets() {
-  return clickhouse.queryPromise(`
+  return await clickhouse.queryPromise(`
     SELECT SUM(acctoutputoctets + acctinputoctets) AS total_data
     FROM hm_stats.sessions
   `);
 }
 
 export async function getTotalInOutOctetsPerPerson() {
-  return clickhouse.queryPromise(`
+  return await clickhouse.queryPromise(`
     SELECT acctuniqueid, SUM(acctoutputoctets + acctinputoctets) AS total_data
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
@@ -27,14 +27,14 @@ export async function getTotalInOutOctetsPerPerson() {
 
 // Moyenne données (envoyées + reçues)
 export async function getAvgInOutOctets() {
-  return clickhouse.queryPromise(`
+  return await clickhouse.queryPromise(`
     SELECT AVG(acctoutputoctets + acctinputoctets) AS average_data
     FROM hm_stats.sessions
   `);
 }
 
 export async function getAvgInOutOctetsPerPerson() {
-  return clickhouse.queryPromise(`
+  return await clickhouse.queryPromise(`
     SELECT acctuniqueid, AVG(acctoutputoctets + acctinputoctets) AS average_data
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
@@ -44,14 +44,14 @@ export async function getAvgInOutOctetsPerPerson() {
 
 // Min données (envoyées + reçues)
 export async function getMinInOutOctets() {
-  return clickhouse.queryPromise(`
+  return await clickhouse.queryPromise(`
     SELECT MIN(acctoutputoctets + acctinputoctets) AS min_data
     FROM hm_stats.sessions
   `);
 }
 
 export async function getMinInOutOctetsPerPerson() {
-  return clickhouse.queryPromise(`
+  return await clickhouse.queryPromise(`
     SELECT acctuniqueid, MIN(acctoutputoctets + acctinputoctets) AS min_data
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
@@ -61,14 +61,14 @@ export async function getMinInOutOctetsPerPerson() {
 
 // Max données (envoyées + reçues)
 export async function getMaxInOutOctets() {
-  return clickhouse.queryPromise(`
+  return await clickhouse.queryPromise(`
     SELECT MAX(acctoutputoctets + acctinputoctets) AS max_data
     FROM hm_stats.sessions
   `);
 }
 
 export async function getMaxInOutOctetsPerPerson() {
-  return clickhouse.queryPromise(`
+  return await clickhouse.queryPromise(`
     SELECT acctuniqueid, MAX(acctoutputoctets + acctinputoctets) AS max_data
     FROM hm_stats.sessions
     GROUP BY acctuniqueid
