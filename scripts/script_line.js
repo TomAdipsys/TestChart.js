@@ -91,7 +91,8 @@ $("#resetButton_line_Chart").click(function() {
 
 document.getElementById('download_line').addEventListener('click', function() {
     var a = document.createElement('a');
-    a.href = window.myChartLine.toBase64Image();
+    a.href = myChartLine.toBase64Image();
     a.download = 'line_chart.jpg';
     a.click();
   });
+

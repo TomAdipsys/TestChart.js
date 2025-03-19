@@ -75,21 +75,73 @@
     </div>
       <canvas id="line_Chart" width="500" height="500"></canvas>
       <div class="buttons">
-        <button class="hide button"  id="hide_line_Chart">hide the line</button>
-        <button class="resetButton button" id="resetButton_line_Chart">reset the line</button>
+        <button class="hide button"  id="hide_line_Chart">hide the lines</button>
+        <button class="resetButton button" id="resetButton_line_Chart">reset the lines</button>
         <button class="download button" id="download_line">Download as JPG</button>
       </div>
     </div>
 
     <div class="radarChart">
+      <div class="container" id="CntRADAR">
+        <div class="field">
+            <label class="label" for="startDate">Date de début :</label>
+            <div class="control">
+                <input class="input" type="datetime-local" id="startDate" name="startDate">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="endDate">Date de fin :</label>
+            <div class="control">
+                <input class="input" type="datetime-local" id="endDate" name="endDate">
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-primary" id="filterButton">Filtrer</button>
+            </div>
+        </div>
+    </div>
       <canvas id="radar_Chart" width="500" height="500"></canvas>
-      <button class="button" id="toggleButton">Inverser l'ordre des données</button>
+      <div class="buttons">
+        <button class="hide button"  id="hide_radar_Chart">hide the radar</button>
+        <button class="resetButton button" id="resetButton_radar_Chart">reset the radar</button>
+        <button class="download button" id="download_radar">Download as JPG</button>
+        <button class="button" id="toggle_radarChart">Inverser l'ordre des données</button>
+      </div>
     </div>
 
 
     <div class="barchart">
+      <div class="container" id="CntLINE">
+        <div class="field">
+            <label class="label" for="startDate">Date de début :</label>
+            <div class="control">
+                <input class="input" type="datetime-local" id="startDate" name="startDate">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="endDate">Date de fin :</label>
+            <div class="control">
+                <input class="input" type="datetime-local" id="endDate" name="endDate">
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-primary" id="filterButton">Filtrer</button>
+            </div>
+        </div>
+    </div>
       <canvas id="bar_Chart" width="500" height="500"></canvas>
-      <button class="button" id="toggleButton">Inverser l'ordre des données</button>
+      <div class="buttons">
+        <button class="hide button"  id="hide_bar_Chart">hide the bars</button>
+        <button class="resetButton button" id="resetButton_bar_Chart">reset the line</button>
+        <button class="download button" id="download_bar">Download as JPG</button>
+        <button class="button" id="toggle_barChart">Inverser l'ordre des données</button>
+      </div>
     </div>
 
   <script type="module" src="./scripts/script_bar.js" defer></script>    
