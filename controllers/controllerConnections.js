@@ -12,3 +12,5 @@ export const getConnections = async () => {
     acctstarttime: resultTime.data[index] ? resultTime.data[index].time : null
   }));
 };
+
+// For each 

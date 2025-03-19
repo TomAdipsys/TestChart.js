@@ -14,8 +14,13 @@ export const getData = async (req, res) => {
 
     res.json({
       connections,
-      stats: { ...outputStats, ...inputStats, ...inoutputStats }
+      stats: {
+        outputStats: outputStats,
+        inputStats: inputStats,
+        inoutputStats: inoutputStats
+      }
     });
+
   } catch (err) {
     res.status(500).send('Erreur lors de la récupération des données : ' + err.message);
   }

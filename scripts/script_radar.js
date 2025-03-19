@@ -5,21 +5,20 @@ fetch('http://localhost:3000/hm_stats')
     if (!data) throw new Error('Aucune donnée reçue pour radar');
     if (!data.stats) throw new Error('Aucune donnée statistique trouvée');
 
-    console.log(data.stats); // Affiche les données des stats
-
+    console.log(data.stats);  
     const ctx_radar = document.getElementById('radar_Chart').getContext('2d');
     myChartRadar = new Chart(ctx_radar, {
       type: 'radar',
       data: {
-        labels: ['Min', 'Moyenne', 'Max'],  // Labels initialement
+        labels: ['Min', 'Moyenne', 'Max'],   
         datasets: [{
           label: 'Données envoyées',
-          data: [data.stats.minOut, data.stats.avgOut, data.stats.maxOut],
+          data: [data.stats.outputStats.minOut, data.stats.outputStats.avgOut, data.stats.outputStats.maxOut],
           borderColor: 'rgba(255, 99, 132, 1)',
           backgroundColor: 'rgba(255, 99, 132, 0.2)'
         }, {
           label: 'Données reçues',
-          data: [data.stats.minIn, data.stats.avgIn, data.stats.maxIn],
+          data: [data.stats.inputStats.minIn, data.stats.inputStats.avgIn, data.stats.inputStats.maxIn],
           borderColor: 'rgba(54, 162, 235, 1)',
           backgroundColor: 'rgba(54, 162, 235, 0.2)'
         }]

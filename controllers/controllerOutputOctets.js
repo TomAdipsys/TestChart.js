@@ -1,6 +1,13 @@
-import { getMinOutPutOctets, getMaxOutPutOctets, getAvgOutPutOctets } from '../services/outputData.js';
-import { getOutPutOctets, getOutPutOctetsPerPerson } from '../services/outputData.js';
-import { getMinOutPutOctetsPerPerson, getMaxOutPutOctetsPerPerson, getAvgOutPutOctetsPerPerson } from '../services/outputData.js';
+import { 
+  getMinOutPutOctets, 
+  getMaxOutPutOctets, 
+  getAvgOutPutOctets, 
+  getOutPutOctets, 
+  getOutPutOctetsPerPerson, 
+  getMinOutPutOctetsPerPerson, 
+  getMaxOutPutOctetsPerPerson, 
+  getAvgOutPutOctetsPerPerson 
+} from '../services/outputData.js';
 
 export const getOutputStats = async () => {
   // Récupérer les statistiques globales

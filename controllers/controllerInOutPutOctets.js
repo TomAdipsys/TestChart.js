@@ -41,15 +41,5 @@ export const getInOutputStats = async () => {
     };
   } catch (error) {
     console.error("Erreur lors de la récupération des statistiques d'entrées/sorties :", error);
-    return {
-      minInOut: 0,
-      maxInOut: 0,
-      avgInOut: 0,
-      totalInOut: 0,
-      totalInOutPerPerson: [],
-      minInOutPerPerson: [],
-      maxInOutPerPerson: [],
-      avgInOutPerPerson: []
-    };
   }
 };

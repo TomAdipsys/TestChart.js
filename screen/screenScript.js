@@ -1,5 +1,3 @@
-//  JQuery
- 
 function changeVisualH1() {
     $("header").hover(
         function() {
