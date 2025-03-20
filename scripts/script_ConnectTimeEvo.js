@@ -1,4 +1,4 @@
-var myChartLine;
+var CoonectTimeEvoChart;
 fetch('http://localhost:3000/hm_stats/connections')
   .then(res => res.json())
   .then(data => {
@@ -10,7 +10,7 @@ fetch('http://localhost:3000/hm_stats/connections')
     
 
     const ctx_ConnectionTimeEvolution = document.getElementById('ConnectionTimeEvolution_Chart').getContext('2d');
-    myChartLine = new Chart(ctx_ConnectionTimeEvolution, {
+    CoonectTimeEvoChart = new Chart(ctx_ConnectionTimeEvolution, {
       type: 'line', 
       data: {
         labels: labels_line,  // dates
@@ -68,15 +68,15 @@ $('#hide_ConnectionTimeEvolution_Chart').click(() => {
 $("#resetButton_ConnectionTimeEvolution_Chart").click(function() {
   console.log("button 'resetButton_ConnectionTimeEvolution_Chart' clicked");
 
-  if (window.myChartLine) {
-    window.myChartLine.data = initialData;
-    window.myChartLine.update();
+  if (window.CoonectTimeEvoChart) {
+    window.CoonectTimeEvoChart.data = initialData;
+    window.CoonectTimeEvoChart.update();
   }
 });
 
 document.getElementById('download_line').addEventListener('click', function() {
     var a = document.createElement('a');
-    a.href = myChartLine.toBase64Image();
+    a.href = CoonectTimeEvoChart.toBase64Image();
     a.download = 'ConnectionTimeEvolution_Chart.jpg';
     a.click();
   });
