@@ -9,8 +9,8 @@ fetch('http://localhost:3000/hm_stats/connections')
     const values_line = data.map(row => row.acctsessiontime);
     
 
-    const ctx_line = document.getElementById('line_Chart').getContext('2d');
-    myChartLine = new Chart(ctx_line, {
+    const ctx_ConnectionTimeEvolution = document.getElementById('ConnectionTimeEvolution_Chart').getContext('2d');
+    myChartLine = new Chart(ctx_ConnectionTimeEvolution, {
       type: 'line', 
       data: {
         labels: labels_line,  // dates
@@ -57,16 +57,16 @@ fetch('http://localhost:3000/hm_stats/connections')
   .catch(error => console.error('Erreur lors de la récupération des données :', error));
 
 
-$('#hide_line_Chart').click(() => {
+$('#hide_ConnectionTimeEvolution_Chart').click(() => {
   $('#CntLINE').fadeToggle(220)
-  $('#line_Chart').fadeToggle(220, function() {
-    $('#hide_line_Chart').text($(this).is(':visible') ? 'hide the line' : 'show the line');
+  $('#ConnectionTimeEvolution_Chart').fadeToggle(220, function() {
+    $('#hide_ConnectionTimeEvolution_Chart').text($(this).is(':visible') ? 'hide the line' : 'show the line');
   });
 })
 
 
-$("#resetButton_line_Chart").click(function() {
-  console.log("button 'resetButton_line_Chart' clicked");
+$("#resetButton_ConnectionTimeEvolution_Chart").click(function() {
+  console.log("button 'resetButton_ConnectionTimeEvolution_Chart' clicked");
 
   if (window.myChartLine) {
     window.myChartLine.data = initialData;
@@ -77,6 +77,6 @@ $("#resetButton_line_Chart").click(function() {
 document.getElementById('download_line').addEventListener('click', function() {
     var a = document.createElement('a');
     a.href = myChartLine.toBase64Image();
-    a.download = 'line_chart.jpg';
+    a.download = 'ConnectionTimeEvolution_Chart.jpg';
     a.click();
   });
