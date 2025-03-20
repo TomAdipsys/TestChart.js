@@ -60,7 +60,7 @@ fetch('http://localhost:3000/hm_stats/connections')
 $('#hide_ConnectionTimeEvolution_Chart').click(() => {
   $('#CntLINE').fadeToggle(220)
   $('#ConnectionTimeEvolution_Chart').fadeToggle(220, function() {
-    $('#hide_ConnectionTimeEvolution_Chart').text($(this).is(':visible') ? 'hide the line' : 'show the line');
+    $('#hide_ConnectionTimeEvolution_Chart').text($(this).is(':visible') ? 'hide the chart' : 'show the chart');
   });
 })
 
