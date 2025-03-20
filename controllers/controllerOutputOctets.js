@@ -43,21 +43,21 @@ export const getOutputStats = async () => {
     // Statistiques par utilisateur
     minOutPers: minOutPers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      min_data_sent: person.min_data_sent
+      min_data_sent: person.min_data_sent_per_person
     })),
     maxOutPers: maxOutPers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      max_data_sent: person.max_data_sent
+      max_data_sent: person.max_data_sent_per_person
     })),
     avgOutPers: avgOutPers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      avg_data_sent: person.average_data_sent
+      avg_data_sent: person.average_data_sent_per_person
     })),
 
     // Données totales par utilisateur
     totalDataSentPerPerson: totalpers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      total_data_sent: person.total_data_sent
+      total_data_sent: person.total_data_sent_per_person
     }))
   };
 };

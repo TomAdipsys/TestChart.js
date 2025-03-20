@@ -13,7 +13,7 @@ export async function getOutPutOctets() {
 // Fonction pour récupérer le total des données envoyées par personne
 export async function getOutPutOctetsPerPerson() {
   const result = await liaisonDB.query({
-    query: `SELECT acctuniqueid, SUM(acctoutputoctets) AS total_data_sent
+    query: `SELECT acctuniqueid, SUM(acctoutputoctets) AS total_data_sent_per_person
             FROM hm_stats.sessions
             GROUP BY acctuniqueid
             LIMIT 5`,
@@ -35,7 +35,7 @@ export async function getAvgOutPutOctets() {
 // Fonction pour récupérer la moyenne des données envoyées par personne
 export async function getAvgOutPutOctetsPerPerson() {
   const result = await liaisonDB.query({
-    query: `SELECT acctuniqueid, AVG(acctoutputoctets) AS average_data_sent
+    query: `SELECT acctuniqueid, AVG(acctoutputoctets) AS average_data_sent_per_person
             FROM hm_stats.sessions
             GROUP BY acctuniqueid
             LIMIT 5`,
@@ -57,7 +57,7 @@ export async function getMinOutPutOctets() {
 // Fonction pour récupérer le minimum des données envoyées par personne
 export async function getMinOutPutOctetsPerPerson() {
   const result = await liaisonDB.query({
-    query: `SELECT acctuniqueid, MIN(acctoutputoctets) AS min_data_sent
+    query: `SELECT acctuniqueid, MIN(acctoutputoctets) AS min_data_sent_per_person
             FROM hm_stats.sessions
             GROUP BY acctuniqueid
             LIMIT 5`,
@@ -79,7 +79,7 @@ export async function getMaxOutPutOctets() {
 // Fonction pour récupérer le maximum des données envoyées par personne
 export async function getMaxOutPutOctetsPerPerson() {
   const result = await liaisonDB.query({
-    query: `SELECT acctuniqueid, MAX(acctoutputoctets) AS max_data_sent
+    query: `SELECT acctuniqueid, MAX(acctoutputoctets) AS max_data_sent_per_person
             FROM hm_stats.sessions
             GROUP BY acctuniqueid
             LIMIT 5`,

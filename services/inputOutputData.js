@@ -13,7 +13,7 @@ export async function getTotalInOutOctets() {
 // Fonction pour récupérer le total des données envoyées et reçues par personne
 export async function getTotalInOutOctetsPerPerson() {
   const result = await liaisonDB.query({
-    query: `SELECT acctuniqueid, SUM(acctoutputoctets + acctinputoctets) AS total_data_used
+    query: `SELECT acctuniqueid, SUM(acctoutputoctets + acctinputoctets) AS total_data_used_per_person
             FROM hm_stats.sessions
             GROUP BY acctuniqueid
             LIMIT 5`,
@@ -35,7 +35,7 @@ export async function getAvgInOutOctets() {
 // Fonction pour récupérer la moyenne des données envoyées et reçues par personne
 export async function getAvgInOutOctetsPerPerson() {
   const result = await liaisonDB.query({
-    query: `SELECT acctuniqueid, AVG(acctoutputoctets + acctinputoctets) AS average_data_used
+    query: `SELECT acctuniqueid, AVG(acctoutputoctets + acctinputoctets) AS average_data_used_per_person
             FROM hm_stats.sessions
             GROUP BY acctuniqueid
             LIMIT 5`,
@@ -57,7 +57,7 @@ export async function getMinInOutOctets() {
 // Fonction pour récupérer le minimum des données envoyées et reçues par personne
 export async function getMinInOutOctetsPerPerson() {
   const result = await liaisonDB.query({
-    query: `SELECT acctuniqueid, MIN(acctoutputoctets + acctinputoctets) AS min_data_used
+    query: `SELECT acctuniqueid, MIN(acctoutputoctets + acctinputoctets) AS min_data_used_per_person
             FROM hm_stats.sessions
             GROUP BY acctuniqueid
             LIMIT 5`,
@@ -79,7 +79,7 @@ export async function getMaxInOutOctets() {
 // Fonction pour récupérer le maximum des données envoyées et reçues par personne
 export async function getMaxInOutOctetsPerPerson() {
   const result = await liaisonDB.query({
-    query: `SELECT acctuniqueid, MAX(acctoutputoctets + acctinputoctets) AS max_data_used
+    query: `SELECT acctuniqueid, MAX(acctoutputoctets + acctinputoctets) AS max_data_used_per_person
             FROM hm_stats.sessions
             GROUP BY acctuniqueid
             LIMIT 5`,

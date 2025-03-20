@@ -39,21 +39,21 @@ export const getInputStats = async () => {
     // Statistiques par utilisateur
     minInPerPerson: minInPerPerson.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      min_data_received: person.min_data_received
+      min_data_received: person.min_data_received_per_person
     })),
     maxInPerPerson: maxInPerPerson.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      max_data_received: person.max_data_received
+      max_data_received: person.max_data_received_per_person
     })),
     avgInPerPerson: avgInPerPerson.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      avg_data_received: person.average_data_received
+      avg_data_received: person.average_data_received_per_person
     })),
   
     // Données totales par utilisateur
     totalInPerPerson: totalInPerPerson.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      total_data_received: person.total_data_received
+      total_data_received: person.total_data_received_per_person
     }))
   };
 }
