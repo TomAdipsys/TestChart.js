@@ -30,30 +30,30 @@ export const getInOutputStats = async () => {
 
     return {
       // Statistiques globales
-      minInOut: minInOut.data[0].min_data_received,
-      maxInOut: maxInOut.data[0].max_data_received, 
-      avgInOut: avgInOut.data[0].average_data_received,
+      minInOut: minInOut.data[0].min_data_used,
+      maxInOut: maxInOut.data[0].max_data_used, 
+      avgInOut: avgInOut.data[0].average_data_used,
       // Données totales (pas par utilisateur)
-      totalInOut: totalInOut.data[0].total_data_received,
+      totalInOut: totalInOut.data[0].total_data_used,
  
       // Statistiques par utilisateur
       minInOutPerPerson: minInOutPerPerson.data.map(person => ({
         acctuniqueid: person.acctuniqueid,
-        min_data_received: person.min_data_received
+        min_data_used: person.min_data_used
       })),
       maxInOutPerPerson: maxInOutPerPerson.data.map(person => ({
         acctuniqueid: person.acctuniqueid,
-        max_data_received: person.max_data_received
+        max_data_used: person.max_data_used
       })),
       avgInOutPerPerson: avgInOutPerPerson.data.map(person => ({
         acctuniqueid: person.acctuniqueid,
-        avg_data_received: person.average_data_received
+        avg_data_used: person.average_data_used
       })),
     
       // Données totales par utilisateur
       totalInOutPerPerson: totalInOutPerPerson.data.map(person => ({
         acctuniqueid: person.acctuniqueid,
-        total_data_received: person.total_data_received
+        total_data_used: person.total_data_used
       }))
     };
   }

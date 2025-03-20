@@ -1,14 +1,14 @@
 // Récupérer les données depuis le serveur Express
 var myChartLine;
-fetch('http://localhost:3000/hm_stats')
+fetch('http://localhost:3000/hm_stats/connections')
   .then(res => res.json())
   .then(data => {
 
     console.log(data); // Affiche les données pour le débogage
 
     // 2. Line chart (Évolution du temps de connexion)
-    const labels_line = data.connections.map(row => row.acctstarttime);
-    const values_line = data.connections.map(row => row.nb);
+    const labels_line = data.map(row => row.acctstarttime);
+    const values_line = data.map(row => row.nb);
     
 
     const ctx_line = document.getElementById('line_Chart').getContext('2d');

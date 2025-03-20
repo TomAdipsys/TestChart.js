@@ -9,10 +9,6 @@ import listEndpoints from 'express-list-endpoints';
 import { createClient } from "@clickhouse/client";
 
 export const liaisonDB = createClient({
-    // url: 'http://51.91.178.210:8123',
-    // username: 'clickhouse',
-    // password:'clickhouse',
-    // database:'hm_stats'
     url: process.env.CLICKHOUSE_URL, //|| 'http://51.91.178.210:8123',
     username: process.env.CLICKHOUSE_USER, //|| 'clickhouse',
     password: process.env.CLICKHOUSE_PASSWORD, //|| 'clickhouse',

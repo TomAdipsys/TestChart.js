@@ -1,12 +1,12 @@
 // script_doughnut.js - Affichage du graphique Doughnut avec les données ClickHouse
 var myChart;
-fetch('http://localhost:3000/hm_stats')
+fetch('http://localhost:3000/hm_stats/connections')
   .then(res => res.json())
   .then(data => {
     if (!data || data.length === 0) throw new Error('Aucune donnée reçue');
 
-    const labels = data.connections.map(row => row.accesspointmac);
-    const values = data.connections.map(row => row.nb);
+    const labels = data.map(row => row.accesspointmac);
+    const values = data.map(row => row.nb);
     
 
     const ctx_doughnut = document.getElementById('doughnut_Chart').getContext('2d');

@@ -9,7 +9,6 @@ import {
   getAvgInPutOctetsPerPerson 
 } from '../services/inputData.js';
 
-
 export const getInputStats = async () => {
   const [minIn, maxIn, avgIn] = await Promise.all([
     getMinInPutOctets(),

@@ -1,6 +1,6 @@
 var myChartBar;
 document.addEventListener("DOMContentLoaded", function() {
-fetch('http://localhost:3000/hm_stats')
+fetch('http://localhost:3000/hm_stats/stats')
   .then(res => res.json())
   .then(data => {
     if (!data) throw new Error('Aucune donnée reçue pour bar');
