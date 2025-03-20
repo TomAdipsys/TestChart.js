@@ -25,18 +25,24 @@ header h1 {
     flex-wrap: wrap;
     height: max-content;
     margin: 0;
-    gap: 200px;
+    gap: 8rem;
     padding: 4rem;
     justify-content: center;
     justify-self: center;
     align-items: end;
+}
+.canvas .container {
+    margin-bottom: 50px;
+}
+
+.canvas h1 {
+    justify-self: center;
 }
 
 .canvas .buttons{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-   /* position: relative; */
    justify-self: center;
    align-self: end;
    padding: 5px;
@@ -44,7 +50,7 @@ header h1 {
 }
 
 .canvas .doughnutChart {
-    background: rgba(0, 0, 0, 0.955);
+    background: rgba(0, 0, 0, 0.255);
     width: 500px;
     padding: 2rem;
     border: 1px solid #f49131;
