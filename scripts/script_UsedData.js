@@ -94,7 +94,7 @@ $("#resetButton_UsedData_Chart").click(function() {
   }
 });
 
-document.getElementById('download_bar').addEventListener('click', function() {
+document.getElementById('download_UsedData_Chart').addEventListener('click', function() {
     var a = document.createElement('a');
     a.href = UsedDataChart.toBase64Image();
     a.download = 'UsedData_Chart.jpg';

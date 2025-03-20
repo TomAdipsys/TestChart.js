@@ -1,4 +1,4 @@
-var myChart;
+var AccessPerSessionChart;
 fetch('http://localhost:3000/hm_stats/connections')
   .then(res => res.json())
   .then(data => {
@@ -8,8 +8,8 @@ fetch('http://localhost:3000/hm_stats/connections')
     const values = data.map(row => row.nbraccess);
     
 
-    const ctx_doughnut = document.getElementById('doughnut_Chart').getContext('2d');
-    myChart = new Chart(ctx_doughnut, {
+    const ctx_AccessPerSession = document.getElementById('AccessPerSession_Chart').getContext('2d');
+    AccessPerSessionChart = new Chart(ctx_AccessPerSession, {
       type: 'doughnut',  
       data: {
         labels: labels,
@@ -35,24 +35,24 @@ fetch('http://localhost:3000/hm_stats/connections')
   .catch(error => console.error('Erreur de récupération des données :', error.message));
 
 // Boutons d'interaction
-$('#hide_doughnut').click(() => {
+$('#hide_AccessPerSession').click(() => {
   $('#CntDONUT').fadeToggle(220)
-  $('#doughnut_Chart').fadeToggle(220, function() {
-    $('#hide_doughnut').text($(this).is(':visible') ? 'hide the doughnut' : 'show the doughnut');
+  $('#AccessPerSession_Chart').fadeToggle(220, function() {
+    $('#hide_AccessPerSession').text($(this).is(':visible') ? 'hide the chart ?' : 'show the chart ?');
   });
   
 });
 
 
-$('#resetButton_doughnut_Chart').click(() => {
-  mychart.destroy();
-  myChart.update();
+$('#resetButton_AccessPerSession_Chart').click(() => {
+  AccessPerSessionChart.destroy();
+  AccessPerSessionChart.update();
 });
 
-document.getElementById('download_doughnut').addEventListener('click', function() {
+document.getElementById('download_AccessPerSession').addEventListener('click', function() {
   var a = document.createElement('a');
-  a.href = myChart.toBase64Image();
-  a.download = 'doughnut_chart.jpg';
+  a.href = AccessPerSessionChart.toBase64Image();
+  a.download = 'AccessPerSession_Chart.jpg';
   a.click();
 });
 
