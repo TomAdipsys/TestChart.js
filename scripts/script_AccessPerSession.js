@@ -1,5 +1,5 @@
 var AccessPerSessionChart;
-fetch('http://localhost:3000/hm_stats/connections')
+fetch('http://localhost:3000/connections')
   .then(res => res.json())
   .then(data => {
     if (!data || data.length === 0) throw new Error('Aucune donnée reçue');
@@ -34,7 +34,6 @@ fetch('http://localhost:3000/hm_stats/connections')
   })
   .catch(error => console.error('Erreur de récupération des données :', error.message));
 
-// Boutons d'interaction
 $('#hide_AccessPerSession').click(() => {
   $('#CntDONUT').fadeToggle(220)
   $('#AccessPerSession_Chart').fadeToggle(220, function() {

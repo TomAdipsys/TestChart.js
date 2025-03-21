@@ -76,7 +76,7 @@ header h1 {
     box-shadow: 0 0 16px rgb(0, 0, 0, 0.75);
 }
 
-.canvas .barchart {
+.canvas .useddatachart {
     background: rgba(255, 255, 255, 0.34);
     width: 500px;
     padding: 2rem;

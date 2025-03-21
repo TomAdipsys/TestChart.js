@@ -1,5 +1,5 @@
 var ConnectTimeEvoChart;
-fetch('http://localhost:3000/hm_stats/connections')
+fetch('http://localhost:3000/connections')
   .then(res => res.json())
   .then(data => {
 

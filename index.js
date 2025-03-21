@@ -3,8 +3,9 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import path from 'path';
 
-import dataRoutes from './routes/dataRoutes.js';
+import { dataRoutes } from './routes/dataRoutes.js';
 import listEndpoints from 'express-list-endpoints';
 import { createClient } from "@clickhouse/client";
 
@@ -23,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 // Utiliser les routes définies dans dataRoutes
-app.use('/hm_stats', dataRoutes);
+app.use(dataRoutes);
 
 app.listen(port, async () => {
   console.log(`Serveur Express en écoute sur le port ${port}`);
