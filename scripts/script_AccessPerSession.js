@@ -16,11 +16,14 @@ $('#resetButton_AccessPerSession_Chart').click(() => {
   AccessPerSessionChart.update();
 });
 
+
 document.getElementById('download_AccessPerSession').addEventListener('click', function() {
-  var a = document.createElement('a');
-  a.href = AccessPerSessionChart.toBase64Image();
-  a.download = 'AccessPerSession_Chart.jpg';
-  a.click();
+  if (window.UsedDataChart) {
+    let a = document.createElement('a');
+    a.href = window.UsedDataChart.toBase64Image();
+    a.download = 'AccessPerSession_Chart.jpg';
+    a.click();
+  } else {
+    console.error("AccessPerSessionChart is not ready.");
+  }
 });
-
-

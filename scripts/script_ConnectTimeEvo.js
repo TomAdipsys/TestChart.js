@@ -25,9 +25,15 @@ $("#resetButton_ConnectionTimeEvolution_Chart").click(function () {
   resetCanvas_ConnectionTimeEvo();
 });
 
+
 document.getElementById('download_ConnectTimeEvoChart').addEventListener('click', function() {
-    var a = document.createElement('a');
-    a.href = ConnectTimeEvoChart.toBase64Image();
+  if (window.UsedDataChart) {
+    let a = document.createElement('a');
+    a.href = window.UsedDataChart.toBase64Image();
     a.download = 'ConnectionTimeEvolution_Chart.jpg';
     a.click();
-  });
+  } else {
+    console.error("ConnectionTimeEvolutionChart is not ready.");
+  }
+});
+
