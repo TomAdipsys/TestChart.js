@@ -1,19 +1,25 @@
 Organisation du projet : 
 
 /mon-projet
-│── /routes
-│   ├── dataRoutes.js
+
+│── /constructors
+│   ├── BuildConnections.js
+│   ├── BuildUsedDataStatsChart.js
 │── /controllers
 │   ├── dataController.js
 │   ├── controllerConnections.js
 │   ├── controllerInOutputOctetsController.js
 │   ├── controllerInputOctets.js
 │   ├── controllerOutputOctets.js 
+│── /routes
+│   ├── dataRoutes.js
+│── /screen
+│   ├── screenScript.js
 │── /scripts          <-- (Directory Charts scripts)
-│   ├── script_bar.js 
-│   ├── script_doughnut.js
-│   ├── script_line.js
-│   ├── script_radar.js
+│   ├── script_AccessPerSession.js 
+│   ├── script_ConnectTimeEvo.js
+│   ├── script_radar.md
+│   ├── script_UsedData.js
 │── /services          <-- (Directory functions query (SQL) from ../index.js)
 │   ├── clickhouseService.js
 │   ├── inputData.js
@@ -21,9 +27,10 @@ Organisation du projet :
 │   ├── outputData.js
 │── /screen          <-- (Directory screen scripts)
 │   ├── screenScript.js
-│── index.js           <-- (Server's main file)
 │── HomePage.html
 │── HomePage.css
+│── index.js           <-- (Server's main file)
 │── package.json
 │── .env
 |── .gitignore
+|── README.md
