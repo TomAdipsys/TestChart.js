@@ -89,15 +89,14 @@ export function buildConnectTimeEvoChart(data) {
 
 export function resetCanvas_ConnectionTimeEvo() {
   $('#ConnectionTimeEvolution_Chart').remove(); // Supprime le canvas existant
-  $('.lineChart').append('<canvas id="ConnectionTimeEvolution_Chart" width="500" height="500"></canvas>');
-
+  $('#lineChartContainer').append('<canvas id="ConnectionTimeEvolution_Chart" width="500" height="500"></canvas>');
   // Sélection du nouveau canvas et définition du contexte
   var canvas = document.querySelector('#ConnectionTimeEvolution_Chart');
   var ctx = canvas.getContext('2d');
 
   // Redimensionnement pour s'adapter au parent
-  ctx.canvas.width = $('.lineChart').width();
-  ctx.canvas.height = $('.lineChart').height();
+  ctx.canvas.width = $('#lineChartContainer').width();
+  ctx.canvas.height = $('#lineChartContainer').height();
 
   // Affichage d'un texte temporaire au centre du canvas
   var x = canvas.width / 2;
@@ -105,4 +104,6 @@ export function resetCanvas_ConnectionTimeEvo() {
   ctx.font = '10pt Verdana';
   ctx.textAlign = 'center';
   ctx.fillText('Réinitialisation du graphique...', x, y);
+  console.log("Canvas 'ConnectionTimeEvolution_Chart' réinitialisé");
+
 }
