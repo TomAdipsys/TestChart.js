@@ -36,22 +36,9 @@ function fetchDataAndBuildCharts() {
 }
 
 // ------------------------------
-// Configuration pour appliquer un margin ou un padding aux legends des charts !!
+// Configuration pour appliquer un margin aux legends des charts !!
 // ------------------------------
 
-export const legendPadding = {
-  id: 'legendPadding',
-  afterInit(chart , args, plugins) {
-    const originalFit = chart.legend.fit;
-    const padding = plugins.padding || 0;
-    chart.legend.fit= function fit (){
-        if (originalFit) {
-          originalFit.call(this)
-        }
-        return this.height += padding 
-    }
-  }
-}
 
 export const legendMargin = {
   id: 'legendMargin',
@@ -100,7 +87,6 @@ export function buildAccessPerSessionChart(data) {
       plugins: {
         legend: { position: 'top' },
         legendMargin: {
-          padding: 20,
           margin: 20
         },
         tooltip: {
@@ -110,7 +96,6 @@ export function buildAccessPerSessionChart(data) {
           plugins: {
             legend: { position: 'top' },
             legendMargin: {
-              padding: 20,
               margin: 20
             },
           }
@@ -122,9 +107,6 @@ export function buildAccessPerSessionChart(data) {
 
   return AccessPerSessionChart;
 }
-
-
-
 
 
 // ------------------------------
@@ -155,7 +137,6 @@ export function buildConnectTimeEvoChart(data) {
       plugins: {
         legend: { position: 'top' },
         legendMargin: {
-          padding: 20,
           margin: 20
         },
         tooltip: {
@@ -167,7 +148,6 @@ export function buildConnectTimeEvoChart(data) {
       plugins: {
         legend: { position: 'top' },
         legendMargin: {
-          padding: 20,
           margin: 20
         },
       },

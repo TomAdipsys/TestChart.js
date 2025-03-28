@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let checkChartExist = setInterval(() => {
       if (window.ConnectTimeEvoChart) {
         clearInterval(checkChartExist);
+        buildConnectTimeEvoChart();
         attachEventListeners();
       }
     }); 
