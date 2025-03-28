@@ -74,7 +74,7 @@
             </div>
         </div>
     </div>
-    <h1 class="title is-4">Évolution du temps de connexion</h1>
+    <h1 class="title is-4">Temps de connexion par utilisateur</h1>
       <div id="lineChartContainer">
         <canvas id="ConnectionTimeEvolution_Chart" width="500" height="500"></canvas>
       </div>
@@ -84,39 +84,6 @@
         <button class="download button" id="download_ConnectTimeEvoChart">Download as JPG</button>
       </div>
     </div>
-
-    <!-- <div class="radarChart">
-      <div class="container" id="CntRADAR">
-        <div class="field">
-            <label class="label" for="startDate">Date de début :</label>
-            <div class="control">
-                <input class="input" type="datetime-local" id="startDate" name="startDate">
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label" for="endDate">Date de fin :</label>
-            <div class="control">
-                <input class="input" type="datetime-local" id="endDate" name="endDate">
-            </div>
-        </div>
-
-        <div class="field">
-            <div class="control">
-                <button class="button is-primary" id="filterButton">Filtrer</button>
-            </div>
-        </div>
-    </div>
-    <h1 class="title is-4">radar</h1>
-      <canvas id="radar_Chart" width="500" height="500"></canvas>
-      <div class="buttons">
-        <button class="hide button"  id="hide_radar_Chart">hide the chart</button>
-        <button class="resetButton button" id="resetButton_radar_Chart">reset the chart</button>
-        <button class="download button" id="download_radar">Download as JPG</button>
-        <button class="button" id="toggle_radarChart">Inverser l'ordre des données</button>
-      </div>
-    </div> -->
-
 
     <div class="useddatachart">
       <div class="container" id="CntUsedData_Chart">
@@ -151,7 +118,6 @@
     </div>
   </div>
   <script type="module" src="./scripts/script_UsedData.js" defer></script>    
-  <!-- <script type="module" src="./scripts/script_radar.js" defer></script> -->
   <script type="module" src="./scripts/script_AccessPerSession.js" defer></script>
   <script type="module" src="./scripts/script_ConnectTimeEvo.js" defer></script>
   <script type="module" src="./screen/screenScript.js" defer></script>

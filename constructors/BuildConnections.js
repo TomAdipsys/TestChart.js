@@ -1,6 +1,15 @@
 document.addEventListener("DOMContentLoaded", fetchDataAndBuildCharts);
 
 function fetchDataAndBuildCharts() {
+
+  const startDate = document.getElementById('startDate').value;
+  const endDate = document.getElementById('endDate').value;
+  
+  const url = new URL('http://localhost:3000/connections');
+  if (startDate) url.searchParams.append('startDate', startDate);
+  if (endDate) url.searchParams.append('endDate', endDate);
+
+
   fetch('http://localhost:3000/connections')
     .then(res => res.json())
     .then(data => {
@@ -8,19 +17,31 @@ function fetchDataAndBuildCharts() {
         throw new Error('Aucune donnée reçue');
       }
       
-      console.log("Données reçues :", data);
-
       buildAccessPerSessionChart(data);
       buildConnectTimeEvoChart(data);
+      console.log("data :", data);
+
+      console.log("Labels :", data.map(row => row.accesspointmac));
+      console.log("Value1 :", data.map(row => row.nbraccess));
+      console.log("Value2 :", data.map(row => row.acctsessiontime));
+
+      console.log("Dates (acctstarttime) :", data.map(row => row.acctstarttime)); 
+      console.log(typeof data[0].acctstarttime); 
+
+      console.log("Temps de connexion (seconde):", data.map(row => row.acctsessiontime)); 
+
+      
     })
     .catch(error => console.error('Erreur lors de la récupération des données :', error));
 }
+
 
 export let AccessPerSessionChart;
 
 export function buildAccessPerSessionChart(data) {
   const labels = data.map(row => row.accesspointmac);
   const values = data.map(row => row.nbraccess);
+
 
   const ctx_AccessPerSession = document.getElementById('AccessPerSession_Chart').getContext('2d');
   AccessPerSessionChart = new Chart(ctx_AccessPerSession, {
@@ -45,6 +66,8 @@ export function buildAccessPerSessionChart(data) {
       }
     }
   });
+  document.getElementById("filterButton").addEventListener("click", fetchDataAndBuildCharts);
+
   return AccessPerSessionChart;
 }
 
@@ -84,6 +107,8 @@ export function buildConnectTimeEvoChart(data) {
       }
     }
   });
+  document.getElementById("filterButton").addEventListener("click", fetchDataAndBuildCharts);
+
   return ConnectTimeEvoChart;
 }
 

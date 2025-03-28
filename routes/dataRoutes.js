@@ -6,10 +6,11 @@ import { getInOutputStats } from '../controllers/controllerInOutputOctets.js';
 
 export const dataRoutes = express.Router();
 
-// Route to get connections
 dataRoutes.get('/connections', async (req, res) => {
     try {
-        const connections = await getConnections();
+        const { startDate, endDate } = req.query;
+        const connections = await getConnections(startDate, endDate);
+
         res.json(connections); 
     } catch (error) {
         res.status(500).send('Error retrieving connections data');
