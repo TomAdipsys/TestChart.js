@@ -35,8 +35,44 @@ function fetchDataAndBuildCharts() {
     .catch(error => console.error('Erreur lors de la récupération des données :', error));
 }
 
+// ------------------------------
+// Configuration pour appliquer un margin ou un padding aux legends des charts !!
+// ------------------------------
 
-export let AccessPerSessionChart;
+export const legendPadding = {
+  id: 'legendPadding',
+  afterInit(chart , args, plugins) {
+    const originalFit = chart.legend.fit;
+    const padding = plugins.padding || 0;
+    chart.legend.fit= function fit (){
+        if (originalFit) {
+          originalFit.call(this)
+        }
+        return this.height += padding 
+    }
+  }
+}
+
+export const legendMargin = {
+  id: 'legendMargin',
+  afterInit(chart , args, plugins) {
+    const originalFit = chart.legend.fit;
+    const margin = plugins.margin || 0;
+    chart.legend.fit= function fit (){
+        if (originalFit) {
+          originalFit.call(this)
+        }
+        return this.height += margin 
+    }
+  }
+}
+
+// ------------------------------
+// Canvas doughnut !!
+// ------------------------------
+
+// export let AccessPerSessionChart;
+var AccessPerSessionChart;
 
 export function buildAccessPerSessionChart(data) {
   const labels = data.map(row => row.accesspointmac);
@@ -44,7 +80,12 @@ export function buildAccessPerSessionChart(data) {
 
 
   const ctx_AccessPerSession = document.getElementById('AccessPerSession_Chart').getContext('2d');
-  AccessPerSessionChart = new Chart(ctx_AccessPerSession, {
+  console.log(ctx_AccessPerSession);
+  if (window.AccessPerSessionChart) {
+    window.AccessPerSessionChart.destroy();
+  }
+  
+  window.AccessPerSessionChart = new Chart(ctx_AccessPerSession, {
     type: 'doughnut',
     data: {
       labels: labels,
@@ -58,9 +99,20 @@ export function buildAccessPerSessionChart(data) {
       responsive: true,
       plugins: {
         legend: { position: 'top' },
+        legendMargin: {
+          padding: 20,
+          margin: 20
+        },
         tooltip: {
           callbacks: {
             label: tooltipItem => `${tooltipItem.label}: ${tooltipItem.raw} accès`
+          },
+          plugins: {
+            legend: { position: 'top' },
+            legendMargin: {
+              padding: 20,
+              margin: 20
+            },
           }
         }
       }
@@ -72,6 +124,13 @@ export function buildAccessPerSessionChart(data) {
 }
 
 
+
+
+
+// ------------------------------
+// Canvas line !!
+// ------------------------------
+
 export var ConnectTimeEvoChart;
 
 export function buildConnectTimeEvoChart(data) {
@@ -79,7 +138,7 @@ export function buildConnectTimeEvoChart(data) {
   const values = data.map(row => row.acctsessiontime);
 
   const ctx_ConnectionTimeEvolution  = document.getElementById('ConnectionTimeEvolution_Chart').getContext('2d');
-  ConnectTimeEvoChart = new Chart(ctx_ConnectionTimeEvolution, {
+  window.ConnectTimeEvoChart = new Chart(ctx_ConnectionTimeEvolution, {
     type: 'line',
     data: {
       labels: labels,
@@ -95,11 +154,22 @@ export function buildConnectTimeEvoChart(data) {
       responsive: true,
       plugins: {
         legend: { position: 'top' },
+        legendMargin: {
+          padding: 20,
+          margin: 20
+        },
         tooltip: {
           callbacks: {
             label: tooltipItem => `${tooltipItem.label}: ${tooltipItem.raw} secondes`
           }
         }
+      },
+      plugins: {
+        legend: { position: 'top' },
+        legendMargin: {
+          padding: 20,
+          margin: 20
+        },
       },
       scales: {
         x: { title: { display: true, text: 'Point d\'accès' } },
@@ -113,13 +183,13 @@ export function buildConnectTimeEvoChart(data) {
 }
 
 export function resetCanvas_ConnectionTimeEvo() {
-  $('#ConnectionTimeEvolution_Chart').remove(); // Supprime le canvas existant
+  $('#ConnectionTimeEvolution_Chart').remove(); 
   $('#lineChartContainer').append('<canvas id="ConnectionTimeEvolution_Chart" width="500" height="500"></canvas>');
   // Sélection du nouveau canvas et définition du contexte
   var canvas = document.querySelector('#ConnectionTimeEvolution_Chart');
   var ctx = canvas.getContext('2d');
 
-  // Redimensionnement pour s'adapter au parent
+  // Redimensionnement  
   ctx.canvas.width = $('#lineChartContainer').width();
   ctx.canvas.height = $('#lineChartContainer').height();
 

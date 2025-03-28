@@ -1,7 +1,16 @@
 import {buildAccessPerSessionChart} from '../constructors/BuildConnections.js';
 
-var AccessPerSessionChart;
+document.addEventListener("DOMContentLoaded", function() {
+  let checkChartExist = setInterval(() => {
+    if (window.AccessPerSessionChart) {
+      clearInterval(checkChartExist);
+      attachEventListeners();
+    }
+  }); 
+});
 
+
+function attachEventListeners() {
 $('#hide_AccessPerSession').click(() => {
   $('#CntDONUT').fadeToggle(220)
   $('#AccessPerSession_Chart').fadeToggle(220, function() {
@@ -10,20 +19,27 @@ $('#hide_AccessPerSession').click(() => {
   
 });
 
+  $("#resetButton_ConnectionTimeEvolution_Chart").click(function() {
+    console.log("button 'resetButton_ConnectionTimeEvolution_Chart' clicked");
 
-$('#resetButton_AccessPerSession_Chart').click(() => {
-  AccessPerSessionChart.destroy();
-  AccessPerSessionChart.update();
+    if (window.AccessPerSessionChart) {
+      buildAccessPerSessionChart()
+        } 
+        else {
+        console.error("AccessPerSessionChart is not defined yet.");
+    }
 });
 
 
 document.getElementById('download_AccessPerSession').addEventListener('click', function() {
-  if (window.UsedDataChart) {
+  if (window.AccessPerSessionChart) {
     let a = document.createElement('a');
-    a.href = window.UsedDataChart.toBase64Image();
+    a.href = window.AccessPerSessionChart.toBase64Image();
     a.download = 'AccessPerSession_Chart.jpg';
     a.click();
   } else {
     console.error("AccessPerSessionChart is not ready.");
   }
 });
+
+}
