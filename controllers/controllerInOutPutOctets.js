@@ -18,9 +18,20 @@ export const getInOutputStats = async () => {
 
     const [totalInOut, totalInOutPerPerson] = await Promise.all([
       getTotalInOutOctets(),
-      getTotalInOutOctetsPerPerson(),
     ]);
 
+    return {
+      minInOut: minInOut.data[0].min_data_used,
+      maxInOut: maxInOut.data[0].max_data_used, 
+      avgInOut: avgInOut.data[0].average_data_used,
+      totalInOut: totalInOut.data[0].total_data_used,
+    };
+  }
+
+  export const getInOutputStatsPerPerson = async () => {
+    const [totalInOutPerPerson] = await Promise.all([
+      getTotalInOutOctetsPerPerson(),
+    ]);
 
     const [minInOutPerPerson, maxInOutPerPerson, avgInOutPerPerson] = await Promise.all([
       getMinInOutOctetsPerPerson(),
@@ -29,14 +40,6 @@ export const getInOutputStats = async () => {
     ]);
 
     return {
-      // Statistiques globales
-      minInOut: minInOut.data[0].min_data_used,
-      maxInOut: maxInOut.data[0].max_data_used, 
-      avgInOut: avgInOut.data[0].average_data_used,
-      // Données totales (pas par utilisateur)
-      totalInOut: totalInOut.data[0].total_data_used,
- 
-      // Statistiques par utilisateur
       minInOutPerPerson: minInOutPerPerson.data.map(person => ({
         acctuniqueid: person.acctuniqueid,
         min_data_used: person.min_data_used_per_person
@@ -50,7 +53,6 @@ export const getInOutputStats = async () => {
         avg_data_used: person.average_data_used_per_person
       })),
     
-      // Données totales par utilisateur
       totalInOutPerPerson: totalInOutPerPerson.data.map(person => ({
         acctuniqueid: person.acctuniqueid,
         total_data_used: person.total_data_used_per_person

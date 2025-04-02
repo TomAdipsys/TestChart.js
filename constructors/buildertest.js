@@ -10,9 +10,6 @@ function fetchDataAndBuildCharts() {
       if (!data || data.length === 0) {
         throw new Error('Aucune donnée reçue');
       }
-      
-      console.log("Données reçues :", data);
-
       buildAccessPerSessionChart(data);
       buildConnectTimeEvoChart(data);
     })
