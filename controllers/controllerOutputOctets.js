@@ -54,7 +54,7 @@ export const getOutputStatsPerPerson = async () => {
       avg_data_sent: person.average_data_sent_per_person
     })),
 
-    totalOutPerPerson: totalpers.data.map(person => ({
+    totalOutPers: totalpers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
       total_data_sent: person.total_data_sent_per_person
     }))

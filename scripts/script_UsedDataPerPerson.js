@@ -1,8 +1,8 @@
-import { buildUsedDataPerPersonChart } from "../constructors/BuildUsedDataPerPersonChart.js";
+import { buildUsedDataPerPersonChart, UsedDataPerpersonChart } from "../builders/BuildUsedDataPerPersonChart.js";
 
 document.addEventListener("DOMContentLoaded", function() {
   let checkChartExist = setInterval(() => {
-    if (window.buildUsedDataPerPersonChart) {
+    if (window.UsedDataPerpersonChart) {
       clearInterval(checkChartExist);
       attachEventListeners();
     }
@@ -16,26 +16,23 @@ function attachEventListeners() {
     });
   });
 
-  $("#resetButton_UsedDataPerPerson_Chart").click(function() {
+  $("#resetButton_UsedDataPerPerson_Chart").click(function () {
     console.log("button 'resetButton_UsedDataPerPerson_Chart' clicked");
 
-    if (window.buildUsedDataPerPersonChart) {
-        buildUsedDataPerPersonChart()
-        } 
-        else {
-        console.error("UsedDataChartPerPerson is not defined yet.");
+    if (UsedDataPerpersonChart) {
+      UsedDataPerpersonChart.destroy(); 
     }
-});
+    UsedDataPerpersonChart = buildUsedDataPerPersonChart();
+  });
 
-
-  document.getElementById('download_UsedDataPerPerson_Chart').addEventListener('click', function() {
-    if (window.buildUsedDataPerPersonChart) {
+  $('download_UsedDataPerPerson_Chart').click (() => {
+    if (UsedDataPerpersonChart) {
       let a = document.createElement('a');
-      a.href = window.buildUsedDataPerPersonChart.toBase64Image();
-      a.download = 'UsedData_Chart.jpg';
+      a.href = UsedDataPerpersonChart.toBase64Image();
+      a.download = 'UsedDataPerPerson_Chart.jpg';
       a.click();
     } else {
-      console.error("buildUsedDataPerPersonChart is not ready.");
+      console.error("UsedDataPerPersonChart instance is not ready.");
     }
   });
 }

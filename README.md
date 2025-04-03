@@ -2,7 +2,7 @@ Organisation du projet :
 
 /mon-projet
 
-│── /constructors
+│── /builders
 │   ├── BuildConnections.js
 │   ├── BuildUsedDataStatsChart.js
 │── /controllers

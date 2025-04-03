@@ -1,4 +1,4 @@
-import {buildAccessPerSessionChart} from '../constructors/BuildConnections.js';
+import {buildAccessPerSessionChart} from '../builders/BuildConnections.js';
 
 document.addEventListener("DOMContentLoaded", function() {
   let checkChartExist = setInterval(() => {

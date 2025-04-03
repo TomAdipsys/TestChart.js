@@ -1,4 +1,4 @@
-import { buildUsedDataChart } from "../constructors/BuildUsedDataStatsChart.js";
+import { buildUsedDataChart } from "../builders/BuildUsedDataStatsChart.js";
 
 document.addEventListener("DOMContentLoaded", function() {
   let checkChartExist = setInterval(() => {
