@@ -9,10 +9,21 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPDF/2.5.1/jspdf.umd.min.js"></script>
   <link rel="stylesheet" href="HomePage.css">
   <link rel="stylesheet" href="my-bulma-project.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+<!-- Bulma Switch Control -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch-control@1.0.0/bulma-switch-control.min.css">
+
 </head>
 <body>
   <header>
     <h1 class="title">Graphique de données provenant de ClickHouse</h1>
+    <div class="field">
+      <input id="switchExample" type="checkbox" class="switch is-rounded">
+      <label for="switchExample">On</label>
+    </div>
+    
+    
+    
   </header>
 
   <img id='first'src="https://preview.redd.it/this-isnt-made-in-abyss-v0-nbnolzkay2nd1.png?width=1080&format=png&auto=webp&s=d2cf83ed483edcc2b7669fdd3b8d6b43d626bfaa" target="_top">
@@ -44,8 +55,8 @@
               </div>
           </div>
         </div>
-    </div>
-    <h1 class="title is-4">Nombre d'acccès par sessions</h1>
+      </div>
+      <h1 class="title is-4">Nombre d'acccès par sessions</h1>
       <canvas id="AccessPerSession_Chart" width="500" height="500"></canvas>
       <div class="buttons">
         <button class="hide button" id="hide_AccessPerSession">hide the chart</button>
@@ -84,6 +95,7 @@
         <button class="hide button"  id="hide_ConnectionTimeEvolution_Chart">hide the chart</button>
         <button class="resetButton button" id="resetButton_ConnectionTimeEvolution_Chart">reset the chart</button>
         <button class="download button" id="download_ConnectTimeEvoChart">Download as JPG</button>
+        <!-- <button class="calldata button" id="calldingdata">call data</button> -->
       </div>
     </div>
 
@@ -115,11 +127,45 @@
         <button class="hide button"  id="hide_UsedData_Chart">hide the chart</button>
         <button class="resetButton button" id="resetButton_UsedData_Chart">reset the chart</button>
         <button class="download button" id="download_UsedData_Chart">Download as JPG</button>
-        <button class="button" id="toggle_barChart">Inverser l'ordre des données</button>
+        <!-- <button class="button" id="toggle_barChart">Inverser l'ordre des données</button> -->
       </div>
     </div>
+
+    <div class="useddataperpersonchart">
+      <div class="container" id="CntUsedDataPerPerson_Chart">
+        <div class="field">
+            <label class="label" for="startDate">Date de début :</label>
+            <div class="control">
+                <input class="input" type="datetime-local" id="startDate" name="startDate">
+            </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="endDate">Date de fin :</label>
+            <div class="control">
+                <input class="input" type="datetime-local" id="endDate" name="endDate">
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-primary" id="filterButton">Filtrer</button>
+            </div>
+        </div>
+    </div>
+    <h1 class="title is-4">Données utilisées par personne</h1>
+      <canvas id="UsedData_Chart" width="500" height="500"></canvas>
+      <div class="buttons">
+        <button class="hide button"  id="hide_UsedDataPerPerson_Chart">hide the chart</button>
+        <button class="resetButton button" id="resetButton_UsedDataPerPerson_Chart">reset the chart</button>
+        <button class="download button" id="download_UsedDataPerPerson_Chart">Download as JPG</button>
+        <!-- <button class="button" id="toggle_barChart">Inverser l'ordre des données</button> -->
+      </div>
+    </div>
+
   </div>
   <script type="module" src="./scripts/script_UsedData.js" defer></script>    
+  <script type="module" src="./scripts/script_UsedDataPerPerson.js" defer></script>    
   <script type="module" src="./scripts/script_AccessPerSession.js" defer></script>
   <script type="module" src="./scripts/script_ConnectTimeEvo.js" defer></script>
   <script type="module" src="./screen/screenScript.js" defer></script>

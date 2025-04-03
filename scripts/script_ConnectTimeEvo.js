@@ -1,6 +1,5 @@
 import { buildConnectTimeEvoChart, resetCanvas_ConnectionTimeEvo } from '../constructors/BuildConnections.js';
 
-
 document.addEventListener("DOMContentLoaded", function() {
     let checkChartExist = setInterval(() => {
       if (window.ConnectTimeEvoChart) {
@@ -20,14 +19,14 @@ document.addEventListener("DOMContentLoaded", function() {
   })
 
   
-  $("#resetButton_ConnectionTimeEvolution_Chart").click(function () {
-    console.log("Bouton 'resetButton_ConnectionTimeEvolution_Chart' cliqué");
+  // $("#resetButton_ConnectionTimeEvolution_Chart").click(function () {
+  //   console.log("Bouton 'resetButton_ConnectionTimeEvolution_Chart' cliqué");
     
-    resetCanvas_ConnectionTimeEvo();
-  });
+  //   resetCanvas_ConnectionTimeEvo();
+  // });
 
 
-  document.getElementById('download_ConnectTimeEvoChart').addEventListener('click', function() {
+  $('download_ConnectTimeEvoChart').click(() => {
     if (window.ConnectTimeEvoChart) {
       let a = document.createElement('a');
       a.href = window.ConnectTimeEvoChart.toBase64Image();

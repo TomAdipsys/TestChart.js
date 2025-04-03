@@ -2,12 +2,12 @@ document.addEventListener("DOMContentLoaded", fetchDataAndBuildCharts);
 
 function fetchDataAndBuildCharts() {
 
-  const startDate = document.getElementById('startDate').value;
-  const endDate = document.getElementById('endDate').value;
+  // const startDate = document.getElementById('startDate').value;
+  // const endDate = document.getElementById('endDate').value;
   
-  const url = new URL('http://localhost:3000/connections');
-  if (startDate) url.searchParams.append('startDate', startDate);
-  if (endDate) url.searchParams.append('endDate', endDate);
+  // const url = new URL('http://localhost:3000/connections');
+  // if (startDate) url.searchParams.append('startDate', startDate);
+  // if (endDate) url.searchParams.append('endDate', endDate);
 
 
   fetch('http://localhost:3000/connections')
@@ -19,55 +19,75 @@ function fetchDataAndBuildCharts() {
       
       buildAccessPerSessionChart(data);
       buildConnectTimeEvoChart(data);
-      console.log("data :", data);
-
-      console.log("Labels :", data.map(row => row.accesspointmac));
-      console.log("Value1 :", data.map(row => row.nbraccess));
-      console.log("Value2 :", data.map(row => row.acctsessiontime));
-
-      console.log("Dates (acctstarttime) :", data.map(row => row.acctstarttime)); 
-      console.log(typeof data[0].acctstarttime); 
-
-      console.log("Temps de connexion (seconde):", data.map(row => row.acctsessiontime)); 
+      // callData(data); 
 
       
     })
     .catch(error => console.error('Erreur lors de la récupération des données :', error));
 }
 
+export function callData(data) {
+  console.log("data :", data);
+
+  console.log("Labels :", data.map(row => row.accesspointmac));
+  console.log("Value1 :", data.map(row => row.nbraccess));
+  console.log("Value2 :", data.map(row => row.acctsessiontime));
+
+  console.log("Dates (acctstarttime) :", data.map(row => row.acctstarttime)); 
+  console.log(typeof data[0].acctstarttime); 
+
+  console.log("Temps de connexion (seconde):", data.map(row => row.acctsessiontime)); 
+}
+// ------------------------------
+// Configuration pour appliquer une image aux charts !!
+// ------------------------------
+
+// Note: changes to the plugin code is not reflected to the chart, because the plugin is loaded at chart construction time and editor changes only trigger an chart.update().
+const image = new Image();
+image.src = 'https://www.chartjs.org/img/chartjs-logo.svg';
+
+const plugin = {
+  id: 'customCanvasBackgroundImage',
+  beforeDraw: (chart) => {
+    if (image.complete) {
+      const ctx = chart.ctx;
+      const {top, left, width, height} = chart.chartArea;
+      const x = left + width / 2 - image.width / 2;
+      const y = top + height / 2 - image.height / 2;
+      ctx.drawImage(image, x, y);
+    } else {
+      image.onload = () => chart.draw();
+    }
+  }
+};
+
 // ------------------------------
 // Configuration pour appliquer un margin aux legends des charts !!
 // ------------------------------
 
-
-export const legendMargin = {
+const legendMarginPlugin = {
   id: 'legendMargin',
-  afterInit(chart , args, plugins) {
-    const originalFit = chart.legend.fit;
-    const margin = plugins.margin || 0;
-    chart.legend.fit= function fit (){
-        if (originalFit) {
-          originalFit.call(this)
-        }
-        return this.height += margin 
+  afterFit: (legend) => {
+    if (legend.options && legend.options.margin) {
+      legend.height += legend.options.margin;
     }
   }
-}
+};
+
+// Enregistrement du plugin correctement
+Chart.register(legendMarginPlugin);
 
 // ------------------------------
 // Canvas doughnut !!
 // ------------------------------
 
-// export let AccessPerSessionChart;
 var AccessPerSessionChart;
 
 export function buildAccessPerSessionChart(data) {
   const labels = data.map(row => row.accesspointmac);
   const values = data.map(row => row.nbraccess);
 
-
   const ctx_AccessPerSession = document.getElementById('AccessPerSession_Chart').getContext('2d');
-  console.log(ctx_AccessPerSession);
   if (window.AccessPerSessionChart) {
     window.AccessPerSessionChart.destroy();
   }
@@ -85,28 +105,29 @@ export function buildAccessPerSessionChart(data) {
     options: {
       responsive: true,
       plugins: {
-        legend: { position: 'top' },
-        legendMargin: {
-          margin: 20
+        legend: { 
+          position: 'bottom',
+          labels: {
+            padding: 10
+          }
+        },
+        legendMargin: { 
+          margin: 200
         },
         tooltip: {
           callbacks: {
             label: tooltipItem => `${tooltipItem.label}: ${tooltipItem.raw} accès`
-          },
-          plugins: {
-            legend: { position: 'top' },
-            legendMargin: {
-              margin: 20
-            },
           }
         }
       }
     }
+    
   });
   document.getElementById("filterButton").addEventListener("click", fetchDataAndBuildCharts);
 
   return AccessPerSessionChart;
 }
+
 
 
 // ------------------------------
@@ -127,7 +148,7 @@ export function buildConnectTimeEvoChart(data) {
       datasets: [{
         label: 'Temps de connexion',
         data: values,
-        borderColor: 'rgba(75, 192, 192, 1)',
+        borderColor: 'rgb(122, 213, 219)',
         fill: true,
         tension: 0
       }]
