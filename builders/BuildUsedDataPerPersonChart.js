@@ -7,9 +7,9 @@ function fetchDataAndBuildCharts() {
             buildUsedDataPerPersonChart(data);
             console.log(data);
             console.log("hi");
-            console.log(data.stats);
-            console.log(data.stats.outputStatsPerPerson.totalOutPers);
-            callDataStatsPerPerson(data);
+            // console.log(data.stats);
+            // console.log(data.stats.outputStatsPerPerson.totalOutPers);
+            // callDataStatsPerPerson(data);
         })
         .catch(error => console.error('Erreur de récupération des données :', error.message));
 };
@@ -43,63 +43,144 @@ export function buildUsedDataPerPersonChart(data) {
         window.UsedDataPerpersonChart.destroy();
     }
 
+    // Extraire les valeurs numériques des tableaux d'objets
+    const labels = data.stats.inputStatsPerPerson.minInPerPerson.map(person => person.acctuniqueid);
+
+    const minOutPersValues = data.stats.outputStatsPerPerson.minOutPers.map(person => person.min_data_sent);
+    const avgOutPersValues = data.stats.outputStatsPerPerson.avgOutPers.map(person => person.avg_data_sent);
+    const maxOutPersValues = data.stats.outputStatsPerPerson.maxOutPers.map(person => person.max_data_sent);
+    const totalOutPersValues = data.stats.outputStatsPerPerson.totalOutPers.map(person => person.total_data_sent);
+
+    const minInPersValues = data.stats.inputStatsPerPerson.minInPerPerson.map(person => person.min_data_received);
+    const avgInPersValues = data.stats.inputStatsPerPerson.avgInPerPerson.map(person => person.avg_data_received);
+    const maxInPersValues = data.stats.inputStatsPerPerson.maxInPerPerson.map(person => person.max_data_received);
+    const totalInPersValues = data.stats.inputStatsPerPerson.totalInPerPerson.map(person => person.total_data_received);
+
+    const minInOutPersValues = data.stats.inoutputStatsPerPerson.minInOutPerPerson.map(person => person.min_data_used);
+    const avgInOutPersValues = data.stats.inoutputStatsPerPerson.avgInOutPerPerson.map(person => person.avg_data_used);
+    const maxInOutPersValues = data.stats.inoutputStatsPerPerson.maxInOutPerPerson.map(person => person.max_data_used);
+    const totalInOutPersValues = data.stats.inoutputStatsPerPerson.totalInOutPerPerson.map(person => person.total_data_used);
+
     window.UsedDataPerpersonChart = new Chart(ctx_UsedDataPerPerson, {
         type: 'bar',
         data: {
-            labels: ['Min', 'Moyenne', 'Max', "Total"],
+            labels: labels, // User IDs as labels
             datasets: [
                 {
-                    label: 'Données envoyées',
-                    data: [
-                        data.stats.outputStatsPerPerson.minOutPers,
-                        data.stats.outputStatsPerPerson.avgOutPers,
-                        data.stats.outputStatsPerPerson.maxOutPers,
-                        data.stats.outputStatsPerPerson.totalOutPerPerson,
-                    ],
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    label: 'Min (Received)',
+                    data: minInPersValues,
                     borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true,
+                    tension: 0.4
                 },
                 {
-                    label: 'Données reçues',
-                    data: [
-                        data.stats.inputStatsPerPerson.minInPerPerson,
-                        data.stats.inputStatsPerPerson.avgInPerPerson,
-                        data.stats.inputStatsPerPerson.maxInPerPerson,
-                        data.stats.inputStatsPerPerson.totalInPerPerson,
-                    ],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    label: 'Avg (Received)',
+                    data: avgInPersValues,
                     borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true,
+                    tension: 0.4
                 },
                 {
-                    label: 'Données entrées/sorties',
-                    data: [
-                        data.stats.inoutputStatsPerPerson.minInOutPerPerson,
-                        data.stats.inoutputStatsPerPerson.avgInOutPerPerson,
-                        data.stats.inoutputStatsPerPerson.maxInOutPerPerson,
-                        data.stats.inoutputStatsPerPerson.totalInOutPerPerson
-                    ],
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    label: 'Max (Received)',
+                    data: maxInPersValues,
                     borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                    tension: 0.4
                 },
+                {
+                    label: 'Total (Received)',
+                    data: totalInPersValues,
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Min (Sent)',
+                    data: minOutPersValues,
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Avg (Sent)',
+                    data: avgOutPersValues,
+                    borderColor: 'rgba(255, 206, 86, 1)',
+                    backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Max (Sent)',
+                    data: maxOutPersValues,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Total (Sent)',
+                    data: totalOutPersValues,
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Min (Combined)',
+                    data: minInOutPersValues,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Avg (Combined)',
+                    data: avgInOutPersValues,
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Max (Combined)',
+                    data: maxInOutPersValues,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                },
+                {
+                    label: 'Total (Combined)',
+                    data: totalInOutPersValues,
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    fill: true,
+                    tension: 0.4
+                }
             ]
         },
         options: {
             responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true
+            plugins: {
+                legend: { position: 'right' },
+                tooltip: {
+                    callbacks: {
+                        label: tooltipItem => `${tooltipItem.dataset.label}: ${tooltipItem.raw}`
+                    }
                 }
+            },
+            scales: {
+                x: { title: { display: true, text: 'Users' } },
+                y: { title: { display: true, text: 'Values' }, beginAtZero: true }
             }
         }
     });
-};
-
-
-
-
+}
 
 
 

@@ -43,20 +43,20 @@ export const getOutputStatsPerPerson = async () => {
   return {
     minOutPers: minOutPers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      min_data_sent: person.min_data_sent_per_person
+      min_data_sent: Number(person.min_data_sent_per_person)
     })),
     maxOutPers: maxOutPers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      max_data_sent: person.max_data_sent_per_person
+      max_data_sent: Number(person.max_data_sent_per_person)
     })),
     avgOutPers: avgOutPers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      avg_data_sent: person.average_data_sent_per_person
+      avg_data_sent: Number(person.average_data_sent_per_person)
     })),
 
     totalOutPers: totalpers.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      total_data_sent: person.total_data_sent_per_person
+      total_data_sent: Number(person.total_data_sent_per_person)
     }))
   };
 }

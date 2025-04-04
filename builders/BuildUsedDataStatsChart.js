@@ -4,8 +4,6 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(data => {
       buildUsedDataChart(data); 
       // callDataStats(data); 
-      // callDataStatsPerPerson(data);
-
     })
     .catch(error => console.error('Erreur de récupération des données :', error.message));
 });

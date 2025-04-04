@@ -17,7 +17,7 @@ export const getInputStats = async () => {
     getAvgInPutOctets()
   ]);
 
-  const [totalIn, totalInPerPerson] = await Promise.all([
+  const [totalIn] = await Promise.all([
     getTotalInPutOctets(),
   ]);
 
@@ -29,7 +29,6 @@ export const getInputStats = async () => {
     totalIn: totalIn.data[0].total_data_received,
     };
 }
-
 
 export const getInputStatsPerPerson = async () => {
 
@@ -46,20 +45,20 @@ export const getInputStatsPerPerson = async () => {
   return {  
     minInPerPerson: minInPerPerson.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      min_data_received: person.min_data_received_per_person
+      min_data_received: Number(person.min_data_received_per_person)
     })),
     maxInPerPerson: maxInPerPerson.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      max_data_received: person.max_data_received_per_person
+      max_data_received: Number(person.max_data_received_per_person)
     })),
     avgInPerPerson: avgInPerPerson.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      avg_data_received: person.average_data_received_per_person
+      avg_data_received: Number(person.average_data_received_per_person)
     })),
   
     totalInPerPerson: totalInPerPerson.data.map(person => ({
       acctuniqueid: person.acctuniqueid,
-      total_data_received: person.total_data_received_per_person
+      total_data_received: Number(person.total_data_received_per_person)
     }))
   };
 }

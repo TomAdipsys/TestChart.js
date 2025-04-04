@@ -42,20 +42,20 @@ export const getInOutputStats = async () => {
     return {
       minInOutPerPerson: minInOutPerPerson.data.map(person => ({
         acctuniqueid: person.acctuniqueid,
-        min_data_used: person.min_data_used_per_person
+        min_data_used: Number(person.min_data_used_per_person)
       })),
       maxInOutPerPerson: maxInOutPerPerson.data.map(person => ({
         acctuniqueid: person.acctuniqueid,
-        max_data_used: person.max_data_used_per_person
+        max_data_used: Number(person.max_data_used_per_person)
       })),
       avgInOutPerPerson: avgInOutPerPerson.data.map(person => ({
         acctuniqueid: person.acctuniqueid,
-        avg_data_used: person.average_data_used_per_person
+        avg_data_used: Number(person.average_data_used_per_person)
       })),
     
       totalInOutPerPerson: totalInOutPerPerson.data.map(person => ({
         acctuniqueid: person.acctuniqueid,
-        total_data_used: person.total_data_used_per_person
+        total_data_used: Number(person.total_data_used_per_person)
       }))
     };
   }
