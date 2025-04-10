@@ -1,47 +1,47 @@
-import { getNbrAccess, getConnectionTimes } from '../services/clickhouseService.js';
+import { getNbrAccess, getConnectionTimes, getConnectionTimeperPerson } from '../services/clickhouseService.js';
 
-export const getConnections = async (startDate, endDate) => {
+// startDate_ConnectionTimes, endDate_ConnectionTimes, startDate_ConnectionTimeperPerson, endDate_ConnectionTimeperPerson
+export const getConnections = async (startDate_NbrAccess, endDate_NbrAccess) => {
     const [resultNbrAccess, resultTime] = await Promise.all([
-        getNbrAccess(),
-        getConnectionTimes()
+        getNbrAccess(startDate_NbrAccess, endDate_NbrAccess),
+        // getConnectionTimes(startDate_ConnectionTimes, endDate_ConnectionTimes)
     ]);
 
-    const filteredData = resultTime.data.filter(row => {
+    const filteredData_NbrAccess = resultTime.data.filter(row => {
         const rowDate = new Date(row.date);
-        return (!startDate || rowDate >= new Date(startDate)) &&
-               (!endDate || rowDate <= new Date(endDate));
+        return (!startDate_NbrAccess || rowDate >= new Date(startDate_NbrAccess)) &&
+               (!endDate_NbrAccess || rowDate <= new Date(endDate_NbrAccess));
     });
+
+    return resultNbrAccess.data.map((row, index) => ({ 
+        accesspointmac: row.accesspointmac,
+        nbraccess: row.nbraccess,
+        acctsessiontime: filteredData_NbrAccess[index] ? filteredData_NbrAccess[index].time : null,
+        acctstarttime: filteredData_NbrAccess[index] ? filteredData_NbrAccess[index].date : null
+    }));
+
+    // const filteredData_ConnectionTimes = resultTime.data.filter(row => {
+    //     const rowDate = new Date(row.date);
+    //     return (!startDate_ConnectionTimes || rowDate >= new Date(startDate_ConnectionTimes)) &&
+    //            (!endDate_ConnectionTimes || rowDate <= new Date(endDate_ConnectionTimes));
+    // });
+
+    // return resultNbrAccess.data.map((row, index) => ({ 
+    //     accesspointmac: row.accesspointmac,
+    //     nbraccess: row.nbraccess,
+    //     acctsessiontime: filteredData_ConnectionTimes[index] ? filteredData_ConnectionTimes[index].time : null,
+    //     acctstarttime: filteredData_ConnectionTimes[index] ? filteredData_ConnectionTimes[index].date : null
+    // }));
+};
+
+
 
     // transition en heure locale
 //     const rowDateLocal = new Date(rowDate.getTime() - rowDate.getTimezoneOffset() * 60000);
 //     return (!startDate || rowDateLocal >= new Date(startDate)) &&
 //            (!endDate || rowDateLocal <= new Date(endDate));
-// });
 
 
 // const rowDateLocal = new Date(rowDate.getTime() - rowDate.getTimezoneOffset() * 60000);
 // return (!startDate || rowDateLocal >= new Date(startDate)) &&
 //        (!endDate || rowDateLocal <= new Date(endDate));
-
-
-    return resultNbrAccess.data.map((row, index) => ({ 
-        accesspointmac: row.accesspointmac,
-        nbraccess: row.nbraccess,
-        acctsessiontime: filteredData[index] ? filteredData[index].time : null,
-        acctstarttime: filteredData[index] ? filteredData[index].date : null
-    }));
-};
-
-// Etape supplémentaire pour la gestion des dates : Matching des dates pour les deux tableaux (eviter les erreurs)
-// return resultNbrAccess.data.map(row => {
-//   const matchingRow = filteredData.find(
-//       filteredRow => filteredRow.accesspointmac === row.accesspointmac
-//   );
-
-//   return {
-//       accesspointmac: row.accesspointmac,
-//       nbraccess: row.nbraccess,
-//       acctsessiontime: matchingRow ? matchingRow.time : null,
-//       acctstarttime: matchingRow ? matchingRow.date : null
-//   };
-// });

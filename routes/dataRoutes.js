@@ -13,8 +13,8 @@ export const dataRoutes = express.Router();
 
 dataRoutes.get('/connections', async (req, res) => {
     try {
-        const { startDate, endDate } = req.query;
-        const connections = await getConnections(startDate, endDate);
+        const { startDate_NbrAccess, endDate_NbrAccess } = req.query;
+        const connections = await getConnections(startDate_NbrAccess, endDate_NbrAccess);
 
         res.json(connections); 
     } catch (error) {

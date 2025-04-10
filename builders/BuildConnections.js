@@ -1,30 +1,46 @@
-document.addEventListener("DOMContentLoaded", fetchDataAndBuildCharts);
-
-function fetchDataAndBuildCharts() {
-
-  // const startDate = document.getElementById('startDate').value;
-  // const endDate = document.getElementById('endDate').value;
+document.addEventListener("DOMContentLoaded", () => {
   
-  // const url = new URL('http://localhost:3000/connections');
-  // if (startDate) url.searchParams.append('startDate', startDate);
-  // if (endDate) url.searchParams.append('endDate', endDate);
+  $('filterButton_NbrAccess').click(async() => {
 
+    console.log("button 'filterButton_NbrAccess' clicked");
+    $('#filterButton_NbrAccess').prop('disabled', true); // Désactiver le bouton pendant le chargement
 
-  fetch('http://localhost:3000/connections')
-    .then(res => res.json())
-    .then(data => {
+    const startDate_NbrAccess = $('#startDate_NbrAccess').val();
+    const endDate_NbrAccess = $('#endDate_NbrAccess').val();
+
+    // Validation des dates avant d'envoyer la requête
+    if (startDate_NbrAccess && isNaN(Date.parse(startDate_NbrAccess))) {
+      console.error('Date de début invalide');
+      return;
+    }
+    if (endDate_NbrAccess && isNaN(Date.parse(endDate_NbrAccess))) {
+      console.error('Date de fin invalide');
+      return;
+    }
+
+    // Envoi des dates au backend via fetch
+    const parameters = new URL('http://localhost:3000/connections');
+    if (startDate_NbrAccess) parameters.searchParams.append('startDate_NbrAccess', startDate_NbrAccess);
+    if (endDate_NbrAccess) parameters.searchParams.append('endDate_NbrAccess', endDate_NbrAccess);
+
+    try {
+      const response = await fetch(parameters);
+      const data = await response.json();
+
+      $('#filterButton_NbrAccess').prop('disabled', false);
+
       if (!data || data.length === 0) {
         throw new Error('Aucune donnée reçue');
       }
-      
-      buildAccessPerSessionChart(data);
-      buildConnectTimeEvoChart(data);
-      // callData(data); 
 
-      
-    })
-    .catch(error => console.error('Erreur lors de la récupération des données :', error));
-}
+      // Construction des graphiques après la réception des données
+      buildAccessPerSessionChart(data);
+      // buildConnectTimeEvoChart(data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données :', error);
+    }
+  });
+});
 
 export function callData(data) {
   console.log("data :", data);
@@ -38,6 +54,7 @@ export function callData(data) {
 
   console.log("Temps de connexion (seconde):", data.map(row => row.acctsessiontime)); 
 }
+
 // ------------------------------
 // Configuration pour appliquer une image aux charts !!
 // ------------------------------
@@ -123,12 +140,8 @@ export function buildAccessPerSessionChart(data) {
     }
     
   });
-  document.getElementById("filterButton").addEventListener("click", fetchDataAndBuildCharts);
-
   return AccessPerSessionChart;
 }
-
-
 
 // ------------------------------
 // Canvas line !!
@@ -178,8 +191,6 @@ export function buildConnectTimeEvoChart(data) {
       }
     }
   });
-  document.getElementById("filterButton").addEventListener("click", fetchDataAndBuildCharts);
-
   return ConnectTimeEvoChart;
 }
 
@@ -201,5 +212,4 @@ export function resetCanvas_ConnectionTimeEvo() {
   ctx.textAlign = 'center';
   ctx.fillText('Réinitialisation du graphique...', x, y);
   console.log("Canvas 'ConnectionTimeEvolution_Chart' réinitialisé");
-
 }
