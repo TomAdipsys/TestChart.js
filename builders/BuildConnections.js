@@ -95,7 +95,7 @@ const legendMarginPlugin = {
 Chart.register(legendMarginPlugin);
 
 // ------------------------------
-// Canvas doughnut !!
+// Canvas AccessPerSession !!
 // ------------------------------
 
 var AccessPerSessionChart;
