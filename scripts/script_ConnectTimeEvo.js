@@ -1,4 +1,4 @@
-import { buildConnectTimeEvoChart, resetCanvas_ConnectionTimeEvo } from '../builders/BuildConnections.js';
+import { resetCanvas_ConnectionTimeEvo } from '../builders/BuildNbraccess.js';
 
 document.addEventListener("DOMContentLoaded", function() {
     let checkChartExist = setInterval(() => {

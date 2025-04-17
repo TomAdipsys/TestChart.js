@@ -1,47 +1,53 @@
-import { getNbrAccess, getConnectionTimes, getConnectionTimeperPerson } from '../services/clickhouseService.js';
+// import { getNbrAccess, getConnectionTimes, getConnectionTimeperPerson } from '../services/clickhouseService.js';
+import { getNbrAccess } from '../services/clickhouseService.js';
+import { getConnectionTime } from '../services/clickhouseService.js';
 
 // startDate_ConnectionTimes, endDate_ConnectionTimes, startDate_ConnectionTimeperPerson, endDate_ConnectionTimeperPerson
-export const getConnections = async (startDate_NbrAccess, endDate_NbrAccess) => {
+export const getNbrConnections = async (startDate_NbrAccess, endDate_NbrAccess) => {
+    try {
     const [resultNbrAccess, resultTime] = await Promise.all([
         getNbrAccess(startDate_NbrAccess, endDate_NbrAccess),
-        // getConnectionTimes(startDate_ConnectionTimes, endDate_ConnectionTimes)
+        //getConnectionTime(startDate_ConnectionTimes, endDate_ConnectionTimes)
     ]);
-
-    const filteredData_NbrAccess = resultTime.data.filter(row => {
-        const rowDate = new Date(row.date);
-        return (!startDate_NbrAccess || rowDate >= new Date(startDate_NbrAccess)) &&
-               (!endDate_NbrAccess || rowDate <= new Date(endDate_NbrAccess));
-    });
-
-    return resultNbrAccess.data.map((row, index) => ({ 
-        accesspointmac: row.accesspointmac,
-        nbraccess: row.nbraccess,
-        acctsessiontime: filteredData_NbrAccess[index] ? filteredData_NbrAccess[index].time : null,
-        acctstarttime: filteredData_NbrAccess[index] ? filteredData_NbrAccess[index].date : null
-    }));
-
-    // const filteredData_ConnectionTimes = resultTime.data.filter(row => {
+    console.log(resultNbrAccess, resultTime);
+    // const filteredData_NbrAccess = resultTime?.data.filter(row => {
     //     const rowDate = new Date(row.date);
-    //     return (!startDate_ConnectionTimes || rowDate >= new Date(startDate_ConnectionTimes)) &&
-    //            (!endDate_ConnectionTimes || rowDate <= new Date(endDate_ConnectionTimes));
+    //     return (!startDate_NbrAccess || rowDate >= new Date(startDate_NbrAccess)) &&
+    //            (!endDate_NbrAccess || rowDate <= new Date(endDate_NbrAccess));
     // });
 
-    // return resultNbrAccess.data.map((row, index) => ({ 
-    //     accesspointmac: row.accesspointmac,
-    //     nbraccess: row.nbraccess,
-    //     acctsessiontime: filteredData_ConnectionTimes[index] ? filteredData_ConnectionTimes[index].time : null,
-    //     acctstarttime: filteredData_ConnectionTimes[index] ? filteredData_ConnectionTimes[index].date : null
-    // }));
+    return resultNbrAccess?.data.map((row, index) => ({ 
+        accesspointmac: row.accesspointmac,
+        nbraccess: row.nbraccess,
+        //acctsessiontime: filteredData_NbrAccess[index] ? filteredData_NbrAccess[index].time : null,
+        //acctstarttime: filteredData_NbrAccess[index] ? filteredData_NbrAccess[index].date : null
+    }));
+    } catch (error) {
+        console.error('Erreur dans getNbrConnections :', error);
+        throw error; // Propagation de l'erreur pour la gestion dans le routeur
+    }
 };
 
-
-
-    // transition en heure locale
-//     const rowDateLocal = new Date(rowDate.getTime() - rowDate.getTimezoneOffset() * 60000);
-//     return (!startDate || rowDateLocal >= new Date(startDate)) &&
-//            (!endDate || rowDateLocal <= new Date(endDate));
-
-
-// const rowDateLocal = new Date(rowDate.getTime() - rowDate.getTimezoneOffset() * 60000);
-// return (!startDate || rowDateLocal >= new Date(startDate)) &&
-//        (!endDate || rowDateLocal <= new Date(endDate));
+export const getUserTime = async (startDate_ConnectionTime, endDate_ConnectionTime) => {
+    try {
+        const [resultUserTime, resultTime] = await Promise.all([
+            getConnectionTime(startDate_ConnectionTime, endDate_ConnectionTime),
+        ]);
+    
+        const filteredData_NbrAccess = resultTime.data.filter(row => {
+            const rowDate = new Date(row.date);
+            return (!startDate_ConnectionTime || rowDate >= new Date(startDate_ConnectionTime)) &&
+                   (!endDate_ConnectionTime || rowDate <= new Date(endDate_ConnectionTime));
+        });
+    
+        return resultUserTime.data.map((row, index) => ({ 
+            accesspointmac: row.accesspointmac,
+            nbraccess: row.nbraccess,
+            acctsessiontime: filteredData_NbrAccess[index] ? filteredData_NbrAccess[index].time : null,
+            acctstarttime: filteredData_NbrAccess[index] ? filteredData_NbrAccess[index].date : null
+        }));
+        } catch (error) {
+            console.error('Erreur dans getNbrConnections :', error);
+            throw error; // Propagation de l'erreur pour la gestion dans le routeur
+        }
+    };

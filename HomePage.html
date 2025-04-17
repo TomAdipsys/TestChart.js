@@ -56,6 +56,14 @@
       </div>
       <h1 class="title is-4">Nombre d'acccès par sessions</h1>
       <canvas id="AccessPerSession_Chart" width="500" height="500"></canvas>
+      <div class="select" id="select_AccessPerSession_Chart">
+        <select>
+          <option value="line">Ligne</option>
+          <option value="Doughnut">Donut</option>
+          <option value="Bar">Bar</option>
+          <option value="Pie">camembert</option>
+        </select>
+      </div>
       <div class="buttons">
         <button class="hide button" id="hide_AccessPerSession">hide the chart</button>
         <button class="resetButton button" id="resetButton_AccessPerSession_Chart">reset the chart</button>
@@ -167,6 +175,8 @@
   <script type="module" src="./scripts/script_UsedDataPerPerson.js" defer></script>     -->
   <!-- <script type="module" src="./scripts/script_AccessPerSession.js" defer></script> -->
   <script type="module" src="./scripts/script_ConnectTimeEvo.js" defer></script>
+  <script type="module" src="./builders/BuildNbraccess.js"></script>
+  <!-- <script type="module" src="./builders/BuildUserTime.js"></script> -->
   <!-- <script type="module" src="./screen/screenScript.js" defer></script> -->
 
 </body>

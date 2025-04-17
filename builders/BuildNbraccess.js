@@ -1,13 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
   
-  $('filterButton_NbrAccess').click(async() => {
+  console.log("1");
+
+
+  // const testData = [
+  //   { accesspointmac: 'AP1', nbraccess: 10 },
+  //   { accesspointmac: 'AP2', nbraccess: 20 },
+  //   { accesspointmac: 'AP3', nbraccess: 15 }
+  // ];
+  // buildAccessPerSessionChart(testData);
+
+
+
+  $('#filterButton_NbrAccess').click(async() => {
 
     console.log("button 'filterButton_NbrAccess' clicked");
     $('#filterButton_NbrAccess').prop('disabled', true); // Désactiver le bouton pendant le chargement
 
     const startDate_NbrAccess = $('#startDate_NbrAccess').val();
     const endDate_NbrAccess = $('#endDate_NbrAccess').val();
-
+    console.log("3");
     // Validation des dates avant d'envoyer la requête
     if (startDate_NbrAccess && isNaN(Date.parse(startDate_NbrAccess))) {
       console.error('Date de début invalide');
@@ -17,12 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error('Date de fin invalide');
       return;
     }
-
     // Envoi des dates au backend via fetch
-    const parameters = new URL('http://localhost:3000/connections');
+    const parameters = new URL('http://localhost:3000/nbraccess');
     if (startDate_NbrAccess) parameters.searchParams.append('startDate_NbrAccess', startDate_NbrAccess);
     if (endDate_NbrAccess) parameters.searchParams.append('endDate_NbrAccess', endDate_NbrAccess);
 
+    console.log("5");
     try {
       const response = await fetch(parameters);
       const data = await response.json();
@@ -34,13 +46,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Construction des graphiques après la réception des données
+      callData(data); // Appel de la fonction pour afficher les données dans la console
+
       buildAccessPerSessionChart(data);
-      // buildConnectTimeEvoChart(data);
+    
     } catch (error) {
       console.error('Erreur lors de la récupération des données :', error);
     }
   });
 });
+console.log("10");
 
 export function callData(data) {
   console.log("data :", data);
@@ -110,7 +125,7 @@ export function buildAccessPerSessionChart(data) {
   }
   
   window.AccessPerSessionChart = new Chart(ctx_AccessPerSession, {
-    type: 'doughnut',
+    type: 'line',
     data: {
       labels: labels,
       datasets: [{
@@ -143,57 +158,6 @@ export function buildAccessPerSessionChart(data) {
   return AccessPerSessionChart;
 }
 
-// ------------------------------
-// Canvas line !!
-// ------------------------------
-
-export var ConnectTimeEvoChart;
-
-export function buildConnectTimeEvoChart(data) {
-  const labels = data.map(row => row.accesspointmac);
-  const values = data.map(row => row.acctsessiontime);
-
-  const ctx_ConnectionTimeEvolution  = document.getElementById('ConnectionTimeEvolution_Chart').getContext('2d');
-  window.ConnectTimeEvoChart = new Chart(ctx_ConnectionTimeEvolution, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Temps de connexion',
-        data: values,
-        borderColor: 'rgb(122, 213, 219)',
-        fill: true,
-        tension: 0
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { position: 'top' },
-        legendMargin: {
-          margin: 20
-        },
-        tooltip: {
-          callbacks: {
-            label: tooltipItem => `${tooltipItem.label}: ${tooltipItem.raw} secondes`
-          }
-        }
-      },
-      plugins: {
-        legend: { position: 'top' },
-        legendMargin: {
-          margin: 20
-        },
-      },
-      scales: {
-        x: { title: { display: true, text: 'Point d\'accès' } },
-        y: { title: { display: true, text: 'Temps de connexion (secondes)' } }
-      }
-    }
-  });
-  return ConnectTimeEvoChart;
-}
-
 export function resetCanvas_ConnectionTimeEvo() {
   $('#ConnectionTimeEvolution_Chart').remove(); 
   $('#lineChartContainer').append('<canvas id="ConnectionTimeEvolution_Chart" width="500" height="500"></canvas>');
@@ -213,3 +177,28 @@ export function resetCanvas_ConnectionTimeEvo() {
   ctx.fillText('Réinitialisation du graphique...', x, y);
   console.log("Canvas 'ConnectionTimeEvolution_Chart' réinitialisé");
 }
+
+$('#select_AccessPerSession_Chart').change(function() {
+  const newType = $(this).val(); // Récupère le type sélectionné
+  console.log('Changing chart type to:', newType);
+
+  if (window.AccessPerSessionChart) {
+    const chartData = window.AccessPerSessionChart.data;
+
+    window.AccessPerSessionChart.destroy();
+
+    const ctx = document.getElementById('AccessPerSession_Chart').getContext('2d');
+    window.AccessPerSessionChart = new Chart(ctx, {
+      type: newType, 
+      data: chartData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' },
+        },
+      },
+    });
+  } else {
+    console.error('AccessPerSessionChart is not defined.');
+  }
+});
