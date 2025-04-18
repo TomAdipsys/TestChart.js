@@ -1,16 +1,7 @@
 // import {buildAccessPerSessionChart} from '../builders/BuildConnections.js';
-import "buildNbraccess.js";
+// import "buildNbraccess.js";
 
-document.addEventListener("DOMContentLoaded", function() {
-  let checkChartExist = setInterval(() => {
-    if (window.AccessPerSessionChart) {
-      clearInterval(checkChartExist);
-      attachEventListeners();
-    }
-  }); 
-});
 
-function attachEventListeners() {
   // Bouton pour cacher/afficher le graphique
   $('#hide_AccessPerSession').click(() => {
     $('#CntDONUT').fadeToggle(220);
@@ -30,4 +21,3 @@ function attachEventListeners() {
       console.error('AccessPerSessionChart is not ready.');
     }
   });
-}

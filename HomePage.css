@@ -49,6 +49,11 @@ header h1 {
     margin: 5px;
 }
 
+.canvas .select{
+    justify-self: center;
+    margin-left: 35%;
+}
+
 .canvas .AccessPerSession {
     background: rgba(0, 0, 0, 0.255);
     width: 500px;
