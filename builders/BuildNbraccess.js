@@ -1,17 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   
-  console.log("1");
-
-
-  // const testData = [
-  //   { accesspointmac: 'AP1', nbraccess: 10 },
-  //   { accesspointmac: 'AP2', nbraccess: 20 },
-  //   { accesspointmac: 'AP3', nbraccess: 15 }
-  // ];
-  // buildAccessPerSessionChart(testData);
-
-
-
   $('#filterButton_NbrAccess').click(async() => {
 
     console.log("button 'filterButton_NbrAccess' clicked");
@@ -19,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const startDate_NbrAccess = $('#startDate_NbrAccess').val();
     const endDate_NbrAccess = $('#endDate_NbrAccess').val();
-    console.log("3");
     // Validation des dates avant d'envoyer la requête
     if (startDate_NbrAccess && isNaN(Date.parse(startDate_NbrAccess))) {
       console.error('Date de début invalide');
@@ -34,7 +21,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (startDate_NbrAccess) parameters.searchParams.append('startDate_NbrAccess', startDate_NbrAccess);
     if (endDate_NbrAccess) parameters.searchParams.append('endDate_NbrAccess', endDate_NbrAccess);
 
-    console.log("5");
     try {
       const response = await fetch(parameters);
       const data = await response.json();
@@ -55,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-console.log("10");
 
 export function callData(data) {
   console.log("data :", data);

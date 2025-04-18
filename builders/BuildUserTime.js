@@ -43,7 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
-console.log("hi");
 
 export function callData(data) {
   console.log("data :", data);

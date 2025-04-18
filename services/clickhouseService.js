@@ -34,28 +34,20 @@ export async function getConnectionTime(startDate_ConnectionTime, endDate_Connec
   return await result.json();
 }
 
-export async function getConnectionTimeperPerson() {
+export async function getConnectionTimeperPerson(startDate_ConnectionTime, endDate_ConnectionTime) {
+  console.log(startDate_ConnectionTime, endDate_ConnectionTime);
   const result = await liaisonDB.query({
-    query:` SELECT DISTINCT(accesspointmac), SUM(acctsessiontime) AS total_time_per_pers
-            FROM hm_stats.sessions
-            GROUP BY accesspointmac
-            ORDER BY total_time_per_pers DESC
-            LIMIT 50`,
-    format:'JSON',
+    query: `
+      SELECT accesspointmac, SUM(acctsessiontime) AS total_time_per_pers, acctstarttime as date
+      FROM hm_stats.sessions
+      WHERE 
+      BETWEEN (${startDate_ConnectionTime ? `acctstarttime >= {start: String}` : '1=1'})
+      AND (${endDate_ConnectionTime ? `acctstarttime <= {end: String}` : '1=1'})
+      GROUP BY accesspointmac
+      ORDER BY total_time_per_pers DESC
+      LIMIT 50`,
+    query_params: {start :startDate_ConnectionTime, end: endDate_ConnectionTime},
+    format: 'JSON',
   })
   return await result.json();
 }
-
-// export async function getConnectionTimeperPerson(startDate_ConnectionTimeperPerson, endDate_ConnectionTimeperPerson) {
-//   const result = await liaisonDB.query({
-//     query: `
-//       SELECT accesspointmac, acctsessiontime AS time, acctstarttime as date
-//       FROM hm_stats.sessions
-//       WHERE (${startDate_ConnectionTimesperPerson ? `acctstarttime >= ?` : '1=1'}) 
-//       AND (${endDate_ConnectionTimesperPerson ? `acctstarttime <= ?` : '1=1'})
-//       LIMIT 50`,
-//     query_params: [startDateConnectionTimesperPerson, endDateConnectionTimesperPerson].filter(param => param != null),
-//     format: 'JSON',
-//   })
-//   return await result.json();
-// }

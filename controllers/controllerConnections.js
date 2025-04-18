@@ -7,14 +7,9 @@ export const getNbrConnections = async (startDate_NbrAccess, endDate_NbrAccess) 
     try {
     const [resultNbrAccess, resultTime] = await Promise.all([
         getNbrAccess(startDate_NbrAccess, endDate_NbrAccess),
-        //getConnectionTime(startDate_ConnectionTimes, endDate_ConnectionTimes)
     ]);
     console.log(resultNbrAccess, resultTime);
-    // const filteredData_NbrAccess = resultTime?.data.filter(row => {
-    //     const rowDate = new Date(row.date);
-    //     return (!startDate_NbrAccess || rowDate >= new Date(startDate_NbrAccess)) &&
-    //            (!endDate_NbrAccess || rowDate <= new Date(endDate_NbrAccess));
-    // });
+
 
     return resultNbrAccess?.data.map((row, index) => ({ 
         accesspointmac: row.accesspointmac,
