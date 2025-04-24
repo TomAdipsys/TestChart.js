@@ -30,7 +30,7 @@
  <span class="bulma-arrow-mixin"></span>
   <div class="canvas">
     
-    <div class="AccessPerSession">
+    <div id="AccessPerSession">
       <div class="container" id="CntDONUT">
         <div class="fields">
           <div class="field">
@@ -48,12 +48,32 @@
           </div>
 
           <div class="field">
+            <label class="label">Filtrer par :</label>
+            <div class="control">
+              <div class="select is-multiple">
+                <select id="filterGroup" multiple>
+                    <optgroup label="Organisation">
+                    <option value="Organisation"></option>
+                  </optgroup>
+                  <optgroup label="Zone">
+                    <option value="zone"></option>
+                  </optgroup>    
+                  <optgroup label="Hotspot">
+                    <option value="hotspot"></option>
+                  </optgroup>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="field">
               <div class="control">
                   <button class="button is-primary" id="filterButton_NbrAccess">Filtrer</button>
               </div>
           </div>
         </div>
       </div>
+
       <h1 class="title is-4">Nombre d'acccès par sessions</h1>
       <canvas id="AccessPerSession_Chart" width="500" height="500"></canvas>
       <div class="select" id="select_AccessPerSession_Chart">
@@ -65,30 +85,6 @@
         </select>
       </div>
 
-      <div class="field">
-        <label class="label">Filtrer par :</label>
-        <div class="control">
-          <div class="select is-multiple">
-            <select id="filterGroup" multiple>
-              <optgroup label="Hotspot">
-                <option value="hotspot1">Hotspot 1</option>
-              </optgroup>
-              <optgroup label="Zone">
-                <option value="zone1">Zone 1</option>
-              </optgroup>
-              <optgroup label="Organisation">
-                <option value="org1">Organisation 1</option>
-              </optgroup>
-            </select>
-          </div>
-        </div>
-      </div>
-      
-      <div class="field">
-        <div class="control">
-          <button class="button is-primary" id="applyFilters">Appliquer les filtres</button>
-        </div>
-      </div>
       <div class="buttons">
         <button class="hide button" id="hide_AccessPerSession">hide the chart</button>
         <button class="resetButton button" id="resetButton_AccessPerSession_Chart">reset the chart</button>
@@ -96,32 +92,55 @@
       </div>
     </div>
 
-    <div class="lineChart">
+    <div id="ConnectionTimeEvolution">
       <div class="container" id="CntLINE">
-        <div class="field">
-            <label class="label" for="startDate">Date de début :</label>
-            <div class="control">
-                <input class="input" type="date" id="startDate" name="startDate" min="2023-01-01" max="2023-12-31" value="2023-01-01">
-            </div>
-        </div>
+        <div class="fields">
 
-        <div class="field">
-            <label class="label" for="endDate">Date de fin :</label>
-            <div class="control">
-                <input class="input" type="date" id="endDate" name="endDate" min="2023-01-01" max="2023-12-31" value="2023-04-17">
-            </div>
-        </div>
+          <div class="field">
+              <label class="label" for="startDate">Date de début :</label>
+              <div class="control">
+                  <input class="input" type="date" id="startDate" name="startDate" min="2023-01-01" max="2023-12-31" value="2023-01-01">
+              </div>
+          </div>
 
-        <div class="field">
+          <div class="field">
+              <label class="label" for="endDate">Date de fin :</label>
+              <div class="control">
+                  <input class="input" type="date" id="endDate" name="endDate" min="2023-01-01" max="2023-12-31" value="2023-12-31">
+              </div>
+          </div>
+
+          <div class="field">
+            <label class="label">Filtrer par :</label>
             <div class="control">
-                <button class="button is-primary" id="filterButton">Filtrer</button>
+              <div class="select is-multiple">
+                <select id="filterGroup" multiple>
+                    <optgroup label="Organisation">
+                    <option value="Organisation"></option>
+                  </optgroup>
+                  <optgroup label="Zone">
+                    <option value="zone"></option>
+                  </optgroup>    
+                  <optgroup label="Hotspot">
+                    <option value="hotspot"></option>
+                  </optgroup>
+                </select>
+              </div>
             </div>
+          </div>
+
+          <div class="field">
+              <div class="control">
+                  <button class="button is-primary" id="filterButton">Filtrer</button>
+              </div>
+          </div>
+          
         </div>
-    </div>
+      </div>
     <h1 class="title is-4">Temps de connexion par utilisateur</h1>
-      <div id="lineChartContainer">
+      <div id="ConnectionTimeEvolutionContainer">
         <canvas id="ConnectionTimeEvolution_Chart" width="500" height="500"></canvas>
-        <div class="select" id="select_AccessPerSession_Chart">
+        <div class="select" id="select_ConnectionTimeEvo_Chart">
           <select>
             <option value="line">Ligne</option>
             <option value="Doughnut">Donut</option>
@@ -132,26 +151,45 @@
       </div>
       <div class="buttons">
         <button class="hide button"  id="hide_ConnectionTimeEvolution_Chart">hide the chart</button>
-        <button class="resetButton button" id="resetButton_ConnectionTimeEvolution_Chart">reset the chart</button>
+        <button class="resetButton button" id="resetButton_ConnectionTimeEvo_Chart">reset the chart</button>
         <button class="download button" id="download_ConnectTimeEvoChart">Download as JPG</button>
         <!-- <button class="calldata button" id="calldingdata">call data</button> -->
       </div>
     </div>
 
-    <div class="useddatachart">
+    <div id="useddatachart">
       <div class="container" id="CntUsedData_Chart">
         <div class="field">
             <label class="label" for="startDate">Date de début :</label>
             <div class="control">
-                <input class="input" type="date" id="startDate" name="startDate" min="2023-01-01" max="2023-12-31" value="2023-04-17">
+                <input class="input" type="date" id="startDate" name="startDate" min="2023-01-01" max="2023-12-31" value="2023-01-01">
             </div>
         </div>
 
         <div class="field">
             <label class="label" for="endDate">Date de fin :</label>
             <div class="control">
-                <input class="input" type="date" id="endDate" name="endDate" min="2023-01-01" max="2023-12-31" value="2023-04-17">
+                <input class="input" type="date" id="endDate" name="endDate" min="2023-01-01" max="2023-12-31" value="2023-12-31">
             </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Filtrer par :</label>
+          <div class="control">
+            <div class="select is-multiple">
+              <select id="filterGroup" multiple>
+                  <optgroup label="Organisation">
+                  <option value="Organisation"></option>
+                </optgroup>
+                <optgroup label="Zone">
+                  <option value="zone"></option>
+                </optgroup>    
+                <optgroup label="Hotspot">
+                  <option value="hotspot"></option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
         </div>
 
         <div class="field">
@@ -162,7 +200,7 @@
     </div>
     <h1 class="title is-4">Données utilisées</h1>
       <canvas id="UsedData_Chart" width="500" height="500"></canvas>
-      <div class="select" id="select_AccessPerSession_Chart">
+      <div class="select" id="select__Chart">
         <select>
           <option value="line">Ligne</option>
           <option value="Doughnut">Donut</option>
@@ -178,20 +216,39 @@
       </div>
     </div>
 
-    <div class="useddataperpersonchart">
+    <div id="useddataperpersonchart">
       <div class="container" id="CntUsedDataPerPerson_Chart">
         <div class="field">
             <label class="label" for="startDate">Date de début :</label>
             <div class="control">
-                <input class="input" type="date" id="startDate" name="startDate" min="2023-01-01" max="2023-12-31" value="2023-04-17">
+                <input class="input" type="date" id="startDate" name="startDate" min="2023-01-01" max="2023-12-31" value="2023-01-01">
             </div>
         </div>
 
         <div class="field">
             <label class="label" for="endDate">Date de fin :</label>
             <div class="control">
-                <input class="input" type="date" id="endDate" name="endDate" min="2023-01-01" max="2023-12-31" value="2023-04-17">
+                <input class="input" type="date" id="endDate" name="endDate" min="2023-01-01" max="2023-12-31" value="2023-12-31">
             </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Filtrer par :</label>
+          <div class="control">
+            <div class="select is-multiple">
+              <select id="filterGroup" multiple>
+                  <optgroup label="Organisation">
+                  <option value="Organisation"></option>
+                </optgroup>
+                <optgroup label="Zone">
+                  <option value="zone"></option>
+                </optgroup>    
+                <optgroup label="Hotspot">
+                  <option value="hotspot"></option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
         </div>
 
         <div class="field">
@@ -202,7 +259,7 @@
     </div>
     <h1 class="title is-4">Données utilisées par personne</h1>
       <canvas id="UsedDataPerPerson_Chart" width="500" height="500"></canvas>
-      <div class="select" id="select_AccessPerSession_Chart">
+      <div class="select" id="select__Chart">
         <select>
           <option value="line">Ligne</option>
           <option value="Doughnut">Donut</option>

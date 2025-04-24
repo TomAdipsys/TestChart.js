@@ -1,6 +1,12 @@
 import { buildUsedDataPerPersonChart, UsedDataPerpersonChart } from "../builders/BuildUsedDataPerPersonChart.js";
 
   $('#hide_UsedDataPerPerson_Chart').click(() => {
+    $('#useddataperpersonchart .field').fadeToggle(220);
+    $('#CntUsedDataPerPerson_Chart').fadeToggle(220);
+    $('#select_UsedDataPerPerson_Chart').fadeToggle(220);
+    $('#download_UsedDataPerPerson_Chart').fadeToggle(220);
+    $('#resetButton_UsedDataPerPerson_Chart').fadeToggle(220);
+
     $('#CntUsedDataPerPerson_Chart, #UsedDataPerPerson_Chart').fadeToggle(220, function () {
       $('#hide_UsedDataPerPerson_Chart').text($(this).is(':visible') ? 'hide the chart' : 'show the chart');
     });

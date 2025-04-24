@@ -1,6 +1,12 @@
 import { buildUsedDataChart } from "../builders/BuildUsedDataStatsChart.js";
 
   $('#hide_UsedData_Chart').click(() => {
+    $('#useddatachart .field').fadeToggle(220);
+    $('#CntUsedData_Chart').fadeToggle(220);
+    $('#select_UsedData_Chart').fadeToggle(220);
+    $('#download_UsedData_Chart').fadeToggle(220);
+    $('#resetButton_UsedData_Chart').fadeToggle(220);
+
     $('#CntUsedData_Chart, #UsedData_Chart').fadeToggle(220, function () {
       $('#hide_UsedData_Chart').text($(this).is(':visible') ? 'hide the chart' : 'show the chart');
     });

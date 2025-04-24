@@ -16,12 +16,18 @@ export let startDate_ConnectionTime = undefined;
 export let endDate_ConnectionTime = undefined;
 export let startDate_NbrAccess = undefined;
 export let endDate_NbrAccess = undefined
+export let organization = undefined;
+export let zone = undefined;
+export let hotspot = undefined;
 
 
 dataRoutes.get('/nbraccess', async (req, res) => {
     try {
         startDate_NbrAccess = req.query.startDate_NbrAccess.substring(0, 10) || undefined;
         endDate_NbrAccess = req.query.endDate_NbrAccess.substring(0, 10) || undefined;
+        organization = req.query.organization || undefined; 
+        zone = req.query.zone || undefined;
+        hotspot = req.query.hotspot || undefined;
         const connections = await getNbrConnections(startDate_NbrAccess, endDate_NbrAccess);
 
         res.json(connections);
@@ -32,10 +38,11 @@ dataRoutes.get('/nbraccess', async (req, res) => {
 
 dataRoutes.get('/usertime', async (req, res) => {
     try {
-        startDate_ConnectionTime = req.query.startDate_ConnectionTime;
-        endDate_ConnectionTime = req.query.endDate_ConnectionTime;
-        console.log("startDate_ConnectionTime RL", startDate_ConnectionTime);
-        console.log("endDate_ConnectionTime RL", endDate_ConnectionTime);
+        startDate_ConnectionTime = req.query.startDate_ConnectionTime.substring(0, 10) || undefined;
+        endDate_ConnectionTime = req.query.endDate_ConnectionTime.substring(0, 10) || undefined;
+        organization = req.query.organization || undefined; 
+        zone = req.query.zone || undefined;
+        hotspot = req.query.hotspot || undefined;
         const connections = await getUserTime(startDate_ConnectionTime, endDate_ConnectionTime);
 
         res.json(connections); 

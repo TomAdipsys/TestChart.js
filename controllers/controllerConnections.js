@@ -3,10 +3,10 @@ import { getNbrAccess } from '../services/clickhouseService.js';
 import { getConnectionTime } from '../services/clickhouseService.js';
 
 // startDate_ConnectionTimes, endDate_ConnectionTimes, startDate_ConnectionTimeperPerson, endDate_ConnectionTimeperPerson
-export const getNbrConnections = async (startDate_NbrAccess, endDate_NbrAccess) => {
+export const getNbrConnections = async (startDate_NbrAccess, endDate_NbrAccess, organization, zone, hotspot) => {
     try {
-    const [resultNbrAccess, resultTime] = await Promise.all([
-        getNbrAccess(startDate_NbrAccess, endDate_NbrAccess),
+    const [resultNbrAccess, resultTime, resultOrganization, resultZone, resultHotspot] = await Promise.all([
+        getNbrAccess(startDate_NbrAccess, endDate_NbrAccess, organization, zone, hotspot),
     ]);
     console.log(resultNbrAccess, resultTime);
 
@@ -22,6 +22,8 @@ export const getNbrConnections = async (startDate_NbrAccess, endDate_NbrAccess) 
         throw error; // Propagation de l'erreur pour la gestion dans le routeur
     }
 };
+
+
 
 export const getUserTime = async (startDate_ConnectionTime, endDate_ConnectionTime) => {
     try {

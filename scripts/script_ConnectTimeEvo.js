@@ -2,11 +2,15 @@ import { resetCanvas_ConnectionTimeEvo } from '../builders/BuildNbraccess.js';
 
   $('#hide_ConnectionTimeEvolution_Chart').click(() => {
     $('#CntLINE').fadeToggle(220)
+    $('#ConnectionTimeEvolution .field').fadeToggle(220);
+    $('#select_ConnectionTimeEvo_Chart').fadeToggle(220);
+    $('#download_ConnectTimeEvoChart').fadeToggle(220);
+    $('#resetButton_ConnectionTimeEvo_Chart').fadeToggle(220);
     $('#ConnectionTimeEvolution_Chart').fadeToggle(220, function() {
       $('#hide_ConnectionTimeEvolution_Chart').text($(this).is(':visible') ? 'hide the chart' : 'show the chart');
     });
   })
-  
+
   $("#resetButton_ConnectionTimeEvolution_Chart").click(function () {
     console.log("Bouton 'resetButton_ConnectionTimeEvolution_Chart' cliqué");
     

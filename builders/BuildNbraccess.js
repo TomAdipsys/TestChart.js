@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const startDate_NbrAccess = $('#startDate_NbrAccess').val();
     const endDate_NbrAccess = $('#endDate_NbrAccess').val();
+    const organization = $('#organization').val();
+    const zone = $('#zone').val();
+    const hotspot = $('#hotspot').val();
     // Validation des dates avant d'envoyer la requête
     if (startDate_NbrAccess && isNaN(Date.parse(startDate_NbrAccess))) {
       console.error('Date de début invalide');
@@ -18,6 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     // Envoi des dates au backend via fetch
     const parameters = new URL('http://localhost:3000/nbraccess');
+    if (organization) parameters.searchParams.append('organization', organization);
+    if (zone) parameters.searchParams.append('zone', zone);
+    if (hotspot) parameters.searchParams.append('hotspot', hotspot);
     if (startDate_NbrAccess) parameters.searchParams.append('startDate_NbrAccess', startDate_NbrAccess);
     if (endDate_NbrAccess) parameters.searchParams.append('endDate_NbrAccess', endDate_NbrAccess);
 
@@ -145,14 +151,14 @@ export function buildAccessPerSessionChart(data) {
 
 export function resetCanvas_ConnectionTimeEvo() {
   $('#ConnectionTimeEvolution_Chart').remove(); 
-  $('#lineChartContainer').append('<canvas id="ConnectionTimeEvolution_Chart" width="500" height="500"></canvas>');
+  $('#ConnectionTimeEvolutionContainer').append('<canvas id="ConnectionTimeEvolution_Chart" width="500" height="500"></canvas>');
   // Sélection du nouveau canvas et définition du contexte
   var canvas = document.querySelector('#ConnectionTimeEvolution_Chart');
   var ctx = canvas.getContext('2d');
 
   // Redimensionnement  
-  ctx.canvas.width = $('#lineChartContainer').width();
-  ctx.canvas.height = $('#lineChartContainer').height();
+  ctx.canvas.width = $('#ConnectionTimeEvolutiontContainer').width();
+  ctx.canvas.height = $('#ConnectionTimeEvolutiontContainer').height();
 
   // Affichage d'un texte temporaire au centre du canvas
   var x = canvas.width / 2;
