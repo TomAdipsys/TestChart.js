@@ -7,10 +7,21 @@ import { buildUsedDataChart } from "../builders/BuildUsedDataStatsChart.js";
     $('#download_UsedData_Chart').fadeToggle(220);
     $('#resetButton_UsedData_Chart').fadeToggle(220);
 
-    $('#CntUsedData_Chart, #UsedData_Chart').fadeToggle(220, function () {
+    $('#UsedData_Chart').fadeToggle(220, function () {
       $('#hide_UsedData_Chart').text($(this).is(':visible') ? 'hide the chart' : 'show the chart');
     });
   });
+
+  // $('#hide_AccessPerSession').click(() => {
+  //   $('#CntDONUT').fadeToggle(220);
+  //   $('#AccessPerSession .field').fadeToggle(220);
+  //   $('#select_AccessPerSession_Chart').fadeToggle(220);
+  //   $('#download_AccessPerSession').fadeToggle(220);
+  //   $('#resetButton_AccessPerSession_Chart').fadeToggle(220);
+  //   $('#AccessPerSession_Chart').fadeToggle(220, function() {
+  //     $('#hide_AccessPerSession').text($(this).is(':visible') ? 'hide the chart' : 'show the chart');
+  //   });
+  // });
 
   $("#resetButton_UsedData_Chart").click(function() {
     console.log("button 'resetButton_UsedData_Chart' clicked");

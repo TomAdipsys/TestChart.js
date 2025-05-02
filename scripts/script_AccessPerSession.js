@@ -10,7 +10,7 @@
     $('#download_AccessPerSession').fadeToggle(220);
     $('#resetButton_AccessPerSession_Chart').fadeToggle(220);
     $('#AccessPerSession_Chart').fadeToggle(220, function() {
-      $('#hide_AccessPerSession').text($(this).is(':visible') ? 'hide the chart ?' : 'show the chart ?');
+      $('#hide_AccessPerSession').text($(this).is(':visible') ? 'hide the chart' : 'show the chart');
     });
   });
 

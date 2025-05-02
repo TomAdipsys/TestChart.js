@@ -1,5 +1,3 @@
-import { resetCanvas_ConnectionTimeEvo } from '../builders/BuildNbraccess.js';
-
   $('#hide_ConnectionTimeEvolution_Chart').click(() => {
     $('#CntLINE').fadeToggle(220)
     $('#ConnectionTimeEvolution .field').fadeToggle(220);

@@ -23,8 +23,6 @@ export const getNbrConnections = async (startDate_NbrAccess, endDate_NbrAccess, 
     }
 };
 
-
-
 export const getUserTime = async (startDate_ConnectionTime, endDate_ConnectionTime) => {
     try {
         const [resultUserTime, resultTime] = await Promise.all([

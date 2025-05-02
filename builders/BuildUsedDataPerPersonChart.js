@@ -6,7 +6,6 @@ function fetchDataAndBuildCharts() {
         .then(data => {
             buildUsedDataPerPersonChart(data);
             console.log(data);
-            console.log("hi");
             // console.log(data.stats);
             // console.log(data.stats.outputStatsPerPerson.totalOutPers);
             // callDataStatsPerPerson(data);

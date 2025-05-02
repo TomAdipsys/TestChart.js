@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error('Date de fin invalide');
       return;
     }
-    console.log("hi");
     // Envoi des dates au backend via fetch
     const parameters = new URL('http://localhost:3000/usertime');
     if (startDate_ConnectionTime) parameters.searchParams.append('startDate_ConnectionTime', startDate_ConnectionTime);
