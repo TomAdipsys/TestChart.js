@@ -1,7 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
-  
-  $('#filterButton_NbrAccess').click(async() => {
+  let globalData = [];
+  let chartType = 'line'; // Type de graphique par défaut
 
+  // Gestionnaire pour le changement de type via le select
+  $('#select_AccessPerSession_Chart select').change(function () {
+    chartType = $(this).val(); // Met à jour le type de graphique
+    console.log('Type de graphique sélectionné :', chartType);
+  });
+
+  // Gestionnaire pour le clic sur le bouton filter
+  $('#filterButton_NbrAccess').click(async () => {
     console.log("button 'filterButton_NbrAccess' clicked");
     $('#filterButton_NbrAccess').prop('disabled', true); // Désactiver le bouton pendant le chargement
 
@@ -10,15 +18,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const organization = $('#organization').val();
     const zone = $('#zone').val();
     const hotspot = $('#hotspot').val();
+
     // Validation des dates avant d'envoyer la requête
     if (startDate_NbrAccess && isNaN(Date.parse(startDate_NbrAccess))) {
       console.error('Date de début invalide');
+      $('#filterButton_NbrAccess').prop('disabled', false);
       return;
     }
     if (endDate_NbrAccess && isNaN(Date.parse(endDate_NbrAccess))) {
       console.error('Date de fin invalide');
+      $('#filterButton_NbrAccess').prop('disabled', false);
       return;
     }
+
     // Envoi des dates au backend via fetch
     const parameters = new URL('http://localhost:3000/nbraccess');
     if (organization) parameters.searchParams.append('organization', organization);
@@ -31,165 +43,67 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch(parameters);
       const data = await response.json();
 
+      globalData = data;
       $('#filterButton_NbrAccess').prop('disabled', false);
 
       if (!data || data.length === 0) {
         throw new Error('Aucune donnée reçue');
       }
 
-      // Construction des graphiques après la réception des données
-      callData(data); // Appel de la fonction pour afficher les données dans la console
+      // Appel de la fonction callData pour afficher les logs ou effectuer un traitement
+      callData(data);
 
-      buildAccessPerSessionChart(data);
-    
+      // Construction des graphiques après la réception des données
+      buildAccessPerSessionChart(data, chartType);
     } catch (error) {
       console.error('Erreur lors de la récupération des données :', error);
+      $('#filterButton_NbrAccess').prop('disabled', false);
     }
   });
-});
 
-export function callData(data) {
-  console.log("data :", data);
+  // Fonction callData pour afficher les logs ou effectuer un traitement
+  function callData(data) {
+    console.log("data :", data);
+    console.log("Labels :", data.map(row => row.accesspointmac));
+    console.log("Value1 :", data.map(row => row.nbraccess));
 
-  console.log("Labels :", data.map(row => row.accesspointmac));
-  console.log("Value1 :", data.map(row => row.nbraccess));
-  console.log("Value2 :", data.map(row => row.acctsessiontime));
-
-  console.log("Dates (acctstarttime) :", data.map(row => row.acctstarttime)); 
-  console.log(typeof data[0].acctstarttime); 
-
-  console.log("Temps de connexion (seconde):", data.map(row => row.acctsessiontime)); 
-}
-
-// ------------------------------
-// Configuration pour appliquer une image aux charts !!
-// ------------------------------
-
-// Note: changes to the plugin code is not reflected to the chart, because the plugin is loaded at chart construction time and editor changes only trigger an chart.update().
-const image = new Image();
-image.src = 'https://www.chartjs.org/img/chartjs-logo.svg';
-
-const plugin = {
-  id: 'customCanvasBackgroundImage',
-  beforeDraw: (chart) => {
-    if (image.complete) {
-      const ctx = chart.ctx;
-      const {top, left, width, height} = chart.chartArea;
-      const x = left + width / 2 - image.width / 2;
-      const y = top + height / 2 - image.height / 2;
-      ctx.drawImage(image, x, y);
-    } else {
-      image.onload = () => chart.draw();
-    }
+    // console.log("Dates (acctstarttime) :", data.map(row => row.acctstarttime)); 
+    // console.log("type de data : ", typeof data[0].acctstarttime); 
   }
-};
 
-// ------------------------------
-// Configuration pour appliquer un margin aux legends des charts !!
-// ------------------------------
+  function buildAccessPerSessionChart(data, chartType) {
+    const labels = data.map(row => row.accesspointmac);
+    const values = data.map(row => row.nbraccess);
 
-const legendMarginPlugin = {
-  id: 'legendMargin',
-  afterFit: (legend) => {
-    if (legend.options && legend.options.margin) {
-      legend.height += legend.options.margin;
+    const ctx_AccessPerSession = document.getElementById('AccessPerSession_Chart').getContext('2d');
+    if (window.AccessPerSessionChart) {
+      console.log("Destruction de l'ancien graphique.");
+      window.AccessPerSessionChart.destroy();
     }
-  }
-};
 
-// Enregistrement du plugin correctement
-Chart.register(legendMarginPlugin);
-
-// ------------------------------
-// Canvas AccessPerSession !!
-// ------------------------------
-
-var AccessPerSessionChart;
-
-export function buildAccessPerSessionChart(data) {
-  const labels = data.map(row => row.accesspointmac);
-  const values = data.map(row => row.nbraccess);
-
-  const ctx_AccessPerSession = document.getElementById('AccessPerSession_Chart').getContext('2d');
-  if (window.AccessPerSessionChart) {
-    window.AccessPerSessionChart.destroy();
-  }
-  
-  window.AccessPerSessionChart = new Chart(ctx_AccessPerSession, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: 'Nombre d\'accès',
-        data: values,
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: { 
-          position: 'bottom',
-          labels: {
-            padding: 10
-          }
-        },
-        legendMargin: { 
-          margin: 200
-        },
-        tooltip: {
-          callbacks: {
-            label: tooltipItem => `${tooltipItem.label}: ${tooltipItem.raw} accès`
-          }
-        }
-      }
-    }
-    
-  });
-  return AccessPerSessionChart;
-}
-
-export function resetCanvas_ConnectionTimeEvo() {
-  $('#ConnectionTimeEvolution_Chart').remove(); 
-  $('#ConnectionTimeEvolutionContainer').append('<canvas id="ConnectionTimeEvolution_Chart" width="500" height="500"></canvas>');
-  // Sélection du nouveau canvas et définition du contexte
-  var canvas = document.querySelector('#ConnectionTimeEvolution_Chart');
-  var ctx = canvas.getContext('2d');
-
-  // Redimensionnement  
-  ctx.canvas.width = $('#ConnectionTimeEvolutiontContainer').width();
-  ctx.canvas.height = $('#ConnectionTimeEvolutiontContainer').height();
-
-  // Affichage d'un texte temporaire au centre du canvas
-  var x = canvas.width / 2;
-  var y = canvas.height / 2;
-  ctx.font = '10pt Verdana';
-  ctx.textAlign = 'center';
-  ctx.fillText('Réinitialisation du graphique...', x, y);
-  console.log("Canvas 'ConnectionTimeEvolution_Chart' réinitialisé");
-}
-
-$('#select_AccessPerSession_Chart').change(function() {
-  const newType = $(this).val(); // Récupère le type sélectionné
-  console.log('Changing chart type to:', newType);
-
-  if (window.AccessPerSessionChart) {
-    const chartData = window.AccessPerSessionChart.data;
-
-    window.AccessPerSessionChart.destroy();
-
-    const ctx = document.getElementById('AccessPerSession_Chart').getContext('2d');
-    window.AccessPerSessionChart = new Chart(ctx, {
-      type: newType, 
-      data: chartData,
+    window.AccessPerSessionChart = new Chart(ctx_AccessPerSession, {
+      type: chartType, // Utilise le type sélectionné
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Nombre d\'accès',
+          data: values,
+          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+        }]
+      },
       options: {
         responsive: true,
         plugins: {
-          legend: { position: 'top' },
-        },
-      },
+          legend: { position: 'bottom' },
+          tooltip: {
+            callbacks: {
+              label: tooltipItem => `${tooltipItem.label}: ${tooltipItem.raw} accès`
+            }
+          }
+        }
+      }
     });
-  } else {
-    console.error('AccessPerSessionChart is not defined.');
+
+    console.log("Graphique créé avec succès :", window.AccessPerSessionChart);
   }
 });
