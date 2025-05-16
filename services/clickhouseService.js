@@ -3,39 +3,46 @@ import {startDate_NbrAccess, endDate_NbrAccess} from "../routes/dataRoutes.js";
 import {startDate_ConnectionTime, endDate_ConnectionTime} from "../routes/dataRoutes.js";
 
 // Fonction pour récupérer le nombre de connexions par sessions
-export async function getNbrAccess(startDate_NbrAccess, endDate_NbrAccess) {
+export async function getNbrAccess(startDate_NbrAccess, endDate_NbrAccess, organization, zone, hotspot) {
   const result = await liaisonDB.query({
     query: `
-      SELECT accesspointmac, count(*) AS nbraccess
+      SELECT accesspointmac, count(*) AS nbraccess, organizationname, hotspotname, zonename
       FROM hm_stats.sessions
       WHERE (${startDate_NbrAccess ? `acctstarttime >= {start: String}` : '1=1'}) 
       AND (${endDate_NbrAccess ? `acctstarttime <= {end: String}` : '1=1'})
-      GROUP BY accesspointmac 
-      LIMIT 50`,
-    query_params: { start : startDate_NbrAccess, end : endDate_NbrAccess},
+      AND (${organization ? `organizationname = {organization: String}` : '1=1'})
+      AND (${hotspot ? `hotspotname = {hotspot: String}` : '1=1'})
+      AND (${zone ? `zonename = {zone: String}` : '1=1'})
+      GROUP BY accesspointmac, organizationname, hotspotname, zonename
+      LIMIT 5`,
+    query_params: { 
+      start: startDate_NbrAccess, 
+      end: endDate_NbrAccess, 
+      organization, 
+      zone,
+      hotspot
+    },
     format: 'JSON',
-  })
+  });
   return await result.json();
 }
 
-// export async function getNbrAccess(startDate_NbrAccess, endDate_NbrAccess, organization, zone, hotspot) {
-//   const result = await liaisonDB.query({
-//     query: `
-//       SELECT accesspointmac, count(*) AS nbraccess, organizationname, hotspotname, zonename
-//       FROM hm_stats.sessions
-//       WHERE (${startDate_NbrAccess ? `acctstarttime >= {start: String}` : '1=1'}) 
-//       AND (${endDate_NbrAccess ? `acctstarttime <= {end: String}` : '1=1'})
-//       AND (${organization ? 'organizationname' : '1=1' } 
-//       AND (${hotspotname ? 'hotspotname' : '1=1' } 
-//       AND (${zonenameme ? 'zonenameme' : '1=1' } 
+export async function getFilterOptions() {
+  const result = await liaisonDB.query({
+    query: `
+      SELECT DISTINCT organizationname AS organization, zonename AS zone, hotspotname AS hotspot
+      FROM hm_stats.sessions
+      LIMIT 5
+    `,
+    format: 'JSON',
+  });
+  const data = await result.json();
 
-//       GROUP BY accesspointmac 
-//       LIMIT 50`,
-//     query_params: { start : startDate_NbrAccess, end : endDate_NbrAccess, organization, hotspotname, zonename},
-//     format: 'JSON',
-//   })
-//   return await result.json();
-// }
+  console.log("Données récupérées dans getFilterOptions :", data);
+  return data;
+
+  // return await result.json();
+}
 
 // Fonction pour récupérer les times de connexion avec filtre sur les dates
 export async function getConnectionTime(startDate_ConnectionTime, endDate_ConnectionTime) {
@@ -46,7 +53,7 @@ export async function getConnectionTime(startDate_ConnectionTime, endDate_Connec
       FROM hm_stats.sessions
       WHERE (${startDate_ConnectionTime ? `acctstarttime >= {start: String}` : '1=1'}) 
       AND (${endDate_ConnectionTime ? `acctstarttime <= {end: String}` : '1=1'})
-      LIMIT 50`,
+      LIMIT 5`,
     query_params: {start :startDate_ConnectionTime, end: endDate_ConnectionTime},
     format: 'JSON',
   })
@@ -64,7 +71,7 @@ export async function getConnectionTimeperPerson(startDate_ConnectionTime, endDa
       AND (${endDate_ConnectionTime ? `acctstarttime <= {end: String}` : '1=1'})
       GROUP BY accesspointmac
       ORDER BY total_time_per_pers DESC
-      LIMIT 50`,
+      LIMIT 5`,
     query_params: {start :startDate_ConnectionTime, end: endDate_ConnectionTime},
     format: 'JSON',
   })

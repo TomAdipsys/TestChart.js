@@ -32,10 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error('Aucune donnée reçue');
       }
 
-      // Construction des graphiques après la réception des données
-      callData(data); // Appel de la fonction pour afficher les données dans la console
-
-      buildAccessPerSessionChart(data);
+      // callData(data); 
       // buildConnectTimeEvoChart(data);
     } catch (error) {
       console.error('Erreur lors de la récupération des données :', error);
@@ -43,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-export function callData(data) {
+function callData(data) {
   console.log("data :", data);
 
   console.log("Labels :", data.map(row => row.accesspointmac));

@@ -23,17 +23,6 @@ import { buildUsedDataChart } from "../builders/BuildUsedDataStatsChart.js";
   //   });
   // });
 
-  $("#resetButton_UsedData_Chart").click(function() {
-    console.log("button 'resetButton_UsedData_Chart' clicked");
-
-    if (window.UsedDataChart) {
-      buildUsedDataChart()
-        } 
-        else {
-        console.error("UsedDataChart is not defined yet.");
-    }
-});
-
   document.getElementById('download_UsedData_Chart').addEventListener('click', function() {
     if (window.UsedDataChart) {
       let a = document.createElement('a');

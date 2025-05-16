@@ -2,6 +2,47 @@ document.addEventListener("DOMContentLoaded", () => {
   let globalData = [];
   let chartType = 'line'; // Type de graphique par défaut
 
+  // Fonction pour récupérer les filtres depuis le backend
+  async function fetchFilters() {
+    try {
+      const response = await fetch('http://localhost:3000/filters');
+      const data = await response.json();
+      console.log("Filtres récupérés :", data); // Log des filtres récupérés
+      return data;
+    } catch (error) {
+      console.error('Erreur lors de la récupération des filtres :', error);
+    }
+  }
+
+  // Récupération et insertion des filtres dans les <select>
+  async function initializeFilters() {
+    const filters = await fetchFilters();
+
+    if (filters) {
+      populateSelect('#organization', filters.organizations);
+      populateSelect('#zone', filters.zones);
+      populateSelect('#hotspot', filters.hotspots);
+    } else {
+      console.error("Aucun filtre récupéré.");
+    }
+  }
+
+  // Fonction pour remplir un <select> avec des options
+  function populateSelect(selector, options) {
+    const select = document.querySelector(selector);
+    if (!select) {
+      console.error(`Élément ${selector} introuvable dans le DOM.`);
+      return;
+    }
+
+    options.forEach(option => {
+      const opt = document.createElement('option');
+      opt.value = option;
+      opt.textContent = option;
+      select.appendChild(opt);
+    });
+  }
+
   // Gestionnaire pour le changement de type via le select
   $('#select_AccessPerSession_Chart select').change(function () {
     chartType = $(this).val(); // Met à jour le type de graphique
@@ -31,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Envoi des dates au backend via fetch
+    // Envoi des dates et filtres au backend via fetch
     const parameters = new URL('http://localhost:3000/nbraccess');
     if (organization) parameters.searchParams.append('organization', organization);
     if (zone) parameters.searchParams.append('zone', zone);
@@ -51,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       // Appel de la fonction callData pour afficher les logs ou effectuer un traitement
-      callData(data);
+      // callData(data);
 
       // Construction des graphiques après la réception des données
       buildAccessPerSessionChart(data, chartType);
@@ -66,11 +107,9 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("data :", data);
     console.log("Labels :", data.map(row => row.accesspointmac));
     console.log("Value1 :", data.map(row => row.nbraccess));
-
-    // console.log("Dates (acctstarttime) :", data.map(row => row.acctstarttime)); 
-    // console.log("type de data : ", typeof data[0].acctstarttime); 
   }
 
+  // Fonction pour construire le graphique
   function buildAccessPerSessionChart(data, chartType) {
     const labels = data.map(row => row.accesspointmac);
     const values = data.map(row => row.nbraccess);
@@ -106,4 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     console.log("Graphique créé avec succès :", window.AccessPerSessionChart);
   }
+
+  // Initialisation des filtres au chargement de la page
+  initializeFilters();
 });

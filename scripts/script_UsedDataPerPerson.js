@@ -12,15 +12,6 @@ import { buildUsedDataPerPersonChart, UsedDataPerpersonChart } from "../builders
     });
   });
 
-  $("#resetButton_UsedDataPerPerson_Chart").click(function () {
-    console.log("button 'resetButton_UsedDataPerPerson_Chart' clicked");
-
-    if (UsedDataPerpersonChart) {
-      UsedDataPerpersonChart.destroy(); 
-    }
-    UsedDataPerpersonChart = buildUsedDataPerPersonChart();
-  });
-
   $('download_UsedDataPerPerson_Chart').click (() => {
     if (UsedDataPerpersonChart) {
       let a = document.createElement('a');

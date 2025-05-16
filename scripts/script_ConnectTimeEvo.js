@@ -9,12 +9,6 @@
     });
   })
 
-  $("#resetButton_ConnectionTimeEvolution_Chart").click(function () {
-    console.log("Bouton 'resetButton_ConnectionTimeEvolution_Chart' cliqué");
-    
-    resetCanvas_ConnectionTimeEvo();
-  });
-
   $('download_ConnectTimeEvoChart').click(() => {
     if (window.ConnectTimeEvoChart) {
       let a = document.createElement('a');

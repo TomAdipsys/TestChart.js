@@ -48,19 +48,22 @@
           </div>
 
           <div class="field">
-            <label class="label">Filtrer par :</label>
+
             <div class="control">
               <div class="select is-multiple">
-                <select id="filterGroup" multiple>
-                    <optgroup label="Organisation">
-                    <option value="Organisation"></option>
-                  </optgroup>
-                  <optgroup label="Zone">
-                    <option value="zone"></option>
-                  </optgroup>    
-                  <optgroup label="Hotspot">
-                    <option value="hotspot"></option>
-                  </optgroup>
+                <label for="organization">Organisation :</label>
+                <select id="organization">
+                  <option value="">-- Sélectionnez une organisation --</option>
+                </select>
+  
+                <label for="zone">Zone :</label>
+                <select id="zone">
+                  <option value="">-- Sélectionnez une zone --</option>
+                </select>
+  
+                <label for="hotspot">Hotspot :</label>
+                <select id="hotspot">
+                  <option value="">-- Sélectionnez un hotspot --</option>
                 </select>
               </div>
             </div>
@@ -117,7 +120,6 @@
           </div>
 
           <div class="field">
-            <label class="label">Filtrer par :</label>
             <div class="control">
               <div class="select is-multiple">
                 <select id="filterGroup" multiple>

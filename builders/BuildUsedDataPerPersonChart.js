@@ -5,7 +5,7 @@ function fetchDataAndBuildCharts() {
         .then(res => res.json())
         .then(data => {
             buildUsedDataPerPersonChart(data);
-            console.log(data);
+            // console.log(data);
             // console.log(data.stats);
             // console.log(data.stats.outputStatsPerPerson.totalOutPers);
             // callDataStatsPerPerson(data);
@@ -61,7 +61,7 @@ export function buildUsedDataPerPersonChart(data) {
     const totalInOutPersValues = data.stats.inoutputStatsPerPerson.totalInOutPerPerson.map(person => person.total_data_used);
 
     window.UsedDataPerpersonChart = new Chart(ctx_UsedDataPerPerson, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: labels, // User IDs as labels
             datasets: [
@@ -174,8 +174,18 @@ export function buildUsedDataPerPersonChart(data) {
                 }
             },
             scales: {
-                x: { title: { display: true, text: 'Users' } },
-                y: { title: { display: true, text: 'Values' }, beginAtZero: true }
+                x: {
+                    title: { display: true, text: 'Users' },
+                    ticks: {
+                        callback: function(value) {
+                            return value
+                        }
+                    }
+                },
+                y: {
+                    title: { display: true, text: 'Values' },
+                    beginAtZero: true
+                }
             }
         }
     });
