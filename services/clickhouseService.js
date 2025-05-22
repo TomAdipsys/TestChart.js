@@ -14,7 +14,8 @@ export async function getNbrAccess(startDate_NbrAccess, endDate_NbrAccess, organ
       AND (${hotspot ? `hotspotname = {hotspot: String}` : '1=1'})
       AND (${zone ? `zonename = {zone: String}` : '1=1'})
       GROUP BY accesspointmac, organizationname, hotspotname, zonename
-      LIMIT 5`,
+      LIMIT 100
+      `,
     query_params: { 
       start: startDate_NbrAccess, 
       end: endDate_NbrAccess, 
@@ -27,12 +28,33 @@ export async function getNbrAccess(startDate_NbrAccess, endDate_NbrAccess, organ
   return await result.json();
 }
 
-export async function getFilterOptions() {
+// export async function getFilterOptions() {
+//   const result = await liaisonDB.query({
+//     query: `
+//       SELECT DISTINCT organizationname AS organization, zonename AS zone, hotspotname AS hotspot
+//       FROM hm_stats.sessions
+//       LIMIT 5
+//     `,
+//     format: 'JSON',
+//   });
+//   const data = await result.json();
+
+//   console.log("Données récupérées dans getFilterOptions :", data);
+//   return data;
+
+//   // return await result.json();
+// }
+
+export async function getFilterOption() {
   const result = await liaisonDB.query({
     query: `
-      SELECT DISTINCT organizationname AS organization, zonename AS zone, hotspotname AS hotspot
-      FROM hm_stats.sessions
-      LIMIT 5
+      SELECT o.uuid AS organizationUUID, o.name AS organizationName, z.uuid AS zoneUUID, z.name AS zoneName,
+      h.uuid AS hotspotUUID, h.name AS hotspotName
+      FROM hm_stats.organizations AS o
+      INNER JOIN hm_stats.zones AS z ON o.uuid = z.organizationUUID
+      INNER JOIN hm_stats.hotspots AS h ON z.uuid = h.zoneUUID
+
+      INNER JOIN hm_stats.sessions AS s ON h.name = s.hotspotname
     `,
     format: 'JSON',
   });

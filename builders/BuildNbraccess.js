@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   let globalData = [];
   let chartType = 'line'; // Type de graphique par défaut
+  let filters;
 
   // Fonction pour récupérer les filtres depuis le backend
   async function fetchFilters() {
@@ -15,38 +16,65 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Récupération et insertion des filtres dans les <select>
-  async function initializeFilters() {
-    const filters = await fetchFilters();
+async function initializeFilters() {
+  filters = await fetchFilters();
 
-    if (filters) {
-      populateSelect('#organization', filters.organizations);
-      populateSelect('#zone', filters.zones);
-      populateSelect('#hotspot', filters.hotspots);
-    } else {
-      console.error("Aucun filtre récupéré.");
-    }
+  if (filters) {
+    populateSelect('#organization', filters.organizations);
+    populateSelect('#zone', []);
+    populateSelect('#hotspot', []);
+
+    $('#organization').change(function () {
+      const selectedOrgUuid = $(this).val();
+      const filteredZones = filters.zones.filter(zone => zone.organizationUUID === selectedOrgUuid);
+      populateSelect('#zone', filteredZones);
+      populateSelect('#hotspot', []);
+    });
+
+    $('#zone').change(function () {
+      const selectedZoneUuid = $(this).val();
+      const filteredHotspots = filters.hotspots.filter(hotspot => hotspot.zoneUUID === selectedZoneUuid);
+      populateSelect('#hotspot', filteredHotspots);
+    });
+  } else {
+    console.error("Aucun filtre récupéré.");
   }
+}
 
-  // Fonction pour remplir un <select> avec des options
-  function populateSelect(selector, options) {
+function populateSelect(selector, options, selectedUuid = null) {
     const select = document.querySelector(selector);
     if (!select) {
       console.error(`Élément ${selector} introuvable dans le DOM.`);
       return;
     }
 
-    options.forEach(option => {
-      const opt = document.createElement('option');
-      opt.value = option;
-      opt.textContent = option;
-      select.appendChild(opt);
-    });
+    if (selectedUuid) {
+      options.forEach(option => {
+        if (option.organizationUUID === selectedUuid) {
+          const opt = document.createElement('option');
+          opt.value = option.uuid;
+          opt.textContent = option.name;
+          select.appendChild(opt);
+        }
+      });
+    } else {
+      options.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option.uuid;
+        opt.textContent = option.name;
+        select.appendChild(opt);
+      });
+    }
   }
+
+function getNameByUuid(options, uuid) {
+  const found = options.find(opt => opt.uuid === uuid);
+  return found ? found.name : undefined;
+}
 
   // Gestionnaire pour le changement de type via le select
   $('#select_AccessPerSession_Chart select').change(function () {
     chartType = $(this).val(); // Met à jour le type de graphique
-    console.log('Type de graphique sélectionné :', chartType);
   });
 
   // Gestionnaire pour le clic sur le bouton filter
@@ -56,9 +84,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const startDate_NbrAccess = $('#startDate_NbrAccess').val();
     const endDate_NbrAccess = $('#endDate_NbrAccess').val();
-    const organization = $('#organization').val();
-    const zone = $('#zone').val();
-    const hotspot = $('#hotspot').val();
+    const organizationUuid = $('#organization').val();
+    const organizationName = $('#organization option:selected').text();
+    const zoneUuid = $('#zone').val();
+    const hotspotUuid = $('#hotspot').val();
+
+    const organization = getNameByUuid(filters.organizations, organizationUuid);
+    console.log("organization :", organization);
+    const zone = getNameByUuid(filters.zones, zoneUuid);
+    const hotspot = getNameByUuid(filters.hotspots, hotspotUuid);
 
     // Validation des dates avant d'envoyer la requête
     if (startDate_NbrAccess && isNaN(Date.parse(startDate_NbrAccess))) {
@@ -85,6 +119,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       globalData = data;
+      console.log("Données reçues pour graphique :", data, globalData); 
+
       $('#filterButton_NbrAccess').prop('disabled', false);
 
       if (!data || data.length === 0) {

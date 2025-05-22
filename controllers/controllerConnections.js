@@ -9,11 +9,20 @@ export const getFilters = async () => {
       const filters = await getFilterOptions();
       console.log("ControllerConnections.js Filtres récupérés :", filters);
   
-      // Utiliser un Set pour supprimer les doublons
+      // Utiliser un Mao pour supprimer les doublons
       return {
-        organizations: [...new Set(filters.data.map(row => row.organization))],
-        zones: [...new Set(filters.data.map(row => row.zone))],
-        hotspots: [...new Set(filters.data.map(row => row.hotspot))],
+        organizations: [...new Map(filters.data
+            .filter(row => row.organizationUUID && row.organizationName)
+            .map(row => [row.organizationUUID, { uuid: row.organizationUUID, name: row.organizationName }])
+        ).values()],
+        zones: [...new Map(filters.data
+            .filter(row => row.zoneUUID && row.zoneName)
+            .map(row => [row.zoneUUID, { uuid: row.zoneUUID, name: row.zoneName, organizationUUID: row.organizationUUID }])
+        ).values()],
+        hotspots: [...new Map(filters.data
+            .filter(row => row.hotspotUUID && row.hotspotName)
+            .map(row => [row.hotspotUUID, { uuid: row.hotspotUUID, name: row.hotspotName, zoneUUID: row.zoneUUID }])
+        ).values()],
       };
     } catch (error) {
       console.error('Erreur lors de la récupération des filtres :', error);
@@ -31,7 +40,6 @@ export const getFilters = async () => {
 
 // Cela convertit le Set en un tableau pour que vous puissiez le retourner dans la réponse.
 
-// startDate_ConnectionTimes, endDate_ConnectionTimes, startDate_ConnectionTimeperPerson, endDate_ConnectionTimeperPerson
 export const getNbrConnections = async (startDate_NbrAccess, endDate_NbrAccess, organization, zone, hotspot) => {
     try {
         console.log("Appel de getNbrConnections avec :", {
@@ -47,7 +55,7 @@ export const getNbrConnections = async (startDate_NbrAccess, endDate_NbrAccess, 
         ]);
 
         console.log("Résultat brut de getNbrAccess :", resultNbrAccess);
-
+// organization || resultNbrAccess.zone || resultNbrAccess.hotspot
         return resultNbrAccess?.data.map(row => ({
             accesspointmac: row.accesspointmac,
             nbraccess: row.nbraccess,
@@ -61,6 +69,7 @@ export const getNbrConnections = async (startDate_NbrAccess, endDate_NbrAccess, 
 export const getUserTime = async (startDate_ConnectionTime, endDate_ConnectionTime) => {
     try {
         const [resultUserTime, resultTime] = await Promise.all([
+            // startDate_ConnectionTimes, endDate_ConnectionTimes, startDate_ConnectionTimeperPerson, endDate_ConnectionTimeperPerson
             getConnectionTime(startDate_ConnectionTime, endDate_ConnectionTime),
         ]);
     
