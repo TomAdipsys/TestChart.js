@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let chartType = 'line'; // Type de graphique par défaut
   let filters;
 
+  $('#zone').hide();
+  $('#hotspot').hide();
   // Fonction pour récupérer les filtres depuis le backend
   async function fetchFilters() {
     try {
@@ -16,76 +18,86 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Récupération et insertion des filtres dans les <select>
-async function initializeFilters() {
-  filters = await fetchFilters();
+  async function initializeFilters() {
+    filters = await fetchFilters();
 
-  if (filters) {
-    populateSelect('#organization', filters.organizations);
-    populateSelect('#zone', []);
-    populateSelect('#hotspot', []);
-
-    $('#organization').change(function () {
-      const selectedOrgUuid = $(this).val();
-      const filteredZones = filters.zones.filter(zone => zone.organizationUUID === selectedOrgUuid);
-      populateSelect('#zone', filteredZones);
+    if (filters) {
+      populateSelect('#organization', filters.organizations);
+      populateSelect('#zone', []);
       populateSelect('#hotspot', []);
-    });
 
-    $('#zone').change(function () {
-      const selectedZoneUuid = $(this).val();
-      const filteredHotspots = filters.hotspots.filter(hotspot => hotspot.zoneUUID === selectedZoneUuid);
-      populateSelect('#hotspot', filteredHotspots);
-    });
-  } else {
-    console.error("Aucun filtre récupéré.");
+    } else {
+      console.error("Aucun filtre récupéré.");
+    }
   }
-}
 
-function populateSelect(selector, options, selectedUuid = null) {
-    const select = document.querySelector(selector);
+  function populateSelect(selector, options) {
+    const select = $(selector);
     if (!select) {
       console.error(`Élément ${selector} introuvable dans le DOM.`);
       return;
     }
 
-    if (selectedUuid) {
-      options.forEach(option => {
-        if (option.organizationUUID === selectedUuid) {
-          const opt = document.createElement('option');
-          opt.value = option.uuid;
-          opt.textContent = option.name;
-          select.appendChild(opt);
-        }
-      });
-    } else {
-      options.forEach(option => {
-        const opt = document.createElement('option');
-        opt.value = option.uuid;
-        opt.textContent = option.name;
-        select.appendChild(opt);
-      });
-    }
+    select.empty().append('<option value="">Sélectionner...</option>');
+
+
+    options.forEach(option => {
+      const opt = document.createElement('option');
+      opt.value = option.uuid;
+      opt.textContent = option.name;
+      select.append(opt);
+    });
   }
 
-function getNameByUuid(options, uuid) {
-  const found = options.find(opt => opt.uuid === uuid);
-  return found ? found.name : undefined;
-}
-
-  // Gestionnaire pour le changement de type via le select
-  $('#select_AccessPerSession_Chart select').change(function () {
-    chartType = $(this).val(); // Met à jour le type de graphique
+  $('#organization').change(function () {
+    const selectedOrgUuid = $(this).val();
+    const filteredZones = filters.zones.filter(zone => zone.organizationUUID === selectedOrgUuid);
+    populateSelect('#zone', filteredZones);
+    populateSelect('#hotspot', []);
+    $("#zone").show();
+    $("#hotspot").hide();
   });
 
-  // Gestionnaire pour le clic sur le bouton filter
+  // $('#zone').on( "change", function() {
+
+  $('#zone').change(function () {
+    const selectedZoneUuid = $(this).val();
+    const filteredHotspots = filters.hotspots.filter(hotspot => hotspot.zoneUUID === selectedZoneUuid);
+    populateSelect('#hotspot', filteredHotspots);
+    $("#hotspot").val("").change(); // Réinitialiser la sélection du hotspot
+    $("#hotspot").show();
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  function getNameByUuid(options, uuid) {
+    const found = options.find(opt => opt.uuid === uuid);
+    return found ? found.name : undefined;
+  }
+
+  $('#select_AccessPerSession_Chart select').change(function () {
+    chartType = $(this).val(); 
+  });
+
   $('#filterButton_NbrAccess').click(async () => {
     console.log("button 'filterButton_NbrAccess' clicked");
-    $('#filterButton_NbrAccess').prop('disabled', true); // Désactiver le bouton pendant le chargement
+    $('#filterButton_NbrAccess').prop('disabled', true); 
 
     const startDate_NbrAccess = $('#startDate_NbrAccess').val();
     const endDate_NbrAccess = $('#endDate_NbrAccess').val();
     const organizationUuid = $('#organization').val();
-    const organizationName = $('#organization option:selected').text();
     const zoneUuid = $('#zone').val();
     const hotspotUuid = $('#hotspot').val();
 
@@ -118,8 +130,12 @@ function getNameByUuid(options, uuid) {
       const response = await fetch(parameters);
       const data = await response.json();
 
+      const dataString = JSON.stringify(data);
+      const sizeBytes = new Blob([dataString]).size;
+      console.log(`Taille des données reçues : ${sizeBytes} octets (${(sizeBytes/1024).toFixed(2)} Ko)`);
+
       globalData = data;
-      console.log("Données reçues pour graphique :", data, globalData); 
+      console.log("Données reçues pour graphique :", data); 
 
       $('#filterButton_NbrAccess').prop('disabled', false);
 
@@ -127,10 +143,8 @@ function getNameByUuid(options, uuid) {
         throw new Error('Aucune donnée reçue');
       }
 
-      // Appel de la fonction callData pour afficher les logs ou effectuer un traitement
       // callData(data);
 
-      // Construction des graphiques après la réception des données
       buildAccessPerSessionChart(data, chartType);
     } catch (error) {
       console.error('Erreur lors de la récupération des données :', error);
@@ -138,14 +152,12 @@ function getNameByUuid(options, uuid) {
     }
   });
 
-  // Fonction callData pour afficher les logs ou effectuer un traitement
   function callData(data) {
     console.log("data :", data);
     console.log("Labels :", data.map(row => row.accesspointmac));
     console.log("Value1 :", data.map(row => row.nbraccess));
   }
 
-  // Fonction pour construire le graphique
   function buildAccessPerSessionChart(data, chartType) {
     const labels = data.map(row => row.accesspointmac);
     const values = data.map(row => row.nbraccess);
@@ -182,6 +194,5 @@ function getNameByUuid(options, uuid) {
     console.log("Graphique créé avec succès :", window.AccessPerSessionChart);
   }
 
-  // Initialisation des filtres au chargement de la page
   initializeFilters();
 });

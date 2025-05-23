@@ -26,7 +26,7 @@ dataRoutes.get('/filters', async (req, res) => {
     try {
         console.log("Requête reçue pour /filters :", req.query);
         const filters = await getFilters();
-        console.log("Filtres envoyés :", filters);
+        // console.log("Filtres envoyés :", filters);
         res.json(filters);
     } catch (error) {
         console.error("Erreur dans la route /filters :", error);

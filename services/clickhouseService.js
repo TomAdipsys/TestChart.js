@@ -28,24 +28,7 @@ export async function getNbrAccess(startDate_NbrAccess, endDate_NbrAccess, organ
   return await result.json();
 }
 
-// export async function getFilterOptions() {
-//   const result = await liaisonDB.query({
-//     query: `
-//       SELECT DISTINCT organizationname AS organization, zonename AS zone, hotspotname AS hotspot
-//       FROM hm_stats.sessions
-//       LIMIT 5
-//     `,
-//     format: 'JSON',
-//   });
-//   const data = await result.json();
-
-//   console.log("Données récupérées dans getFilterOptions :", data);
-//   return data;
-
-//   // return await result.json();
-// }
-
-export async function getFilterOption() {
+export async function getFilterOptions() {
   const result = await liaisonDB.query({
     query: `
       SELECT o.uuid AS organizationUUID, o.name AS organizationName, z.uuid AS zoneUUID, z.name AS zoneName,
@@ -60,7 +43,7 @@ export async function getFilterOption() {
   });
   const data = await result.json();
 
-  console.log("Données récupérées dans getFilterOptions :", data);
+  // console.log("Données récupérées dans getFilterOptions :", data);
   return data;
 
   // return await result.json();

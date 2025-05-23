@@ -5,9 +5,9 @@ import { getFilterOptions } from '../services/clickhouseService.js';
 
 export const getFilters = async () => {
     try {
-      console.log("ControllerConnections.js Appel de getFilters...");
+    //   console.log("ControllerConnections.js Appel de getFilters...");
       const filters = await getFilterOptions();
-      console.log("ControllerConnections.js Filtres récupérés :", filters);
+    //   console.log("ControllerConnections.js Filtres récupérés :", filters);
   
       // Utiliser un Mao pour supprimer les doublons
       return {
@@ -54,7 +54,7 @@ export const getNbrConnections = async (startDate_NbrAccess, endDate_NbrAccess, 
             getNbrAccess(startDate_NbrAccess, endDate_NbrAccess, organization, zone, hotspot),
         ]);
 
-        console.log("Résultat brut de getNbrAccess :", resultNbrAccess);
+        // console.log("Résultat brut de getNbrAccess :", resultNbrAccess);
 // organization || resultNbrAccess.zone || resultNbrAccess.hotspot
         return resultNbrAccess?.data.map(row => ({
             accesspointmac: row.accesspointmac,
