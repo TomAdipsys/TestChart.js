@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   $('#zone_AccessPerSession, #zone_AccessPerSession_container').hide();
   $('#hotspot_AccessPerSession, #hotspot_AccessPerSession_container').hide();
-  
+
   async function fetchFilters() {
     try {
       const response = await fetch('http://localhost:3000/filters');
@@ -117,9 +117,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Envoi des dates et filtres au backend via fetch
     const parameters = new URL('http://localhost:3000/nbraccess');
-    if (organization) parameters.searchParams.append('organization_AccessPerSession', organization);
-    if (zone) parameters.searchParams.append('zone_AccessPerSession', zone);
-    if (hotspot) parameters.searchParams.append('hotspot_AccessPerSession', hotspot);
+    if (organization) parameters.searchParams.append('organization', organization);
+    if (zone) parameters.searchParams.append('zone', zone);
+    if (hotspot) parameters.searchParams.append('hotspot', hotspot);
     if (startDate_NbrAccess) parameters.searchParams.append('startDate_NbrAccess', startDate_NbrAccess);
     if (endDate_NbrAccess) parameters.searchParams.append('endDate_NbrAccess', endDate_NbrAccess);
 
