@@ -20,7 +20,7 @@ header h1 {
     color: rgba(57, 57, 176, 0.505);
 }
 
-.canvas {
+#charts-section {
     display: flex;
     flex-wrap: wrap;
     height: max-content;
@@ -31,15 +31,15 @@ header h1 {
     justify-self: center;
     align-items: end;
 }
-.canvas .container {
+#charts-section .container {
     margin-bottom: 50px;
 }
 
-.canvas h1 {
+#charts-section h1 {
     justify-self: center;
 }
 
-.canvas .buttons{
+#charts-section .buttons{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -49,12 +49,12 @@ header h1 {
     margin: 5px;
 }
 
-.canvas .select{
+#charts-section .select{
     justify-self: center;
     margin-left: 35%;
 }
 
-.canvas #AccessPerSession {
+#charts-section #AccessPerSession {
     background: rgba(0, 0, 0, 0.255);
     width: 500px;
     padding: 2rem;
@@ -63,7 +63,7 @@ header h1 {
     box-shadow: 0 0 16px rgba(255, 255, 255, 0.75);
 }
 
-.canvas #ConnectionTimeEvolution {
+#charts-section #ConnectionTimeEvolution {
     background: rgba(255, 255, 255);
     width: 500px;
     padding: 2rem;
@@ -72,7 +72,7 @@ header h1 {
     box-shadow: 0 0 16px rgb(0, 0, 0, 0.75);
 }
 
-.canvas #useddatachart {
+#charts-section #useddatachart {
     background: rgba(156, 156, 156);
     width: 500px;
     padding: 2rem;
@@ -81,7 +81,7 @@ header h1 {
     box-shadow: 0 0 16px rgb(0, 0, 0, 0.75);
 }
 
-.canvas #useddataperpersonchart {
+#charts-section #useddataperpersonchart {
     background: rgba(156, 156, 156);
     width: 500px;
     padding: 2rem;

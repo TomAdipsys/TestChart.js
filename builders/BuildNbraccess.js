@@ -47,26 +47,37 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-$('#organization').change(function () {
-  const selectedOrgUuid = $(this).val();
-  const filteredZones = filters.zones.filter(zone => zone.organizationUUID === selectedOrgUuid);
-  populateSelect('#zone', filteredZones);
-  populateSelect('#hotspot', []);
-  if (!selectedOrgUuid) {
-    $("#zone, #zonecontainer").hide();
-  } else {
-    $("#zone, #zonecontainer").show();
-  }
-  $("#hotspot, #hotspotcontainer").hide();
-});
-
+  $('#organization').change(function () {
+    const selectedOrgUuid = $(this).val();
+    const filteredZones = filters.zones.filter(zone => zone.organizationUUID === selectedOrgUuid);
+    populateSelect('#zone', filteredZones);
+    populateSelect('#hotspot', []);
+    if (!selectedOrgUuid) {
+      $("#zone, #zonecontainer").hide();
+      $("#hotspot, #hotspotcontainer").hide();
+    } else {
+      $("#zone, #zonecontainer").show();
+    }
+    $("#hotspot, #hotspotcontainer").hide();
+  });
 
   $('#zone').change(function () {
     const selectedZoneUuid = $(this).val();
     const filteredHotspots = filters.hotspots.filter(hotspot => hotspot.zoneUUID === selectedZoneUuid);
     populateSelect('#hotspot', filteredHotspots);
+    if (!selectedZoneUuid) {
+      $("#hotspot, #hotspotcontainer").hide();
+    }
+    else {
     $("#hotspot").val("").change(); // Réinitialiser la sélection du hotspot
     $("#hotspot, #hotspotcontainer").show();
+    }
+  });
+
+  $('#resetButton_AccessPerSession_Chart').click(function () {
+    $('#select_AccessPerSession_Chart select').val('line').change();
+    // $('#startDate_NbrAccess, #endDate_NbrAccess').val('');
+    $('#organization, #zone, #hotspot').val('').change();
   });
 
   function getNameByUuid(options, uuid) {

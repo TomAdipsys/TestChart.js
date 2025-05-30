@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
 <!-- Bulma Switch Control -->
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-switch-control@1.0.0/bulma-switch-control.min.css"> -->
-
 </head>
 <body>
   <header>
@@ -24,13 +23,17 @@
     
   </header>
 
-  <img id='first'src="https://preview.redd.it/this-isnt-made-in-abyss-v0-nbnolzkay2nd1.png?width=1080&format=png&auto=webp&s=d2cf83ed483edcc2b7669fdd3b8d6b43d626bfaa" target="_top">
-  <img id='seconde'src="https://preview.redd.it/this-isnt-made-in-abyss-v0-nbnolzkay2nd1.png?width=1080&format=png&auto=webp&s=d2cf83ed483edcc2b7669fdd3b8d6b43d626bfaa" target="_parent">
- <button class="button" id="essaie">toggle</button>
- <span class="bulma-arrow-mixin"></span>
-  <div class="canvas">
+    <section class="images-section">
+      <img id="first" src="https://preview.redd.it/this-isnt-made-in-abyss-v0-nbnolzkay2nd1.png?width=1080&format=png&auto=webp&s=d2cf83ed483edcc2b7669fdd3b8d6b43d626bfaa" alt="Image 1">
+      <img id="second" src="https://preview.redd.it/this-isnt-made-in-abyss-v0-nbnolzkay2nd1.png?width=1080&format=png&auto=webp&s=d2cf83ed483edcc2b7669fdd3b8d6b43d626bfaa" alt="Image 2">
+      <button class="button" id="toggleImages">Toggle Images</button>
+      <span class="bulma-arrow-mixin"></span>
+    </section>
+
+  <section id="charts-section">
     
     <div id="AccessPerSession">
+        <h1 class="title is-4">Nombre d'acccès par sessions</h1>
       <div class="container" id="CntDONUT">
         <div class="fields">
           <div class="field">
@@ -76,7 +79,6 @@
         </div>
       </div>
 
-      <h1 class="title is-4">Nombre d'acccès par sessions</h1>
       <div class="canvasholder">
         <canvas id="AccessPerSession_Chart" width="500" height="500"></canvas>
       </div>
@@ -85,17 +87,17 @@
           <option value="line">Ligne</option>
           <option value="doughnut">Donut</option>
           <option value="bar">Bar</option>
-          <option value="pie">camembert</option>
-          <option value="radar">radar</option>
-          <option value="polarArea">polarArea</option>
-          <option value="bubble">bubble</option>
-          <option value="scatter">scatter</option>
+          <option value="pie">Camembert</option>
+          <option value="radar">Radar</option>
+          <option value="polarArea">PolarArea</option>
+          <option value="bubble">Bubble</option>
+          <option value="scatter">Scatter</option>
         </select>
       </div>
 
       <div class="buttons">
         <button class="hide button" id="hide_AccessPerSession">hide the chart</button>
-        <button class="resetButton button" id="resetButton_AccessPerSession_Chart">reset the chart</button>
+        <button class="resetButton button" id="resetButton_AccessPerSession_Chart">reset the filters</button>
         <button class="download button" id="download_AccessPerSession">Download as JPG</button>
       </div>
     </div>
@@ -294,7 +296,7 @@
       </div>
     </div>
 
-  </div>
+  </section>
 
   <script type="module" src="./scripts/script_UsedData.js" defer></script>    
   <script type="module" src="./scripts/script_UsedDataPerPerson.js" defer></script>
