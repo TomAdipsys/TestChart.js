@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let chartType = 'line'; 
   let filters;
 
-  $('#zone').hide();
-  $('#hotspot').hide();
+  $('#zone, #zonecontainer').hide();
+  $('#hotspot, #hotspotcontainer').hide();
   async function fetchFilters() {
     try {
       const response = await fetch('http://localhost:3000/filters');
@@ -47,14 +47,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  $('#organization').change(function () {
-    const selectedOrgUuid = $(this).val();
-    const filteredZones = filters.zones.filter(zone => zone.organizationUUID === selectedOrgUuid);
-    populateSelect('#zone', filteredZones);
-    populateSelect('#hotspot', []);
-    $("#zone").show();
-    $("#hotspot").hide();
-  });
+$('#organization').change(function () {
+  const selectedOrgUuid = $(this).val();
+  const filteredZones = filters.zones.filter(zone => zone.organizationUUID === selectedOrgUuid);
+  populateSelect('#zone', filteredZones);
+  populateSelect('#hotspot', []);
+  if (!selectedOrgUuid) {
+    $("#zone, #zonecontainer").hide();
+  } else {
+    $("#zone, #zonecontainer").show();
+  }
+  $("#hotspot, #hotspotcontainer").hide();
+});
 
 
   $('#zone').change(function () {
@@ -62,22 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const filteredHotspots = filters.hotspots.filter(hotspot => hotspot.zoneUUID === selectedZoneUuid);
     populateSelect('#hotspot', filteredHotspots);
     $("#hotspot").val("").change(); // Réinitialiser la sélection du hotspot
-    $("#hotspot").show();
+    $("#hotspot, #hotspotcontainer").show();
   });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   function getNameByUuid(options, uuid) {
     const found = options.find(opt => opt.uuid === uuid);
@@ -89,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   $('#filterButton_NbrAccess').click(async () => {
-    // console.log("button 'filterButton_NbrAccess' clicked");
     $('#filterButton_NbrAccess').prop('disabled', true); 
 
     const startDate_NbrAccess = $('#startDate_NbrAccess').val();
@@ -130,15 +119,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const sizeBytes = new Blob([dataString]).size;
       console.log(`Taille des données reçues : ${sizeBytes} octets (${(sizeBytes/1024).toFixed(2)} Ko)`);
 
-      // globalData = data;
-
       $('#filterButton_NbrAccess').prop('disabled', false);
 
       if (!data || data.length === 0) {
         throw new Error('Aucune donnée reçue');
       }
 
-      // callData(data);
 
       buildAccessPerSessionChart(data, chartType);
     } catch (error) {
@@ -163,7 +149,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     window.AccessPerSessionChart = new Chart(ctx_AccessPerSession, {
-      type: chartType, // Utilise le type sélectionné
+      type: chartType, 
       data: {
         labels: labels,
         datasets: [{
