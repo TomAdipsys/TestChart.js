@@ -24,7 +24,7 @@ export let hotspot = undefined;
 // ça fonctionne pas
 dataRoutes.get('/filters', async (req, res) => {
     try {
-        console.log("Requête reçue pour /filters :", req.query);
+        // console.log("Requête reçue pour /filters :", req.query);
         const filters = await getFilters();
         // console.log("Filtres envoyés :", filters);
         res.json(filters);
@@ -36,7 +36,7 @@ dataRoutes.get('/filters', async (req, res) => {
 
 dataRoutes.get('/nbraccess', async (req, res) => {
     try {
-        console.log("Requête reçue pour /nbraccess :", req.query);
+        // console.log("Requête reçue pour /nbraccess :", req.query);
 
         startDate_NbrAccess = req.query.startDate_NbrAccess.substring(0, 10) || undefined;
         endDate_NbrAccess = req.query.endDate_NbrAccess.substring(0, 10) || undefined;
@@ -45,13 +45,13 @@ dataRoutes.get('/nbraccess', async (req, res) => {
         hotspot = req.query.hotspot || undefined;
         const connections = await getNbrConnections(startDate_NbrAccess, endDate_NbrAccess, organization, zone, hotspot);
 
-        console.log("Paramètres traités :", {
-            startDate_NbrAccess,
-            endDate_NbrAccess,
-            organization,
-            zone,
-            hotspot,
-        });
+        // console.log("Paramètres traités :", {
+        //     startDate_NbrAccess,
+        //     endDate_NbrAccess,
+        //     organization,
+        //     zone,
+        //     hotspot,
+        // });
 
         res.json(connections);
     } catch (error) {

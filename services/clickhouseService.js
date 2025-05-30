@@ -43,15 +43,11 @@ export async function getFilterOptions() {
   });
   const data = await result.json();
 
-  // console.log("Données récupérées dans getFilterOptions :", data);
   return data;
 
-  // return await result.json();
 }
 
-// Fonction pour récupérer les times de connexion avec filtre sur les dates
 export async function getConnectionTime(startDate_ConnectionTime, endDate_ConnectionTime) {
-  console.log(startDate_ConnectionTime, endDate_ConnectionTime);
   const result = await liaisonDB.query({
     query: `
       SELECT accesspointmac, acctsessiontime AS time, acctstarttime as date
@@ -66,7 +62,6 @@ export async function getConnectionTime(startDate_ConnectionTime, endDate_Connec
 }
 
 export async function getConnectionTimeperPerson(startDate_ConnectionTime, endDate_ConnectionTime) {
-  console.log(startDate_ConnectionTime, endDate_ConnectionTime);
   const result = await liaisonDB.query({
     query: `
       SELECT accesspointmac, SUM(acctsessiontime) AS total_time_per_pers, acctstarttime as date

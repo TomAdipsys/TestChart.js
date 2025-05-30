@@ -1,23 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
   let globalData = [];
-  let chartType = 'line'; // Type de graphique par défaut
+  let chartType = 'line'; 
   let filters;
 
   $('#zone').hide();
   $('#hotspot').hide();
-  // Fonction pour récupérer les filtres depuis le backend
   async function fetchFilters() {
     try {
       const response = await fetch('http://localhost:3000/filters');
       const data = await response.json();
-      console.log("Filtres récupérés :", data); // Log des filtres récupérés
+      // console.log("Filtres récupérés :", data);
       return data;
     } catch (error) {
       console.error('Erreur lors de la récupération des filtres :', error);
     }
   }
 
-  // Récupération et insertion des filtres dans les <select>
   async function initializeFilters() {
     filters = await fetchFilters();
 
@@ -58,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#hotspot").hide();
   });
 
-  // $('#zone').on( "change", function() {
 
   $('#zone').change(function () {
     const selectedZoneUuid = $(this).val();
@@ -92,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   $('#filterButton_NbrAccess').click(async () => {
-    console.log("button 'filterButton_NbrAccess' clicked");
+    // console.log("button 'filterButton_NbrAccess' clicked");
     $('#filterButton_NbrAccess').prop('disabled', true); 
 
     const startDate_NbrAccess = $('#startDate_NbrAccess').val();
@@ -102,7 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const hotspotUuid = $('#hotspot').val();
 
     const organization = getNameByUuid(filters.organizations, organizationUuid);
-    console.log("organization :", organization);
     const zone = getNameByUuid(filters.zones, zoneUuid);
     const hotspot = getNameByUuid(filters.hotspots, hotspotUuid);
 
@@ -134,8 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const sizeBytes = new Blob([dataString]).size;
       console.log(`Taille des données reçues : ${sizeBytes} octets (${(sizeBytes/1024).toFixed(2)} Ko)`);
 
-      globalData = data;
-      console.log("Données reçues pour graphique :", data); 
+      // globalData = data;
 
       $('#filterButton_NbrAccess').prop('disabled', false);
 
@@ -164,7 +159,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const ctx_AccessPerSession = document.getElementById('AccessPerSession_Chart').getContext('2d');
     if (window.AccessPerSessionChart) {
-      console.log("Destruction de l'ancien graphique.");
       window.AccessPerSessionChart.destroy();
     }
 
@@ -191,7 +185,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 
-    console.log("Graphique créé avec succès :", window.AccessPerSessionChart);
   }
 
   initializeFilters();

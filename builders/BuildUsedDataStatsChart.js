@@ -83,7 +83,8 @@ export const buildUsedDataChart = (data) => {
         responsive: true,
         scales: {
           y: {
-            beginAtZero: true 
+            beginAtZero: true,
+            type: 'logarithmic',
           }
         }
       }

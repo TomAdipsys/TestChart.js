@@ -48,7 +48,6 @@
           </div>
 
           <div class="field">
-
             <div class="control">
               <div class="select is-multiple">
                 <label for="organization">Organisation :</label>
@@ -105,33 +104,37 @@
       <div class="container" id="CntLINE">
         <div class="block">
 
+          <div class="fields">
           <div class="field">
-              <label class="label" for="startDate">Date de début :</label>
+              <label class="label" for="startDate_NbrAccess">Date de début :</label>
               <div class="control">
-                  <input class="input" type="date" id="startDate" name="startDate" min="2023-01-01" max="2023-12-31" value="2023-01-01">
+                  <input class="input" type="date" id="startDate_NbrAccess" name="startDate_NbrAccess" min="2023-01-01" max="2023-12-31" value="2023-01-01">
               </div>
           </div>
 
           <div class="field">
-              <label class="label" for="endDate">Date de fin :</label>
+              <label class="label" for="endDate_NbrAccess">Date de fin :</label>
               <div class="control">
-                  <input class="input" type="date" id="endDate" name="endDate" min="2023-01-01" max="2023-12-31" value="2023-12-31">
+                  <input class="input" type="date" id="endDate_NbrAccess" name="endDate_NbrAccess" min="2023-01-01" max="2023-12-31" value="2023-12-31">
               </div>
           </div>
 
           <div class="field">
             <div class="control">
               <div class="select is-multiple">
-                <select id="filterGroup" multiple>
-                    <optgroup label="Organisation">
-                    <option value="Organisation"></option>
-                  </optgroup>
-                  <optgroup label="Zone">
-                    <option value="zone"></option>
-                  </optgroup>    
-                  <optgroup label="Hotspot">
-                    <option value="hotspot"></option>
-                  </optgroup>
+                <label for="organization">Organisation :</label>
+                <select id="organization">
+                  <option value="">-- Sélectionnez une organisation --</option>
+                </select>
+  
+                <label for="zone">Zone :</label>
+                <select id="zone">
+                  <option value="">-- Sélectionnez une zone --</option>
+                </select>
+  
+                <label for="hotspot">Hotspot :</label>
+                <select id="hotspot">
+                  <option value="">-- Sélectionnez un hotspot --</option>
                 </select>
               </div>
             </div>
@@ -139,9 +142,10 @@
 
           <div class="field">
               <div class="control">
-                  <button class="button is-primary" id="filterButton">Filtrer</button>
+                  <button class="button is-primary" id="filterButton_NbrAccess">Filtrer</button>
               </div>
           </div>
+        </div>
           
         </div>
       </div>
@@ -167,43 +171,47 @@
 
     <div id="useddatachart">
       <div class="container" id="CntUsedData_Chart">
-        <div class="field">
-            <label class="label" for="startDate">Date de début :</label>
-            <div class="control">
-                <input class="input" type="date" id="startDate" name="startDate" min="2023-01-01" max="2023-12-31" value="2023-01-01">
-            </div>
-        </div>
+        <div class="fields">
+          <div class="field">
+              <label class="label" for="startDate_NbrAccess">Date de début :</label>
+              <div class="control">
+                  <input class="input" type="date" id="startDate_NbrAccess" name="startDate_NbrAccess" min="2023-01-01" max="2023-12-31" value="2023-01-01">
+              </div>
+          </div>
 
-        <div class="field">
-            <label class="label" for="endDate">Date de fin :</label>
-            <div class="control">
-                <input class="input" type="date" id="endDate" name="endDate" min="2023-01-01" max="2023-12-31" value="2023-12-31">
-            </div>
-        </div>
+          <div class="field">
+              <label class="label" for="endDate_NbrAccess">Date de fin :</label>
+              <div class="control">
+                  <input class="input" type="date" id="endDate_NbrAccess" name="endDate_NbrAccess" min="2023-01-01" max="2023-12-31" value="2023-12-31">
+              </div>
+          </div>
 
-        <div class="field">
-          <label class="label">Filtrer par :</label>
-          <div class="control">
-            <div class="select is-multiple">
-              <select id="filterGroup" multiple>
-                  <optgroup label="Organisation">
-                  <option value="Organisation"></option>
-                </optgroup>
-                <optgroup label="Zone">
-                  <option value="zone"></option>
-                </optgroup>    
-                <optgroup label="Hotspot">
-                  <option value="hotspot"></option>
-                </optgroup>
-              </select>
+          <div class="field">
+            <div class="control">
+              <div class="select is-multiple">
+                <label for="organization">Organisation :</label>
+                <select id="organization">
+                  <option value="">-- Sélectionnez une organisation --</option>
+                </select>
+  
+                <label for="zone">Zone :</label>
+                <select id="zone">
+                  <option value="">-- Sélectionnez une zone --</option>
+                </select>
+  
+                <label for="hotspot">Hotspot :</label>
+                <select id="hotspot">
+                  <option value="">-- Sélectionnez un hotspot --</option>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="field">
-            <div class="control">
-                <button class="button is-primary" id="filterButton">Filtrer</button>
-            </div>
+          <div class="field">
+              <div class="control">
+                  <button class="button is-primary" id="filterButton_NbrAccess">Filtrer</button>
+              </div>
+          </div>
         </div>
     </div>
     <h1 class="title is-4">Données utilisées</h1>
@@ -226,45 +234,48 @@
 
     <div id="useddataperpersonchart">
       <div class="container" id="CntUsedDataPerPerson_Chart">
-        <div class="field">
-            <label class="label" for="startDate">Date de début :</label>
-            <div class="control">
-                <input class="input" type="date" id="startDate" name="startDate" min="2023-01-01" max="2023-12-31" value="2023-01-01">
-            </div>
-        </div>
+        <div class="fields">
+          <div class="field">
+              <label class="label" for="startDate_NbrAccess">Date de début :</label>
+              <div class="control">
+                  <input class="input" type="date" id="startDate_NbrAccess" name="startDate_NbrAccess" min="2023-01-01" max="2023-12-31" value="2023-01-01">
+              </div>
+          </div>
 
-        <div class="field">
-            <label class="label" for="endDate">Date de fin :</label>
-            <div class="control">
-                <input class="input" type="date" id="endDate" name="endDate" min="2023-01-01" max="2023-12-31" value="2023-12-31">
-            </div>
-        </div>
+          <div class="field">
+              <label class="label" for="endDate_NbrAccess">Date de fin :</label>
+              <div class="control">
+                  <input class="input" type="date" id="endDate_NbrAccess" name="endDate_NbrAccess" min="2023-01-01" max="2023-12-31" value="2023-12-31">
+              </div>
+          </div>
 
-        <div class="field">
-          <label class="label">Filtrer par :</label>
-          <div class="control">
-            <div class="select is-multiple">
-              <select id="filterGroup" multiple>
-                  <optgroup label="Organisation">
-                  <option value="Organisation"></option>
-                </optgroup>
-                <optgroup label="Zone">
-                  <option value="zone"></option>
-                </optgroup>    
-                <optgroup label="Hotspot">
-                  <option value="hotspot"></option>
-                </optgroup>
-              </select>
+          <div class="field">
+            <div class="control">
+              <div class="select is-multiple">
+                <label for="organization">Organisation :</label>
+                <select id="organization">
+                  <option value="">-- Sélectionnez une organisation --</option>
+                </select>
+  
+                <label for="zone">Zone :</label>
+                <select id="zone">
+                  <option value="">-- Sélectionnez une zone --</option>
+                </select>
+  
+                <label for="hotspot">Hotspot :</label>
+                <select id="hotspot">
+                  <option value="">-- Sélectionnez un hotspot --</option>
+                </select>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="field">
-            <div class="control">
-                <button class="button is-primary" id="filterButton">Filtrer</button>
-            </div>
+          <div class="field">
+              <div class="control">
+                  <button class="button is-primary" id="filterButton_NbrAccess">Filtrer</button>
+              </div>
+          </div>
         </div>
-    </div>
     <h1 class="title is-4">Données utilisées par personne</h1>
       <canvas id="UsedDataPerPerson_Chart" width="500" height="500"></canvas>
       <div class="select" id="select_UsedDataPerPerson_Chart">

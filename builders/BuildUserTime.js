@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   $('filterButton_').click(async() => {
 
-    console.log("button 'filterButton_ ' clicked");
     $('#filterButton_ConnectionTime').prop('disabled', true); // Désactiver le bouton pendant le chargement
 
     const startDate_ConnectionTime = $('#startDate_ConnectionTime').val();
@@ -32,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error('Aucune donnée reçue');
       }
 
-      // callData(data); 
+      callData(data); 
       // buildConnectTimeEvoChart(data);
     } catch (error) {
       console.error('Erreur lors de la récupération des données :', error);

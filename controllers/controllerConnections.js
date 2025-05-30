@@ -42,13 +42,13 @@ export const getFilters = async () => {
 
 export const getNbrConnections = async (startDate_NbrAccess, endDate_NbrAccess, organization, zone, hotspot) => {
     try {
-        console.log("Appel de getNbrConnections avec :", {
-            startDate_NbrAccess,
-            endDate_NbrAccess,
-            organization,
-            zone,
-            hotspot,
-        });
+        // console.log("Appel de getNbrConnections avec :", {
+        //     startDate_NbrAccess,
+        //     endDate_NbrAccess,
+        //     organization,
+        //     zone,
+        //     hotspot,
+        // });
 
         const [resultNbrAccess] = await Promise.all([
             getNbrAccess(startDate_NbrAccess, endDate_NbrAccess, organization, zone, hotspot),
