@@ -3,8 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let chartType = 'line'; 
   let filters;
 
-  $('#zone, #zonecontainer').hide();
-  $('#hotspot, #hotspotcontainer').hide();
+  $('#zone_AccessPerSession, #zone_AccessPerSession_container').hide();
+  $('#hotspot_AccessPerSession, #hotspot_AccessPerSession_container').hide();
+  
   async function fetchFilters() {
     try {
       const response = await fetch('http://localhost:3000/filters');
@@ -20,9 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
     filters = await fetchFilters();
 
     if (filters) {
-      populateSelect('#organization', filters.organizations);
-      populateSelect('#zone', []);
-      populateSelect('#hotspot', []);
+      populateSelect('#organization_AccessPerSession', filters.organizations);
+      populateSelect('#zone_AccessPerSession', []);
+      populateSelect('#hotspot_AccessPerSession', []);
 
     } else {
       console.error("Aucun filtre récupéré.");
@@ -47,37 +48,37 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  $('#organization').change(function () {
+  $('#organization_AccessPerSession').change(function () {
     const selectedOrgUuid = $(this).val();
     const filteredZones = filters.zones.filter(zone => zone.organizationUUID === selectedOrgUuid);
-    populateSelect('#zone', filteredZones);
-    populateSelect('#hotspot', []);
+    populateSelect('#zone_AccessPerSession', filteredZones);
+    populateSelect('#hotspot_AccessPerSession', []);
     if (!selectedOrgUuid) {
-      $("#zone, #zonecontainer").hide();
-      $("#hotspot, #hotspotcontainer").hide();
+      $("#zone_AccessPerSession, #zone_AccessPerSession_container").hide();
+      $("#hotspot_AccessPerSession, #hotspot_AccessPerSession_container").hide();
     } else {
-      $("#zone, #zonecontainer").show();
+      $("#zone_AccessPerSession, #zone_AccessPerSession_container").show();
     }
-    $("#hotspot, #hotspotcontainer").hide();
+    $("#hotspot_AccessPerSession, #hotspot_AccessPerSession_container").hide();
   });
 
-  $('#zone').change(function () {
+  $('#zone_AccessPerSession').change(function () {
     const selectedZoneUuid = $(this).val();
     const filteredHotspots = filters.hotspots.filter(hotspot => hotspot.zoneUUID === selectedZoneUuid);
-    populateSelect('#hotspot', filteredHotspots);
+    populateSelect('#hotspot_AccessPerSession', filteredHotspots);
     if (!selectedZoneUuid) {
-      $("#hotspot, #hotspotcontainer").hide();
+      $("#hotspot_AccessPerSession, #hotspot_AccessPerSession_container").hide();
     }
     else {
-    $("#hotspot").val("").change(); // Réinitialiser la sélection du hotspot
-    $("#hotspot, #hotspotcontainer").show();
+    $("#hotspot_AccessPerSession").val("").change(); // Réinitialiser la sélection du hotspot
+    $("#hotspot_AccessPerSession, #hotspot_AccessPerSession_container").show();
     }
   });
 
   $('#resetButton_AccessPerSession_Chart').click(function () {
     $('#select_AccessPerSession_Chart select').val('line').change();
     // $('#startDate_NbrAccess, #endDate_NbrAccess').val('');
-    $('#organization, #zone, #hotspot').val('').change();
+    $('#organization_AccessPerSession, #zone_AccessPerSession, #hotspot_AccessPerSession').val('').change();
   });
 
   function getNameByUuid(options, uuid) {
@@ -94,9 +95,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const startDate_NbrAccess = $('#startDate_NbrAccess').val();
     const endDate_NbrAccess = $('#endDate_NbrAccess').val();
-    const organizationUuid = $('#organization').val();
-    const zoneUuid = $('#zone').val();
-    const hotspotUuid = $('#hotspot').val();
+    const organizationUuid = $('#organization_AccessPerSession').val();
+    const zoneUuid = $('#zone_AccessPerSession').val();
+    const hotspotUuid = $('#hotspot_AccessPerSession').val();
 
     const organization = getNameByUuid(filters.organizations, organizationUuid);
     const zone = getNameByUuid(filters.zones, zoneUuid);
@@ -116,9 +117,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Envoi des dates et filtres au backend via fetch
     const parameters = new URL('http://localhost:3000/nbraccess');
-    if (organization) parameters.searchParams.append('organization', organization);
-    if (zone) parameters.searchParams.append('zone', zone);
-    if (hotspot) parameters.searchParams.append('hotspot', hotspot);
+    if (organization) parameters.searchParams.append('organization_AccessPerSession', organization);
+    if (zone) parameters.searchParams.append('zone_AccessPerSession', zone);
+    if (hotspot) parameters.searchParams.append('hotspot_AccessPerSession', hotspot);
     if (startDate_NbrAccess) parameters.searchParams.append('startDate_NbrAccess', startDate_NbrAccess);
     if (endDate_NbrAccess) parameters.searchParams.append('endDate_NbrAccess', endDate_NbrAccess);
 
