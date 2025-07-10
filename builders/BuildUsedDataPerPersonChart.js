@@ -14,18 +14,18 @@ function fetchDataAndBuildCharts() {
 };
 
 export const callDataStatsPerPerson = (data) => {
-    console.log('minoutPerPerson ' + data.stats.outputStatsPerPerson.minOutPers,);
-    console.log('avgoutPerPerson ' + data.stats.outputStatsPerPerson.maxOutPers,);
-    console.log('maxoutPerPerson ' + data.stats.outputStatsPerPerson.maxOutPers,);
-    console.log('mininPerPerson ' + data.stats.inputStatsPerPerson.minInPerPerson,);
-    console.log('avginPerPerson ' + data.stats.inputStatsPerPerson.avgInPerPerson,);
-    console.log('maxinPerPerson ' + data.stats.inputStatsPerPerson.maxInPerPerson,);
-    console.log('mininoutPerPerson ' + data.stats.inoutputStatsPerPerson.minInOutPerPerson,);
-    console.log('avginoutPerPerson ' + data.stats.inoutputStatsPerPerson.avgInOutPerPerson,);
-    console.log('maxinoutPerPerson ' + data.stats.inoutputStatsPerPerson.maxInOutPerPerson,);
-    console.log('totalinPerPerson ' + data.stats.inputStatsPerPerson.totalInPerPerson,);
-    console.log('totaloutPerPerson ' + data.stats.outputStatsPerPerson.totalOutPers,);
-    console.log('totalinoutPerPerson ' + data.stats.inoutputStatsPerPerson.totalInOutPerPerson,);
+    console.log('minoutPerPerson',  data.stats.outputStatsPerPerson.minOutPers);
+    console.log('avgoutPerPerson', data.stats.outputStatsPerPerson.avgOutPers);
+    console.log('maxoutPerPerson', data.stats.outputStatsPerPerson.maxOutPers);
+    console.log('mininPerPerson', data.stats.inputStatsPerPerson.minInPerPerson);
+    console.log('avginPerPerson', data.stats.inputStatsPerPerson.avgInPerPerson);
+    console.log('maxinPerPerson', data.stats.inputStatsPerPerson.maxInPerPerson);
+    console.log('mininoutPerPerson', data.stats.inoutputStatsPerPerson.minInOutPerPerson);
+    console.log('avginoutPerPerson', data.stats.inoutputStatsPerPerson.avgInOutPerPerson);
+    console.log('maxinoutPerPerson', data.stats.inoutputStatsPerPerson.maxInOutPerPerson);
+    console.log('totalinPerPerson', data.stats.inputStatsPerPerson.totalInPerPerson);
+    console.log('totaloutPerPerson', data.stats.outputStatsPerPerson.totalOutPers);
+    console.log('totalinoutPerPerson', data.stats.inoutputStatsPerPerson.totalInOutPerPerson);
 }
 
 export var UsedDataPerpersonChart;
@@ -61,7 +61,7 @@ export function buildUsedDataPerPersonChart(data) {
     const totalInOutPersValues = data.stats.inoutputStatsPerPerson.totalInOutPerPerson.map(person => person.total_data_used);
 
     window.UsedDataPerpersonChart = new Chart(ctx_UsedDataPerPerson, {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: labels, // User IDs as labels
             datasets: [

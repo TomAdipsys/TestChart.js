@@ -60,6 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
       $("#zone_AccessPerSession, #zone_AccessPerSession_container").show();
     }
     $("#hotspot_AccessPerSession, #hotspot_AccessPerSession_container").hide();
+    $('#filterButton_NbrAccess').prop('disabled', false);
+
   });
 
   $('#zone_AccessPerSession').change(function () {
@@ -72,8 +74,22 @@ document.addEventListener("DOMContentLoaded", () => {
     else {
     $("#hotspot_AccessPerSession").val("").change(); // Réinitialiser la sélection du hotspot
     $("#hotspot_AccessPerSession, #hotspot_AccessPerSession_container").show();
+    $('#filterButton_NbrAccess').prop('disabled', false);
     }
   });
+
+  $('#hotspot_AccessPerSession').change(function () {
+    $('#filterButton_NbrAccess').prop('disabled', false);
+  });
+
+  $('#startDate_NbrAccess, #endDate_NbrAccess').change(function () {
+    $('#filterButton_NbrAccess').prop('disabled', false);
+  });
+
+  $('#endDate_NbrAccess').on('change', function () {
+    $('#filterButton_NbrAccess').prop('disabled', false);
+  });
+
 
   $('#resetButton_AccessPerSession_Chart').click(function () {
     $('#select_AccessPerSession_Chart select').val('line').change();
@@ -131,7 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const sizeBytes = new Blob([dataString]).size;
       console.log(`Taille des données reçues : ${sizeBytes} octets (${(sizeBytes/1024).toFixed(2)} Ko)`);
 
-      $('#filterButton_NbrAccess').prop('disabled', false);
 
       if (!data || data.length === 0) {
         throw new Error('Aucune donnée reçue');
@@ -155,12 +170,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const labels = data.map(row => row.accesspointmac);
     const values = data.map(row => row.nbraccess);
 
-    const ctx_AccessPerSession = document.getElementById('AccessPerSession_Chart').getContext('2d');
-    if (window.AccessPerSessionChart) {
-      window.AccessPerSessionChart.destroy();
+    const ctx_AccessPerSession = $('#AccessPerSession_Chart');
+    const chart = Chart.getChart(ctx_AccessPerSession);
+    if (chart) {
+      chart.destroy();
     }
 
-    window.AccessPerSessionChart = new Chart(ctx_AccessPerSession, {
+    new Chart(ctx_AccessPerSession, {
       type: chartType, 
       data: {
         labels: labels,

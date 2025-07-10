@@ -102,7 +102,8 @@ dataRoutes.get('/stats/perperson', async (req, res) => {
             getOutputStatsPerPerson(),
             getInOutputStatsPerPerson()
         ]);
-
+        console.log('in', inputStatsPerPerson);
+        console.log('out', outputStatsPerPerson);
         res.json({
             stats: {
                 inputStatsPerPerson, 
